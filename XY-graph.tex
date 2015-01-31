@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+
+% horizontal axis
+\draw[->] (0,0) -- (6,0) node[anchor=north] {$\log x$};
+% ranges
+\draw	(1,2.2) node{{\scriptsize Threshold}};
+
+% vertical axis
+\draw[->] (0,0) -- (0,4) node[anchor=east] {$\log y$};
+% nominal speed
+\draw[dotted] (0,2) -- (5,2);
+
+% logy = logx
+\draw[thick] (0,0) -- (2,2) -- (5,3);
+
+\end{tikzpicture}
