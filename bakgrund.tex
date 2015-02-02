@@ -6,6 +6,8 @@
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage[swedish,english]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 
 \begin{document}
@@ -29,21 +31,21 @@ In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression proc
 
 In practice, however, is is not desirable to apply instant compression since it introduces distortion\cite{giannoullis}. We thus want to smooth out the compression applied over time. This is illustrated in figure \ref{fig:envelope-graph}.
 
-%\begin{figure}[ht]
-%\captionsetup{justification=centering}
-%\begin{minipage}[t]{.5\textwidth}
-% \centering
-%\input{XY-graph}
-%\caption{Output signal vs input signal.} 
-%\label{fig:xy-graph}
-%\end{minipage}%
-%\begin{minipage}[t]{.5\textwidth}
-%\centering
-%\input{envelope}
-%\caption{Input and output signal plotted over time. } 
-%\label{fig:envelope-graph}
-%\end{minipage}
-%\end{figure}
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+\begin{minipage}[t]{.5\textwidth}
+ \centering
+\input{XY-graph}
+\caption{Output signal vs input signal.} 
+\label{fig:xy-graph}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\input{envelope}
+\caption{Input and output signal plotted over time. } 
+\label{fig:envelope-graph}
+\end{minipage}
+\end{figure}
 
 In order to analyse the compression process we define the following parameters
 \begin{itemize}
@@ -57,10 +59,9 @@ In order to analyse the compression process we define the following parameters
 
 
 \subsection{Gain-reduction}
-We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
+We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and it is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
 
-In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. In this paper we will use the term VCA as a generic term for any controllable amplifier. This is not to be confused with modern solid state compressors that use integrated VCA circuits for gain control, sometimes called \emph{VCA compressors}.
-
+In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. Modern solid state compressors that use integrated circuits for gain control is sometimes called \emph{VCA compressors}. In this paper however, we will use the term VCA as a generic term for any controllable amplifier.
 
 \begin{figure}[ht]
 \centering
@@ -69,17 +70,20 @@ In the analog history of compressor design, various different circuit types have
 \label{fig:vca-generic-blockdiagram}
 \end{figure}
 
-
-
-
+\subsubsection{Ideal VCA}
+At least in a mathematical sense, an "ideal" VCA can be modeled as perfectly linear:
+\begin{equation}
+	y(t) = x(t) c_v
+\end{equation}
+where $y(t)$ is the output, $x(t)$ the input, and $c_v$ the control voltage.
 
 \subsection{Feed-forward, feedback}
-Now, we stand at an early cross-road for how to compute the control voltage. We can choose to have an open loop, feed-forward design, or a closed loop, feedback design.
+To compute the control voltage, we can choose to have an open loop/feed-forward design (figure \ref{fig:feedforward-blockdiagram}), or a closed loop/feedback design (figure \ref{fig:feedback-blockdiagram}). In analog compressor design this have implications for the amplitude range the components will have to handle, and also how well the gain computer can compensate for non-linearities in the VCA. This is not relevant to our digital implementation, but as we will see in our derivation of the gain computer it will affect the compression ratio possible to achieve.
 
 \begin{figure}[ht]
 \centering
 \input{feedforward-blockdiagram}
-\caption{Block diagram of feed forward design} 
+\caption{Block diagram of feed forward design}
 \label{fig:feedforward-blockdiagram}
 \end{figure}
 
@@ -140,6 +144,61 @@ Y > T.
 c = (1-R)\cdot max\left(Y-T,0\right)
 \end{align}
 \\In the case of a ideal limiter ($R = \infty$) an infinite negative amplification is needed to calculate the control voltage. A perfect limiter is thus impossible to implement with a feedback design.
+
+\subsection{Peak detector}
+So far, we have assumed that the gain computer acts directly on the input signal in a time-independent fashion. To make the compressor act on the \emph{envelope} of the input signal instead, with the smooth time dependent behaviour depicted in figure \ref{fig:envelope-graph}, we introduce a \emph{peak detector} component.
+
+There are two ways to look at this:
+\begin{enumerate}
+\item Smoothing of the input signal with a low pass filter.
+\item Implementing a system with an (exponential) asymptotical step response in the time domain.
+\end{enumerate}
+
+This is the same thing. \emph{Text about impulse response, FIR filters, IIR filters, transfer functions etc. Need matlab-graphs for this. coming soon!}.
+
+\begin{figure}[ht]
+\centering
+\input{attack-release-graph}
+\caption{Desired peak detector step response, attack and release phase} 
+\label{fig:attack-release-graph}
+\end{figure}
+
+\subsubsection{The discrete exponential, IIR filter}
+\emph{Derivation of the below expression here!}
+
+\begin{equation}
+y_k = \left\{
+  \begin{array}{ll}
+    \alpha_{att} x_k + (1-\alpha_{att})y_{k-1} & \text{if }  x_k > y_{k-1} \\
+    \alpha_{rel} x_k + (1-\alpha_{rel})y_{k-1} & \text{otherwise} 
+  \end{array}
+\right.
+\end{equation}
+where
+\begin{equation}
+\begin{array}{lr}
+\alpha_{att} = 1-e^{1/f_s \tau_{att}}, & \alpha_{rel} = 1-e^{1/f_s \tau_{rel}}
+\end{array}
+\end{equation}
+
+\subsubsection{Peak, RMS and Crest factor}
+We can further smooth the peak detector envelope by taking the RMS of the input signal. \emph{something about number of samples to take mean over}
+
+This will also allow us to calculate the \emph{Crest factor} defined as
+\begin{equation}
+y_{crest} = \frac{y_{peak}}{y_{RMS}}
+\end{equation}
+which can be used to detect transients.
+
+\subsubsection{Log or linear domain}
+Assuming that we choose the exponential function as our attack and release trajectory, we can either implement this in the logarithmic or the linear domain. In the logarithmic domain, we will get an exponential temporal evolution of the compression in dB (\emph{need to have text about log and dB somewhere explaining this...}.) On the other hand, if the function is exponential in the linear domain, it will be linear in the logarithmic domain, which presumably will not be as smooth to the human ear (but worth investigating!).
+
+\subsubsection{Placement in block diagram}
+Furthermore, we can choose to place the peak detector either before or after the gain computer. Placed before the gain computer, we will feed the gain computer not with the input signal, but with our computed envelope. \emph{This will lead to slow attack, since the attack time will begin below the threshold etc...}
+Another option is to place it \emph{after} the gain computer. This way the gain computer acts on the input signal, and we feed the peak detector with the control voltage instead of the raw input signal, calculating a smooth envelope on this instead. \emph{maybe some graphs and block diagrams depicting this difference...}
+
+\emph{TODO: Investigate how this affects the transfer functions etc... If it was a linear system this would not matter? Maybe interesting to do some math on the importance of the order of components in this nonlinear system}
+
 \bibliographystyle{plain}
 \bibliography{reflist}
 \end{document}
