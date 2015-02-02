@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+
+% horizontal axis
+\draw[->] (0,0) -- (6,0) node[anchor=north] {t};
+% ranges
+\draw	(0.7,1.7) node{{\scriptsize Threshold}};
+%legend
+\draw[thick] (4,4) -- (4.5,4);
+\draw	(5,4) node{{\scriptsize input}};
+
+\draw[dashed] (4,3.5) -- (4.5,3.5);
+\draw	(5.05,3.5) node{{\scriptsize output}};
+
+% vertical axis
+\draw[->] (0,0) -- (0,4) node[anchor=east] {$\left|A\right|$};
+\draw[dotted] (0,1.5) -- (6,1.5);
+\draw[dashed,domain=1.5:4] plot (\x,{1.5+0.5*(exp(4*(1.5-\x))});
+\draw[dashed,domain=4:6] plot (\x,{1-0.5*(exp(4*(4-\x))});
+\draw[dashed] (4,2) -- (4,0.5);
+
+% logy = logx
+\draw[thick] (0,1) -- (1.5,1) -- (1.5,2) -- (4,2) -- (4,1) -- (6,1);
+
+\end{tikzpicture}
