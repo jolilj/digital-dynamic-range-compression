@@ -1,14 +1,24 @@
 \documentclass[]{article}
 \usepackage{natbib}
 \usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{textcomp}
 
 \begin{document}
 
-\title{Title}
-\author{Author}
-\date{Today}
+\title{Digital dynamic range compression algorithm design att Klevgränd Production AB}
+\author{J. Lilja, O. Karlsson}
+\date{2014-02-01}
 \maketitle
+
+\begin{abstract}
+In this study/paper/report, we investigate...
+\end{abstract}
+
+\clearpage
+\section{Introduction}
 \section{Background}
+\subsection{Dynamical range compression}
 The dynamic range compressor is a complex nonlinear time dependent system where the the amplitude peaks of a signal is suppressed, reducing its dynamic range. The complexity of the system together with the vast set of design choices makes it difficult to draw a generic block diagram of the process\cite{giannoullis}  and thus we will, in the analysis, focus on a digital implementation corresponding to ideal components of it's analogue counterpart. 
 
 In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression process is illustrated. The x- and y-axis represents the logarithmic amplitude of input and output signal respectively. As the input signal rise above the threshold level, compression is applied. Logarithmic scale is used since sound amplitude is ,by standard, expressed in the logarithmic unit decibel.
@@ -19,6 +29,43 @@ In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression proc
 \caption{Output signal plotted against input signal. When the input signal rise above the threshold level, compression is applied.} 
 \label{fig:xy-graph}
 \end{figure}
+
+\subsection{Gain-reduction}
+We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
+
+In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. In this paper we will use the term VCA as a generic term for any controllable amplifier. This is not to be confused with modern solid state compressors that use integrated VCA circuits for gain control, sometimes called \emph{VCA compressors}.
+
+
+\begin{figure}[ht]
+\centering
+\input{vca-generic-blockdiagram}
+\caption{Block diagram of gain reduction step} 
+\label{fig:vca-generic-blockdiagram}
+\end{figure}
+
+
+
+
+
+\subsection{Feed-forward, feedback}
+Now, we stand at an early cross-road for how to compute the control voltage. We can choose to have an open loop, feed-forward design, or a closed loop, feedback design.
+
+\begin{figure}[ht]
+\centering
+\input{feedforward-blockdiagram}
+\caption{Block diagram of feed forward design} 
+\label{fig:feedforward-blockdiagram}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\input{feedback-blockdiagram}
+\caption{Block diagram of feedback design} 
+\label{fig:feedback-blockdiagram}
+\end{figure}
+
+\subsection{Gain computer}
+\subsection{Peak detector}
 
 \bibliographystyle{plain}
 \bibliography{reflist}
