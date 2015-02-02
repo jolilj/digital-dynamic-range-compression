@@ -12,17 +12,18 @@
 
 \begin{document}
 
-\title{Digital dynamic range compression algorithm design att Klevgränd Production AB}
+\title{Digital Dynamic Range Compression Algorithm Design at Klevgränd Production AB}
 \author{J. Lilja, O. Karlsson}
 \date{2014-02-01}
 \maketitle
 
 \begin{abstract}
-In this study/paper/report, we investigate...
+TODO
 \end{abstract}
 
 \clearpage
 \section{Introduction}
+TODO
 \section{Background}
 \subsection{Dynamical range compression}
 The dynamic range compressor is a complex nonlinear time dependent system where the the amplitude peaks of a signal is suppressed, reducing its dynamic range. The complexity of the system together with the vast set of design choices makes it difficult to draw a generic block diagram of the process\cite{giannoullis}  and thus we will, in the analysis, focus on a digital implementation corresponding to ideal components of it's analogue counterpart. 
@@ -103,7 +104,7 @@ Y = \left\{
     X & \quad \text{otherwise.}
   \end{array} \right.
 \end{equation}
-\\Modelling an ideal VCA using the exponential of the control voltage, $c$, yields
+\\Modelling an ideal VCA \emph{[reference/explanation needed]} using the exponential of the control voltage, $c$, yields
 \begin{align}
 y &= xe^{c}   \\
 \log|y| & = \log|x| + c   \\
@@ -144,6 +145,7 @@ Y > T.
 c = (1-R)\cdot max\left(Y-T,0\right)
 \end{align}
 \\In the case of a ideal limiter ($R = \infty$) an infinite negative amplification is needed to calculate the control voltage. A perfect limiter is thus impossible to implement with a feedback design.
+\\\emph{TODO: Derivation of control voltage for feed-forward design!}
 
 \subsection{Peak detector}
 So far, we have assumed that the gain computer acts directly on the input signal in a time-independent fashion. To make the compressor act on the \emph{envelope} of the input signal instead, with the smooth time dependent behaviour depicted in figure \ref{fig:envelope-graph}, we introduce a \emph{peak detector} component.
