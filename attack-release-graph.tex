@@ -1,12 +1,21 @@
-\documentclass[]{article}
+\begin{tikzpicture}
 
-\begin{document}
+% horizontal axis
+\draw[->] (0,0) -- (6,0) node[anchor=north] {t};
+%legend
+\draw[thick] (4,4) -- (4.5,4);
+\draw	(5,4) node{{\scriptsize input}};
 
-\title{Title}
-\author{Author}
-\date{Today}
-\maketitle
+\draw[dashed] (4,3.5) -- (4.5,3.5);
+\draw	(5.05,3.5) node{{\scriptsize output}};
 
-Content
+% vertical axis
+\draw[->] (0,0) -- (0,4) node[anchor=east] {$\left|A\right|$};
 
-\end{document}
+\draw[dashed,domain=1:3] plot (\x,{3*(1-exp(-(\x-1)/0.4))});
+\draw[dashed,domain=3:6] plot (\x,{3*(exp(-(\x-3)/0.5))});
+
+% logy = logx
+\draw[thick] (0,0) -- (1,0) -- (1,3) -- (3,3) -- (3,0) -- (6,0);
+
+\end{tikzpicture}

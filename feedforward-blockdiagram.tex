@@ -22,7 +22,7 @@
     % Joining blocks. 
     % Commands \draw with options like [->] must be written individually
 	\draw[->](input1) -- node [label={[xshift=-25mm]\it{in}}]{}(vca1);
- 	\draw[->](vca1) -- node {\it{out}} (output1);
+ 	\draw[->](vca1) -- node [label={\it{out}}]{} (output1);
 	\draw[->](1.5,0) |- node {} (gain1);
 	\draw[->](gain1) -| node [label={[xshift=5mm]\it{cv}}]{} (vca1);
 
