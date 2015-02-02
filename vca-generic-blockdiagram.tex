@@ -1,0 +1,25 @@
+\tikzset{%
+  amp/.style	= {draw, regular polygon, regular polygon sides=3,
+	shape border rotate=-90, node distance = 25mm},
+  input/.style	= {coordinate}, % Input
+  output/.style	= {coordinate} % Output
+}
+
+\begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
+\draw
+	% Drawing the blocks of first filter :
+	node at (0,0)[right=-3mm]{\Large \textopenbullet}
+	node [input, name=input1] {} 
+
+	node [amp, right of=input1, name=vca1, ] {VCA}
+	node [output, right of=vca1, name=output1, xshift=10mm]{}
+	
+	node [below of=vca1, name=cv1, yshift=-5mm]{\Large \textopenbullet}
+	;
+    % Joining blocks. 
+    % Commands \draw with options like [->] must be written individually
+	\draw[->](input1) -- node {\it{in}}(vca1);
+ 	\draw[->](vca1) -- node {\it{out}} (output1);
+	\draw[->](cv1) -- node [label={[xshift=5mm, yshift=-5mm]\it{cv}}]{} (vca1);
+
+\end{tikzpicture}
