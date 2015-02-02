@@ -4,6 +4,8 @@
 \usetikzlibrary{shapes,arrows}
 \usepackage{textcomp}
 \usepackage{pgfplots}
+\usepackage[swedish,english]{babel}
+\usepackage[utf8]{inputenc}
 
 \begin{document}
 
@@ -42,10 +44,9 @@ In application is is not desirable to apply instant compression since it introdu
 
 
 \subsection{Gain-reduction}
-We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
+We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and it is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
 
-In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. In this paper we will use the term VCA as a generic term for any controllable amplifier. This is not to be confused with modern solid state compressors that use integrated VCA circuits for gain control, sometimes called \emph{VCA compressors}.
-
+In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. Modern solid state compressors that use integrated circuits for gain control is sometimes called \emph{VCA compressors}. In this paper however, we will use the term VCA as a generic term for any controllable amplifier.
 
 \begin{figure}[ht]
 \centering
@@ -54,17 +55,20 @@ In the analog history of compressor design, various different circuit types have
 \label{fig:vca-generic-blockdiagram}
 \end{figure}
 
-
-
-
+\subsubsection{Ideal VCA}
+At least in a mathematical sense, an "ideal" VCA can be modeled as perfectly linear:
+\begin{equation}
+	y(t) = x(t) c_v
+\end{equation}
+where $y(t)$ is the output, $x(t)$ the input, and $c_v$ the control voltage.
 
 \subsection{Feed-forward, feedback}
-Now, we stand at an early cross-road for how to compute the control voltage. We can choose to have an open loop, feed-forward design, or a closed loop, feedback design.
+To compute the control voltage, we can choose to have an open loop/feed-forward design (figure \ref{fig:feedforward-blockdiagram}), or a closed loop/feedback design (figure \ref{fig:feedback-blockdiagram}). In analog compressor design this have implications for the amplitude range the components will have to handle, and also how well the gain computer can compensate for non-linearities in the VCA. This is not relevant to our digital implementation, but, as we will see in our derivation of the gain computer, it will affect the compression ratio possible to achieve.
 
 \begin{figure}[ht]
 \centering
 \input{feedforward-blockdiagram}
-\caption{Block diagram of feed forward design} 
+\caption{Block diagram of feed forward design}
 \label{fig:feedforward-blockdiagram}
 \end{figure}
 
@@ -77,6 +81,10 @@ Now, we stand at an early cross-road for how to compute the control voltage. We 
 
 \subsection{Gain computer}
 \subsection{Peak detector}
+So far, we have assumed that the gain computer acts on the input signal in a time-independent fashion. To make the compressor instead act on the \emph{envelope} of the input signal with the smooth behaviour depicted in figure \ref{fig:envelope-graph}, we introduce a \emph{peak detector} component.
+
+
+
 
 \bibliographystyle{plain}
 \bibliography{reflist}
