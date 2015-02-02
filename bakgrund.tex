@@ -1,6 +1,7 @@
 \documentclass[]{article}
 \usepackage{natbib}
 \usepackage{tikz}
+\usepackage{pgfplots}
 
 \begin{document}
 
@@ -18,6 +19,15 @@ In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression proc
 \input{XY-graph}
 \caption{Output signal plotted against input signal. When the input signal rise above the threshold level, compression is applied.} 
 \label{fig:xy-graph}
+\end{figure}
+
+In application is is not desirable to apply instant compression since it introduces distortion\cite{giannoullis}. We thus want to smooth out the compression applied over time. This is illustrated in figure \ref{fig:envelope-graph}
+
+\begin{figure}[ht]
+\centering
+\input{envelope}
+\caption{Input signal plotted against time. The output is superimposed in the graph as a dashed line. When the input signal rise above the threshold level, compression is applied continously over time } 
+\label{fig:envelope-graph}
 \end{figure}
 
 \bibliographystyle{plain}
