@@ -26,9 +26,7 @@ TODO
 TODO
 \section{Background}
 \subsection{Dynamical range compression}
-The dynamic range compressor is a complex nonlinear time dependent system where the the amplitude peaks of a signal is suppressed, reducing its dynamic range. The complexity of the system together with the vast set of design choices makes it difficult to draw a generic block diagram of the process\cite{giannoullis}  and thus we will, in the analysis, focus on a digital implementation corresponding to ideal components of it's analogue counterpart. 
-
-In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression process is illustrated. The x- and y-axis represents the logarithmic amplitude of input and output signal respectively. As the input signal rise above the threshold level, compression is applied. Logarithmic scale is used since sound amplitude is, by standard, expressed in the logarithmic unit decibel.
+The dynamic range compressor is a complex nonlinear time dependent system where the the amplitude peaks of a signal is suppressed, reducing its dynamic range. In figure \ref{fig:xy-graph} the eligible behaviour of a simple compression process is illustrated. The x- and y-axis represents the logarithmic amplitude of input and output signal respectively. As the input signal rise above the threshold level, compression is applied. Logarithmic scale is used since sound amplitude is, by standard, expressed in the logarithmic unit decibel.
 
 In practice, however, is is not desirable to apply instant compression since it introduces distortion\cite{giannoullis}. We thus want to smooth out the compression applied over time. This is illustrated in figure \ref{fig:envelope-graph}.
 
@@ -96,7 +94,7 @@ To compute the control voltage, we can choose to have an open loop/feed-forward 
 \end{figure}
 
 \subsection{Gain computer}
-According to figure \ref{fig:xy-graph} and denoting the threshold level $T$ and the ratio $R$, we get
+The gain computer calculates the gain factor, $g_n$ given the envelope of the signal. According to figure \ref{fig:xy-graph} and denoting the threshold level $T$ and the ratio $R$, we get
 \begin{equation} \label{eq:gaincomp}
 Y = \left\{ 
   \begin{array}{l l}
@@ -104,48 +102,33 @@ Y = \left\{
     X & \quad \text{otherwise.}
   \end{array} \right.
 \end{equation}
-\\Modelling an ideal VCA \emph{[reference/explanation needed]} using the exponential of the control voltage, $c$, yields
+\\ To derive $g_n$ we begin with the relationship between the input and output signal, see figure \ref{fig:feedforward-blockdiagram}
 \begin{align}
-y &= xe^{c}   \\
-\log|y| & = \log|x| + c   \\
-Y &= X + c \label{eq:cv}
+y_n &= x_ng_n   \\
+\log|y_n| & = \log|x_n| + \log|g_n|   \\
+Y &= X + G \label{eq:cv}
 \end{align}
-\\Negative control voltage corresponds to compression while zero control voltage leaves the input signal uncompressed. 
+\\ where the logarithmic variables are denoted by capital letters. For a compressor the output is never amplified, hence $g_n \leq 1$.
 
-In a feedback design the control voltage is a function of the output signal and thus equation (\ref{eq:cv}) and (\ref{eq:gaincomp}) yields
+In a feed-forwad design $x$ is the inserted into the gain computer, thus equation (\ref{eq:cv}) and (\ref{eq:gaincomp}) yields
 \begin{equation}
-Y = \left\{ 
+X+G = \left\{ 
   \begin{array}{l l}
-    T+ \dfrac{Y-c-T}{R} & \quad \text{if $X > T$}\\
-    Y-c & \quad \text{otherwise.}
+    T+ \dfrac{X-T}{R} & \quad \text{if $X > T$}\\
+    X & \quad \text{otherwise.}
   \end{array} \right.
 \end{equation}
-\\Solving for $c \rm \Rightarrow$
+\\Solving for $G \rm \Rightarrow$
 \begin{equation} \label{eq:c}
-c = \left\{ 
+G = \left\{ 
   \begin{array}{l l}
-    (1-R)(Y-T)& \quad \text{if $Y-c > T$}\\
+    \left(R^{-1}-1\right)(X-T)& \quad \text{if $X > T$}\\
     0 & \quad \text{otherwise.}
   \end{array} \right.
 \end{equation}
-\\Rewrite the limit for $c$
-\begin{align*}
-Y - c  = Y-(1-R)(Y-T) = T + R(Y-T) > T.   \\
-\end{align*}
-\\Hence 
-\begin{align*}
-Y-c > T \Longleftrightarrow R(Y-T)  > 0.
-\end{align*}
-\\And assuming $R > 0$
-\begin{align} \label{eq:feedbacklimit}
-Y > T.
-\end{align}
-\\Inserting equation (\ref{eq:feedbacklimit}) into (\ref{eq:c}) allow us to write the control voltage as
 \begin{align}
-c = (1-R)\cdot max\left(Y-T,0\right)
+G = (R^{-1}-1)\cdot \max\left(Y-T,0\right)
 \end{align}
-\\In the case of a ideal limiter ($R = \infty$) an infinite negative amplification is needed to calculate the control voltage. A perfect limiter is thus impossible to implement with a feedback design.
-\\\emph{TODO: Derivation of control voltage for feed-forward design!}
 
 \subsection{Peak detector}
 So far, we have assumed that the gain computer acts directly on the input signal in a time-independent fashion. To make the compressor act on the \emph{envelope} of the input signal instead, with the smooth time dependent behaviour depicted in figure \ref{fig:envelope-graph}, we introduce a \emph{peak detector} component.
