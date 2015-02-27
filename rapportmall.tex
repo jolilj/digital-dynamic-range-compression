@@ -1,0 +1,86 @@
+\documentclass[]{article}
+\usepackage{natbib}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{textcomp}
+\usepackage{pgfplots}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[swedish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{\Large{Comparing Digital Dynamic Range Compression} \\ \large{A Numerical Approach} }
+\author{J. Lilja, O. Karlsson}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+Skrivs i slutet av rapportskrivandet. Sammanfattar metod och resultat.
+\end{abstract}
+
+\clearpage
+
+\section{Introduction}
+\begin{itemize}
+\item{Kan parameterinställningarna hos en kompressor optimeras för att matcha en given signal med kompression på numerisk väg?}
+\item{Varför? -  Ger en möjlighet att jämföra kompressorer på riktiga signaler. Har ej gjorts. Tidigare forskning jämför algoritmer kvalitativt. Se \cite{giannoullis}. Kompression är en subtil effekt, möjliggör att utforska var gränsen går för mänskliga örat}
+\end{itemize}
+
+\section{Background}
+
+\subsection{Previous work}
+Compressor design
+\begin{itemize}
+\item{Digital dynamic range compressor design—a tutorial and analysis\cite{giannoullis}}
+\item{DAFX\cite{dafx}}
+\item{Digital Signal Processing(Zoelzer) \cite{zolzer1997digital}}
+\end{itemize}
+Parameter determination
+\begin{itemize}
+\item{Reverse Engineering of a Mix \cite{reiss2010rev}}
+\end{itemize}
+
+\subsection{Theory}
+
+\subsubsection{Digital signal processing}
+Hur ljud är representerat i digital form
+
+\subsubsection{Dynamic Range Compression}
+Här beskrivs utförlig teori av hur kompressorn är byggd/implementerad (Det vi påbörjat tidigare som bakgrund). 
+
+\subsubsection{Numerical analyisis}
+\begin{itemize}
+\item Linear least squares fitting
+\item Nonlinear optimization (curve fitting/function minimization)
+
+\begin{itemize}
+\item Convex optimization?
+\item Nelder-Mead simplex algorithm?
+\end{itemize}
+
+\end{itemize}
+
+\section{Method}
+Vi börjar att testa MATLABS fminsearch på de kompressoralgoritmer vi implementerat, enligt \cite{giannoullis}, i MATLAB och se vilka resultat vi får. I första hand kolla konvergens i specialfall, exempelvis hitta parameterinställningen för samma kompressor.
+
+Metric: Euklidisk norm, tidsdomän? spektrum? envelope?
+
+Hur kan vi förbättra fminsearch, givet vårt specifika problem?
+
+I framtiden lyssnartest?
+
+\section{Result and analysis}
+Jämföra numeriska mått med lyssnartest?
+
+\section{Discussion}
+Ev. problem med den numeriska metoden?
+
+\bibliographystyle{plain}
+\bibliography{reflist}
+\end{document}
+
+
+

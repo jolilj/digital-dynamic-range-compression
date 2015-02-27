@@ -4,7 +4,11 @@
   block/.style    = {draw, thick, rectangle, minimum height = 3em,
     minimum width = 3em},
   input/.style	= {coordinate}, % Input
-  output/.style	= {coordinate} % Output
+  output/.style	= {coordinate}, % Output
+cross/.style={path picture={ 
+  \draw[black]
+(path picture bounding box.south east) -- (path picture bounding box.north west) (path picture bounding box.south west) -- (path picture bounding box.north east);
+}}
 }
 
 \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
@@ -15,15 +19,15 @@
 
 	node at (1.5,0){\textbullet}
 
-	node [amp, right of=input1, name=vca1, ] {VCA}
+	node [draw,circle,cross, minimum width = 0.7cm, node distance = 70mm, right of=input1, name=vca1, ] {}
 	node [block, below left of=vca1, xshift=-15mm, yshift=-5mm, name=gain1]{Gain computer}
 	node [output, right of=vca1, name=output1, xshift=10mm]{}
 	;
     % Joining blocks. 
     % Commands \draw with options like [->] must be written individually
-	\draw[->](input1) -- node [label={[xshift=-25mm]\it{in}}]{}(vca1);
- 	\draw[->](vca1) -- node [label={\it{out}}]{} (output1);
+	\draw[->](input1) -- node [label={[xshift=-25mm]$x_n$}]{}(vca1);
+ 	\draw[->](vca1) -- node [label={$y_n$}]{} (output1);
 	\draw[->](1.5,0) |- node {} (gain1);
-	\draw[->](gain1) -| node [label={[xshift=5mm]\it{cv}}]{} (vca1);
+	\draw[->](gain1) -| node [label={[xshift=5mm]$g_n$}]{} (vca1);
 
 \end{tikzpicture}

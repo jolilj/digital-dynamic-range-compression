@@ -57,44 +57,13 @@ In order to analyse the compression process we define the following parameters
 
 
 
-\subsection{Gain-reduction}
-We begin our derivation of a block diagram for a generic compressor with the gain reduction step. This is where the signals amplitude is modified and it is achieved with a \emph{Voltage Controlled Amplifier} (VCA).
-
-In the analog history of compressor design, various different circuit types have been implemented for this task (FET, optical circuits, tube amplifiers etc.), each with it's own characteristic. Modern solid state compressors that use integrated circuits for gain control is sometimes called \emph{VCA compressors}. In this paper however, we will use the term VCA as a generic term for any controllable amplifier.
-
-\begin{figure}[ht]
-\centering
-\input{vca-generic-blockdiagram}
-\caption{Block diagram of gain reduction step} 
-\label{fig:vca-generic-blockdiagram}
-\end{figure}
-
-\subsubsection{Ideal VCA}
-At least in a mathematical sense, an "ideal" VCA can be modeled as perfectly linear:
-\begin{equation}
-	y(t) = x(t) c_v
-\end{equation}
-where $y(t)$ is the output, $x(t)$ the input, and $c_v$ the control voltage.
-
-\subsection{Feed-forward, feedback}
-To compute the control voltage, we can choose to have an open loop/feed-forward design (figure \ref{fig:feedforward-blockdiagram}), or a closed loop/feedback design (figure \ref{fig:feedback-blockdiagram}). In analog compressor design this have implications for the amplitude range the components will have to handle, and also how well the gain computer can compensate for non-linearities in the VCA. This is not relevant to our digital implementation, but as we will see in our derivation of the gain computer it will affect the compression ratio possible to achieve.
-
-\begin{figure}[ht]
-\centering
-\input{feedforward-blockdiagram}
-\caption{Block diagram of feed forward design}
-\label{fig:feedforward-blockdiagram}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\input{feedback-blockdiagram}
-\caption{Block diagram of feedback design} 
-\label{fig:feedback-blockdiagram}
-\end{figure}
-
-\subsection{Gain computer}
-The gain computer calculates the gain factor, $g_n$ given the envelope of the signal. According to figure \ref{fig:xy-graph} and denoting the threshold level $T$ and the ratio $R$, we get
+\subsection{Gain Computer}
+The heart in any compressor design is where the gain reduction is applied. Here the amplitude of the input signal is reduced by the gain factor $g_n$, see figure \ref{fig:gain-step-blockdiagram}. Denoting input and output signal $x_n$ and $y_n$ respectively, we have
+\begin{align}
+y_n = x_n g_n.
+\label{eq:inout}
+\end{align}
+To derive the gain factor, $g_n$ we begin by examining the eligible behaviour of the compressor according to figure \ref{fig:xy-graph}. Denoting the threshold level $T$ and the ratio $R$, we get
 \begin{equation} \label{eq:gaincomp}
 Y = \left\{ 
   \begin{array}{l l}
@@ -102,15 +71,28 @@ Y = \left\{
     X & \quad \text{otherwise.}
   \end{array} \right.
 \end{equation}
-\\ To derive $g_n$ we begin with the relationship between the input and output signal, see figure \ref{fig:feedforward-blockdiagram}
+The component generating the gain factor is defined as the \emph{gain computer}. We now face two different approaches: feeding the gain computer with the uncompressed input or the compressed output signal resulting in a feed-forward or feedback system, see figure \ref{fig:feedforward-blockdiagram} and \ref{fig:feedback-blockdiagram}. 
+\begin{figure}[ht]
+ \centering
+\input{feedforward-blockdiagram}
+\caption{Block diagram of feed forward design}
+\label{fig:feedforward-blockdiagram}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\input{feedback-blockdiagram}
+\caption{Block diagram of feedback design} 
+\label{fig:feedback-blockdiagram}
+\end{figure}
+\\ To derive $g_n$ we begin with the relationship between the input and output signal.
 \begin{align}
 y_n &= x_ng_n   \\
 \log|y_n| & = \log|x_n| + \log|g_n|   \\
 Y &= X + G \label{eq:cv}
 \end{align}
-\\ where the logarithmic variables are denoted by capital letters. For a compressor the output is never amplified, hence $g_n \leq 1$.
+\\ where the logarithmic variables are denoted by capital letters. For a compressor the output is never amplified, hence $g_n \leq 1$. In \cite{giannoullis} it is shown that a feedback compressor cannot function as a perfect limiter. Furthermore it lacks the ability for look-ahead, see TODO refer to section explaining look ahead. Therefor we leave the feedback compressor design aside. 
 
-In a feed-forwad design $x$ is the inserted into the gain computer, thus equation (\ref{eq:cv}) and (\ref{eq:gaincomp}) yields
+In a feed-forward design the logarithmic input signal, $X$,  is inserted into the gain computer, thus equation (\ref{eq:cv}) and (\ref{eq:gaincomp}) yields
 \begin{equation}
 X+G = \left\{ 
   \begin{array}{l l}
@@ -127,7 +109,7 @@ G = \left\{
   \end{array} \right.
 \end{equation}
 \begin{align}
-G = (R^{-1}-1)\cdot \max\left(Y-T,0\right)
+G = (R^{-1}-1)\cdot \max\left(Y-T,0\right).
 \end{align}
 
 \subsection{Peak detector}
