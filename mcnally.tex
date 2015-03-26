@@ -1,0 +1,26 @@
+\documentclass[]{article}
+\usepackage{natbib}
+\begin{document}
+
+\title{Title}
+\author{Author}
+\date{Today}
+\maketitle
+\section*{}
+Although being a widely used effect in many digital signal processing systems, the method of compressing the dynamic range of a digital signal is investigated in but a few publications. A majority of the open literature is based on a feed-forward design with little modifications to the internal structure of the side-chain despite a quite extensive freedom in design choices leading to different characteristics. It is not until 2012 a formal comparison between these design choices is carried out.  An early description of a digital dynamic range compressor, DDRC, is given in "Dynamic Range Control of Digital Audio Signals" by G.W McNally published in Journal of the Audio Engineering Society, May 1984. The design, see Fig \ref{fig:mcnaBlock}, is feed-forward based and the side-chain is composed of the following key components
+\begin{itemize}
+\item{Level detector}
+\item{Gain computer}
+\item{Gain smoothing filter}
+\end{itemize}
+\begin{figure}
+\caption{Block diagram of a feed-forward DDRC}
+\label{fig:mcnaBlock}
+\end{figure}
+Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one, time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced. McNally suggests that a last adaptive low pass filter should be introduced to smooth out the calculated gain to avoid distortion in the final output.
+
+"Digital Signal Processing", by Zoelzer 
+
+\bibliographystyle{plain}
+\bibliography{reflist}
+\end{document}
