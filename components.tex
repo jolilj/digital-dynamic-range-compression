@@ -52,29 +52,33 @@ y_k = \begin{cases}
 
 It is possibly also suggested for gain smoothing in McNally and Zoelzer. The block diagrams in McNally, Zoelzer97, Zoelzer05, DAFX02 and DAFX11 all suggest that the branching condition is determined by $x_k > x_{k-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in DAFX11, the branching condition of eq XX is actually used. Bitzer06 refers to McNally and DAFX02 for their implementation of this filter, but also use the branching condition of eq XX. It is unclear what the original intent was in McNally's block diagram from 1984.
 
-\subsubsection{Decoupled IIR filter}
+\subsubsection{Two pole "Decoupled" IIR filter}
 This filter is derived in Reiss, as a "Decoupled peak detector". It has the same attack trajectory as the branching filter, but the release trajectory is a combination of attack and release envelopes.
 
 \begin{equation}
+\openup 2\jot
 \begin{split}
 z_k &= \begin{cases}
-    x_k 								& x_k > z_{k-1} \\
-   (1-\alpha_{rel}) z_{k-1} 					& x_k \leq z_{k-1}
+    x_k 								& x_k > r_{k} \\
+   r_k 					& \text{otherwise}
 \end{cases} \\
+r_k &= (1-\alpha_{rel})z_{k-1}  \\
 y_k &= \alpha_{att} z_k + (1-\alpha_{att}) y_{k-1}
 \end{split}
 \end{equation}
 The name "decoupled" can be discussed, since the release trajectory is actually coupled with the attack time constant in contrast to the branching detector. The name is Reiss' convention, and can be understood from it's analog counterpart.
 
-\subsubsection{Decoupled smooth IIR filter}
+\subsubsection{Two pole "Decoupled" smooth IIR filter}
 This is an adjusted version of the above filter, analogous to the modification of the branched filter to it's smoothed counterpart.
 
 \begin{equation}
+\openup 2\jot
 \begin{split}
 z_k &= \begin{cases}
-    x_k 								& x_k > z_{k-1} \\
-    \alpha_{rel} x_k + (1-\alpha_{rel}) z_{k-1} 	& x_k \leq z_{k-1}
+    x_k 								& x_k >  r_{k} \\
+    y_{re}	& \text{otherwise}
 \end{cases} \\
+r_{k} &= \alpha_{rel} x_k + (1-\alpha_{rel}) z_{k-1}  \\
 y_k &= \alpha_{att} z_k + (1-\alpha_{att}) y_{k-1}
 \end{split}
 \end{equation}
