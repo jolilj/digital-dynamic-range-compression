@@ -47,9 +47,9 @@
 		\node[dspfilter, minimum size = 10mm] (m23) {abs};          &
 		\node[dspfilter, minimum size = 10mm]                  (m24) {dB};          &
 		\node[dspfilter,minimum width = 18mm,text height=2em] (m25) {\small Gain \\ \small computer};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m26) {\small Gain \\ \small smoothing };          &
-		\node[dspadder]                  (m27) {};          &
-		\node[dspfilter, minimum size = 10mm]                  (m28) {lin};          &
+		\node[dspfilter,minimum width = 18mm,text height=2em] (m26) {\small Loop \\ \small filter };          &
+		\node[dspfilter, minimum size = 10mm]                  (m27) {lin};          &
+		\node[coordinate]                  (m28) {};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m210) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\
@@ -95,9 +95,6 @@
 	\draw[dashed] (m11) -- (m31);
 	\draw[dashed] (m31) -- (m310);
 	\draw[dashed] (m110) -- (m310);
-	
-	\draw[dspconn]([yshift=2mm]m37) -- (m27);
-	\node[black, below=2.5mm](M) at ([xshift=2.5mm] m27){M};
 	
 	%\coordinate (dB1) at ([xshift=7.5mm]m24.center);
 	%\coordinate (dB2) at ([xshift=7.5mm,yshift=-2mm] m14);
