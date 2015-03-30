@@ -1,0 +1,102 @@
+\documentclass[]{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{Title}
+\author{Author}
+\date{Today}
+\maketitle
+
+\section{Components}
+
+
+\subsection{Filters}
+Input signal is denoted by $x_k$ and the output signal is denoted by $y_k$, regardless of filter placement in the side chain. They are, so to speak, local variables to this subsection. We use the term filter here to emphasise their purpose of smoothing out high frequencies in the side chain, even though most of them are highly nonlinear and cannot be used on arbitrary signals as they demand the input to be above or equal to zero.
+
+No standard naming convention can be found in the literature apart from general descriptions of order and number of poles. Thus, the names presented here are our own, and for our own convenience. However, we have tried to follow Reiss' categorisation as close as possible.
+
+\subsubsection{One pole averaging IIR filter}
+This filter is used by McNally to take the average of the squared input samples in the RMS level detector. In that context the square root should be taken of the output before feeding it to the gain computer. The constant $\alpha_{av}$ can thus be seen as a moving average RMS weight, but also as a time constant in a one pole IIR low pass filter.
+
+\begin{equation}
+y_k = \alpha_{av}x_k + (1-\alpha_{av}) y_{k-1}
+\end{equation}
+
+\subsubsection{One pole coupled IIR filter}
+This filter is used for peak level detector smoothing in McNally and Zoelzer 97.
+\begin{equation}
+y_k = \begin{cases}
+    \alpha_{att} x_k + (1- (\alpha_{att} + \alpha_{rel})) y_{k-1}  	& x_k > y_{k-1} \\
+    (1-\alpha_{rel}) y_{k-1} 								& x_k \leq y_{k-1}
+\end{cases}
+\end{equation}
+
+Reiss shows that it can be derived as an ideal model of a simple analog RC-circuit design. Reiss also points out that the attack time as well as the peak estimate is scaled by the release time, which is why we choose to call it "coupled" in this paper. This scaling behavior can be seen in fig XXX.
+
+\subsubsection{One pole branching IIR filter}
+This is an improved version of the coupled IIR filter, described in Zoelzer 05, where the release time constant is removed from the attack phase so that the level measurement and attack time is no longer scaled with release time.
+\begin{equation}
+y_k = \begin{cases}
+    \alpha_{att} x_k + (1-\alpha_{att}) y_{k-1} 	& x_k > y_{k-1} \\
+    (1-\alpha_{rel}) y_{k-1} 					& x_k \leq y_{k-1}
+\end{cases}
+\end{equation}
+
+\subsubsection{One pole branching, smooth, IIR filter}
+This is a design proposed for peak level detector smoothing in Reiss. It is called "smooth" because it falls off in a smooth exponential towards $x_k$ in the release phase. This is to be contrasted with the one pole branching IIR filter above that falls off towards zero, regardless of $x_k$, yielding a discontinuity when $x_k > 0$ as can be seen in figure XX.
+\begin{equation}
+y_k = \begin{cases}
+    \alpha_{att} x_k + (1-\alpha_{att}) y_{k-1} 	& x_k > y_{k-1} \\
+    \alpha_{rel} x_k + (1-\alpha_{rel}) y_{k-1} 	& x_k \leq y_{k-1}
+\end{cases}
+\end{equation}
+
+It is possibly also suggested for gain smoothing in McNally and Zoelzer. The block diagrams in McNally, Zoelzer97, Zoelzer05, DAFX02 and DAFX11 all suggest that the branching condition is determined by $x_k > x_{k-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in DAFX11, the branching condition of eq XX is actually used. Bitzer06 refers to McNally and DAFX02 for their implementation of this filter, but also use the branching condition of eq XX. It is unclear what the original intent was in McNally's block diagram from 1984.
+
+\subsubsection{Two pole "Decoupled" IIR filter}
+This filter is derived in Reiss, as a "Decoupled peak detector". It has the same attack trajectory as the branching filter, but the release trajectory is a combination of attack and release envelopes.
+
+\begin{equation}
+\openup 2\jot
+\begin{split}
+z_k &= \begin{cases}
+    x_k 								& x_k > r_{k} \\
+   r_k 					& \text{otherwise}
+\end{cases} \\
+r_k &= (1-\alpha_{rel})z_{k-1}  \\
+y_k &= \alpha_{att} z_k + (1-\alpha_{att}) y_{k-1}
+\end{split}
+\end{equation}
+The name "decoupled" can be discussed, since the release trajectory is actually coupled with the attack time constant in contrast to the branching detector. The name is Reiss' convention, and can be understood from it's analog counterpart.
+
+\subsubsection{Two pole "Decoupled" smooth IIR filter}
+This is an adjusted version of the above filter, analogous to the modification of the branched filter to it's smoothed counterpart.
+
+\begin{equation}
+\openup 2\jot
+\begin{split}
+z_k &= \begin{cases}
+    x_k 								& x_k >  r_{k} \\
+    y_{re}	& \text{otherwise}
+\end{cases} \\
+r_{k} &= \alpha_{rel} x_k + (1-\alpha_{rel}) z_{k-1}  \\
+y_k &= \alpha_{att} z_k + (1-\alpha_{att}) y_{k-1}
+\end{split}
+\end{equation}
+
+\subsubsection{Stickvoort three pole release filter}
+\begin{equation}
+y_k = c^k+ k c^k (c - 1)(c - 3)/2 + k^2 c^k (1 - c)^2/2
+\end{equation}
+
+\subsubsection{Time constants}
+All time constants in the above are defined in the same way, here only denoted by $\alpha$, and given by
+
+\begin{equation}
+\alpha = 1- e^{-T/ \tau},
+\end{equation}
+where $\tau$ is the usual time constant denoting the time it takes a decaying exponential function to reach $63 \%$ of it's final value.
+
+
+\end{document}

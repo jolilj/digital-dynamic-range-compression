@@ -1,0 +1,62 @@
+\documentclass[]{article}
+
+%document structure
+\usepackage{subfiles}
+%plots
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{pgfplots}
+% encoding and symbols
+\usepackage[swedish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{textcomp}
+%formatting
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+%\usepackage{natbib}
+
+% section numbering
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+
+% make paragraphs behave like level 4 sections
+\titleformat{\paragraph}[hang]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\begin{document}
+%set this directory to root directory, for subfiles and figures paths
+%must be set here, so it's not included when compiling subfiles standalone
+\newcommand{\rootdir}{.}
+
+\title{Digital Dynamic Range Compression Algorithm Design at Klevgränd Production AB}
+\author{J. Lilja, O. Karlsson}
+\date{2014-03-29}
+\maketitle
+
+\begin{abstract}
+\todo{we do this last...}
+\end{abstract}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\subfile{\rootdir/sections/introduction}
+
+\subfile{\rootdir/sections/background}
+
+\subfile{\rootdir/sections/theory}
+
+\subfile{\rootdir/sections/method}
+
+\subfile{\rootdir/sections/result}
+
+\subfile{\rootdir/sections/discussion}
+
+\bibliographystyle{alpha}
+\bibliography{reflist}
+\end{document}

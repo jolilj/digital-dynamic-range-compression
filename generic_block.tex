@@ -1,0 +1,93 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{dsp,chains}
+
+\begin{document}
+\newcommand{\z}{z}
+% FIR filter as block diagram
+\begin{tikzpicture}
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m00) {$x[n]$};    &
+		\node[coordinate]                  (m01) {};          &
+		\node[dspnodefull]                 (m02) {};           &
+		\node[dspfilter,minimum width = 18mm] (m03) {\small Delay};         &
+	         \node[coordinate]                 (m04) {};           &
+		\node[coordinate]                   (m05) {}; 	&
+		\node[coordinate]                 (m06) {};           &
+		\node[coordinate]                   (m07) {}; 	&
+		\node[dspmixer]                  (m08) {};          &
+		\node[coordinate]                  (m09) {};          &
+		\node[dspnodeopen,dsp/label=above] (m0X) {$y[n]$};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m10) {};          &
+		\node[coordinate]                  (m11) {};          &
+		\node[coordinate]   		   (m12) {};          &
+		\node[coordinate]                  (m13) {};          &
+		\node[coordinate]                  (m14) {};          &
+		\node[coordinate]                  (m15) {};          &
+		\node[coordinate]                  (m16) {};          &
+		\node[coordinate]                  (m17) {};          &
+		\node[coordinate]                  (m18) {};          &
+		\node[coordinate]                  (m19) {};          &
+		\node[coordinate]                  (m1X) {};          \\
+		%--------------------------------------------------------------------
+		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m20) {};          &
+		\node[coordinate]                  (m21) {};          &
+		\node[coordinate]                  (m22) {};          &
+		\node[dspfilter,minimum width = 18mm,text height=2em] (m23) {\small Level \\ \small detector};          &
+		\node[coordinate]                  (m24) {};          &
+		\node[dspfilter,minimum width = 18mm,text height=2em] (m25) {\small Gain \\ \small computer};          &
+		\node[coordinate]                  (m26) {};          &
+		\node[dspfilter,minimum width = 18mm,text height=2em] (m27) {\small Gain \\ \small smoothing };          &
+		\node[coordinate]                  (m28) {};          &
+		\node[coordinate]                  (m29) {};          &
+		\node[coordinate]                  (m2X) {};          &  \\
+		%--------------------------------------------------------------------
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m30) {};          &
+		\node[coordinate]                  (m31) {};          &
+		\node[coordinate]   		   (m32) {};          &
+		\node[coordinate]                  (m33) {};          &
+		\node[coordinate]                  (m34) {};          &
+		\node[label,below=1mm]                  (m35) {\small Sidechain};          &
+		\node[coordinate]                  (m36) {};          &
+		\node[coordinate]                  (m37) {};          &
+		\node[coordinate]                  (m38) {};          &
+		\node[coordinate]                  (m39) {};          &
+		\node[coordinate]                  (m3X) {};          \\
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m00);
+		\chainin (m02) [join=by dspline];
+		\chainin (m22) [join=by dspline];
+		\chainin (m23) [join=by dspline];
+		\chainin (m25) [join=by dspline];
+		\chainin (m27) [join=by dspline];
+		\chainin (m28) [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+	\end{scope}
+	
+	
+	\begin{scope}[start chain]
+		\chainin (m02);
+		\chainin (m03)  [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+		\chainin (m0X) [join=by dspconn];
+	\end{scope}
+	
+	\draw[dashed] (m11) -- (m19);
+	\draw[dashed] (m11) -- (m31);
+	\draw[dashed] (m31) -- (m39);
+	\draw[dashed] (m19) -- (m39);
+	
+	\end{tikzpicture}
+
+\end{document}
