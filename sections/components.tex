@@ -12,9 +12,11 @@
 
 
 \subsection{Filters}
-Input signal is denoted by $x_k$ and the output signal is denoted by $y_k$, regardless of filter placement in the side chain. They are, so to speak, local variables to this subsection. We use the term filter here to emphasise their purpose of smoothing out high frequencies in the side chain, however, most of them cannot be used as filters on arbitrary signals since they demand the input to be above or equal to zero.
+Input signal is denoted by $x_k$ and the output signal is denoted by $y_k$, regardless of filter placement in the side chain. They are, so to speak, local variables to this subsection. We use the term filter here to emphasise their purpose of smoothing out high frequencies in the side chain, even though most of them are highly nonlinear and cannot be used on arbitrary signals as they demand the input to be above or equal to zero.
 
-\subsection{One pole averaging IIR filter}
+No standard naming convention can be found in the literature apart from general descriptions of order and number of poles. Thus, the names presented here are our own, and for our own convenience. However, we have tried to follow Reiss' categorisation as close as possible.
+
+\subsubsection{One pole averaging IIR filter}
 This filter is used by McNally to take the average of the squared input samples in the RMS level detector. In that context the square root should be taken of the output before feeding it to the gain computer. The constant $\alpha_{av}$ can thus be seen as a moving average RMS weight, but also as a time constant in a one pole IIR low pass filter.
 
 \begin{equation}
