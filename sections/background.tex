@@ -1,26 +1,67 @@
 \documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
 \begin{document}
 
 \section{Background}
+In this background we first describe various lines of research on DDRC design since 1984 to get an overview of the different implementations that have been proposed. This is followed by a summary of more recent studies, outlining the differences between suggested design choices and their respective characteristics. In section \ref{sec:theory}, we 
 
-\subsection{DDRC design}
+\FloatBarrier
+\subsection{DDRC Design}
+\subsubsection{Early Publications}
+An early description of a digital dynamic range compressor is given in~\cite{mcnally1984dynamic}. The design, see Fig.~\ref{fig:block_mcnally}, is feed-forward based and the side-chain is composed of the following key components:
+
 \begin{itemize}
-\item McNally
-\item Stickvoort
-\item Bendiksen
-\item Zoelzer
-\item DAFX (compilation of the above (and others? who?), adds anything new?)
-\item Reiss
-
-
+\item{Level detector}
+\item{Gain computer}
+\item{Gain smoothing filter}
 \end{itemize}
+
+\begin{figure}
+\subfile{\rootdir/figures/block_mcnally}
+\caption{Block diagram of a feed-forward DDRC as described by McNally}
+\label{fig:block_mcnally}
+\end{figure}
+
+Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced. McNally suggests that a last adaptive low pass filter should be introduced to smooth out the calculated gain to avoid distortion in the final output.\todo{true?}
+
+In~\cite{stikvoort1986digital} a similar feed-forward design is described. The side-chain is structured in the same way as presented by McNally, but Stikvoort chooses different time-behaviour by implementing higher-order filters to smooth out the signal, see block diagram in Fig \ref{fig:block_stikvoort}. Stikvoort's design seems to have had little impact on the field as all later publications we've encountered so far stick to one-pole smoothing filters.\todo{but how to classify the decoupled detector? second order? actually similar!}
+
+\begin{figure}
+\caption{Block diagram of a feed-forward DDRC as described by E.F. Stikvoort}
+\label{fig:block_stikvoort}
+\end{figure}
+
+TODO:
+\begin{itemize}
+\item Bendiksen 97 om vi får tag i artikeln!
+\item L. Lu 98
+\item Reiss (the design that is proposed)
+\end{itemize}
+
+\subsection*{Literature}
+The well renowned \todo{subjective?} "Digital Signal Processing" by Zölzer~\cite{zoe1997digital} has a section thoroughly describing a DDRC based on McNally's work. No modifications to the initial design is carried out, but in the 2nd ed. printed 2005~\cite{zoelzer2005digital}, a minor change in the peak detector is implemented. This is discussed in section REEFFF.
+
+Another cornerstone \todo{subjective?} in the field of digital audio is "DAFX: Digital Audio Effects", edited by Zölzer, with a section explaining DDRC based on the work of McNally as described in "Digital Signal processing" (Zölzer 1997).
 
 \subsection{Comparisons of designs}
+TODO:
 \begin{itemize}
 \item Abel 2003 - Comparing feed forward with feedback (peak and RMS) ratio dependent characteristic!
-\item Bitzer 2006 - Comparing Commersial with McNally model
 \item Fred Floru: Log = Lin
-\item Reiss 2012 - Comparing peak detector and gain smoothing filters, lin log. 
 \end{itemize}
+
+In \cite{bitzer2006parameter} the chasm between the few described digital compressor models in academic literature and the large variety of commercial products is investigated. It is shown that the commercial products do show similarities with the proposed model described in~\cite{mcnally1984dynamic}\cite{zolzer1997digital}\cite{dafx} although two of the investigated compressor algorithms calculate the gain reduction in the linear domain, likely to minimize computational load and all but one have slight deviation in the static and dynamic characteristics~\cite{bitzer2006parameter}. All tested compressors fall within an error margin of 1 dB, using the euclidean distance between the signals as metric.
+
+In \cite{reiss2012tutorial} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig \ref{fig:gian_ddrc_block}.
+\begin{figure}
+\caption{Block diagram of a feed-forward DDRC as described by Giannoulis et. al.}
+\label{fig:gian_ddrc_block}
+\end{figure}
+
+TODO beskriv denna modell kort!
+
 
 \end{document}

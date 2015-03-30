@@ -16,14 +16,14 @@
 Although being a widely used effect in many digital signal processing systems, the method of compressing the dynamic range of a digital signal is investigated in but a few publications. A majority of these are based on a feed-forward design with little modifications to the internal structure of the side-chain despite a quite extensive freedom in design choices leading to different characteristics.  In 2006, an investigation regarding the chasm in compressor design between academia and industry is carried out. But it is not until 2012 a formal comparison between the different design choices is carried out.
 
 \subsection*{Early publications}
-An early description of a digital dynamic range compressor, DDRC, is given in "Dynamic Range Control of Digital Audio Signals" by G.W McNally published in Journal of the Audio Engineering Society, May 1984. The design, see Fig \ref{fig:mcnaBlock}, is feed-forward based and the side-chain is composed of the following key components
+An early description of a digital dynamic range compressor is given in~\cite{mcnally1984dynamic}. The design, see Fig \ref{fig:mcnaBlock}, is feed-forward based and the side-chain is composed of the following key components
 \begin{itemize}
 \item{Level detector}
 \item{Gain computer}
 \item{Gain smoothing filter}
 \end{itemize}
 \begin{figure}
-\input{generic_block}
+\input{../figures/generic_block}
 \caption{Block diagram of a feed-forward DDRC as described by McNally}
 \label{fig:mcnaBlock}
 \end{figure}
@@ -44,9 +44,9 @@ The well renowned "Digital Signal Processing" by Zölzer(1st ed. 1997) has a sec
 Another cornerstone in the field of digital audio is "DAFX: Digital Audio Effects", edited by Zölzer, with a section explaining DDRC based on the work of McNally as described in "Digital Signal processing" (Zölzer 1997).
 
 \subsection*{Modern work}
-In \cite{bitzer2006parameter} the chasm between the few described digital compressor models in academic literature and the large variety of commercial products is investigated. It is shown that the commercial products do show similarities with the proposed model described in \cite{mcnally1984dynamic}\cite{zolzer1997digital}\cite{dafx} although two of the investigated compressor algorithms calculate the gain reduction in the linear domain, likely to minimize computational load\cite{bitzer2006parameter} and all but one have slight deviation in the static and dynamic characteristics. All tested compressors fall within an error margin of 1 dB, using the euclidean distance between the signals as metric.
+In \cite{bitzer2006parameter} the chasm between the few described digital compressor models in academic literature and the large variety of commercial products is investigated. It is shown that the commercial products do show similarities with the proposed model described in~\cite{mcnally1984dynamic}\cite{zolzer1997digital}\cite{dafx} although two of the investigated compressor algorithms calculate the gain reduction in the linear domain, likely to minimize computational load and all but one have slight deviation in the static and dynamic characteristics~\cite{bitzer2006parameter}. All tested compressors fall within an error margin of 1 dB, using the euclidean distance between the signals as metric.
 
-In \cite{giannoullis} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig \ref{fig:gian_ddrc_block}.
+In \cite{reiss2012tutorial} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig \ref{fig:gian_ddrc_block}.
 \begin{figure}
 \caption{Block diagram of a feed-forward DDRC as described by Giannoulis et. al.}
 \label{fig:gian_ddrc_block}
