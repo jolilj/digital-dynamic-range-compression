@@ -25,10 +25,8 @@ The dynamic range compressor is a nonlinear time dependent system with memory, i
 \end{minipage}
 \end{figure}
 
-Various designs have been proposed for a digital dynamic range compressor (DDRC) in the literature and there exists an abundance of commercial implementations on the market.\footnote{For examples of commercial compressors, see this listing~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult.
+Various designs have been proposed for a digital dynamic range compressor (DDRC) in the literature and there exists an abundance of commercial implementations on the market.\footnote{For examples of commercial compressors, see this listing~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. Some studies have been made, outlining different possible implementations and comparing their respective characteristics. However, the main results are often restricted to a limited parameter set and the most discriminating input signals. 
 
-Some studies have been made, outlining different possible implementations and comparing their respective characteristics. However, the main results are often restricted to a limited parameter set, and the most discriminating input signals.
-
-In this thesis, we develop a generic model for feed forward type DDRCs based on previous work. \todo{others work, that is. Not our own. How to emphazise this?} With this model
+In this thesis, we develop a generic model for feed forward type DDRCs based on previous work. \todo{others work, that is. Not our own. How to emphazise this?} The various proposed designs are then categorised by their sub-components. With this model at hand we investigate the following problem: How close can the output of one compressor come that of another, given a full featured parameter set? The optimal parameter settings are found by fitting the output with a simplex algorithm. The results are quantified and verified by ABX listening tests.
 
 \end{document}
