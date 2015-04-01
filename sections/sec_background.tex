@@ -1,3 +1,10 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
 \subsection{Earlier work}
 
 \begin{itemize}
@@ -21,13 +28,13 @@ In practice, however, is is not desirable to apply instant compression since it 
 \captionsetup{justification=centering}
 \begin{minipage}[t]{.5\textwidth}
  \centering
-\input{fig_gain_comp}
+\subfile{../figures/fig_gain_comp}
 \caption{Output signal vs input signal.} 
 \label{fig:xy-graph}
 \end{minipage}%
 \begin{minipage}[t]{.5\textwidth}
 \centering
-\input{fig_envelope}
+\subfile{../figures/fig_envelope}
 \caption{Input and output signal plotted over time. } 
 \label{fig:envelope-graph}
 \end{minipage}
@@ -61,13 +68,13 @@ Y = \left\{
 The component generating the gain factor is defined as the \emph{gain computer}. We now face two different approaches: feeding the gain computer with the uncompressed input or the compressed output signal resulting in a feed-forward or feedback system, see Fig. \ref{fig:feedforward-blockdiagram} and \ref{fig:feedback-blockdiagram}. 
 \begin{figure}[ht]
  \centering
-\input{fig_feedforward_blockdiagram}
+\subfile{../figures/fig_feedforward_blockdiagram}
 \caption{Block diagram of a feed-forward design.}
 \label{fig:feedforward-blockdiagram}
 \end{figure}
 \begin{figure}[ht]
 \centering
-\input{fig_feedback_blockdiagram}
+\subfile{../figures/fig_feedback_blockdiagram}
 \caption{Block diagram of feedback design.} 
 \label{fig:feedback-blockdiagram}
 \end{figure}
@@ -103,7 +110,7 @@ G = (R^{-1}-1)\cdot \max\left(Y-T,0\right).
 So far, the gain reduction is calculated and applied instantly and thus changes the wave shape of the input signal introducing new frequencies, i.e. distortion, see Fig. \ref{fig:instant_comp}. 
 \begin{figure}[ht]
 \centering
-\input{fig_instant_comp}
+\subfile{../figures/fig_instant_comp}
 \caption{Instant compression changes the shape of the wave and thus introduces distortion.} 
 \label{fig:instant_comp}
 \end{figure}
@@ -126,7 +133,7 @@ y_n = \alpha x_{n} + (1-\alpha)y_{n-1}
 \end{align}
 \begin{figure}[ht]
 \centering
-\input{fig_attack_release}
+\subfile{../figures/fig_attack_release}
 \caption{Desired peak detector step response, attack and release phase} 
 \label{fig:attack-release-graph}
 \end{figure}
@@ -164,3 +171,4 @@ Another option is to place it \emph{after} the gain computer. This way the gain 
 
 \emph{TODO: Investigate how this affects the transfer functions etc... If it was a linear system this would not matter? Maybe interesting to do some math on the importance of the order of components in this nonlinear system}
 
+\end{document)
