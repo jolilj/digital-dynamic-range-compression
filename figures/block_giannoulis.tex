@@ -9,6 +9,10 @@
 (path picture bounding box.center) -- (path picture bounding box.north west) (path picture bounding box.center) -- (path picture bounding box.north east);
 }}]
 
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
 	% Place nodes using a matrix
 	\matrix (m1) [row sep=2.5mm, column sep=5mm]
 	{
@@ -44,12 +48,12 @@
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[dspfilter, minimum size = 10mm] (m23) {abs};          &
-		\node[dspfilter, minimum size = 10mm]                  (m24) {dB};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m25) {\small Gain \\ \small computer};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m26) {\small Gain \\ \small smoothing };          &
+		\node[sqrblock] (m23) {\small abs};          &
+		\node[sqrblock]                  (m24) {\small dB};          &
+		\node[recblock,text height=2em] (m25) {\small Gain \\ \small computer};          &
+		\node[recblock,text height=2em] (m26) {\small Gain \\ \small smoothing };          &
 		\node[dspadder]                  (m27) {};          &
-		\node[dspfilter, minimum size = 10mm]                  (m28) {lin};          &
+		\node[sqrblock]                  (m28) {\small lin};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m210) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\

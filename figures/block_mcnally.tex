@@ -5,6 +5,10 @@
 % FIR filter as block diagram
 \begin{tikzpicture}
 
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
 	% Place nodes using a matrix
 	\matrix (m1) [row sep=2.5mm, column sep=5mm]
 	{
@@ -12,7 +16,7 @@
 		\node[dspnodeopen,dsp/label=above] (m00) {$x[n]$};    &
 		\node[coordinate]                  (m01) {};          &
 		\node[dspnodefull]                 (m02) {};           &
-		\node[dspfilter,minimum width = 18mm] (m03) {\small Delay};         &
+		\node[recblock] (m03) {\small Delay};         &
 	         \node[coordinate]                 (m04) {};           &
 		\node[coordinate]                   (m05) {}; 	&
 		\node[coordinate]                 (m06) {};           &
@@ -38,11 +42,11 @@
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m23) {\small Level \\ \small detector};          &
+		\node[recblock,text height=2em] (m23) {\small Level \\ \small detector};          &
 		\node[coordinate]                  (m24) {};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m25) {\small Gain \\ \small computer};          &
+		\node[recblock,text height=2em] (m25) {\small Gain \\ \small computer};          &
 		\node[coordinate]                  (m26) {};          &
-		\node[dspfilter,minimum width = 18mm,text height=2em] (m27) {\small Gain \\ \small smoothing };          &
+		\node[recblock,text height=2em] (m27) {\small Gain \\ \small smoothing };          &
 		\node[coordinate]                  (m28) {};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\

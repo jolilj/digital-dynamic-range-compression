@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\section{Background}
+\section{Background} \label{background}
 \emph{In this background we first describe various lines of research on DDRC design since 1984 to get an overview of the different implementations that have been proposed. This is followed by a summary of more recent studies, outlining the differences between suggested design choices and their respective characteristics. In section \ref{sec:theory}, we}
 
 The method of compressing the dynamic range of a digital signal is investigated in but a few publications. A majority of these are based on a feed-forward design with little modifications to the internal structure of the side-chain despite a quite extensive freedom in design choices leading to different characteristics.  In 2006, an investigation regarding the chasm in compressor design between academia and industry is carried out. But it is not until 2012 a formal comparison between the different design choices is carried out.
@@ -22,18 +22,32 @@ An early description of a digital dynamic range compressor is given in~\cite{mcn
 \end{itemize}
 %================================
 \begin{figure}
-\subfile{\rootdir/figures/block_mcnally}
+\centerline{\subfile{\rootdir/figures/block_mcnally}}
 \caption{Block diagram of a feed-forward DDRC as described by McNally}
 \label{fig:block_mcnally}
 \end{figure}
 %================================
-Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced. McNally suggests that a last adaptive low pass filter should be introduced to smooth out the calculated gain to avoid distortion. In order for the compressor to be able to suppress sharp transients a delay is applied to the input signal. The gain reduction is thus applied time-shifted and compensates for the attack time due to the dynamics.
+Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced. At the end of the sidechain a adaptive low pass filter is introduced to smooth out the calculated gain to avoid distortion. In order for the compressor to be able to suppress sharp transients a delay is applied to the input signal. The gain reduction is thus applied time-shifted and compensates for the attack time due to the dynamics.
 
-In~\cite{stikvoort1986digital} a similar feed-forward design is described. The side-chain is structured in the same way as presented by McNally, but Stikvoort chooses different time-behaviour by implementing higher-order filters to smooth out the signal, see block diagram in Fig \ref{fig:block_stikvoort}.
+In~\cite{stikvoort1986digital} a similar feed-forward design is described. The side-chain is structured in the same way as presented in \cite{mcnally1984dynamic}, but here a different time-behaviour is achieved by implementing higher-order filters to smooth out the signal. The mono version of the model can be seen as a block diagram in Fig \ref{fig:block_stikvoort}. 
 %============================
 \begin{figure}
-\caption{Block diagram of a feed-forward DDRC as described by E.F. Stikvoort}
+\centerline{
+\subfile{\rootdir/figures/block_stikvoort}
+}
+\caption{Block diagram of a feed-forward DDRC as described in \cite{stikvoort1986digital}}
 \label{fig:block_stikvoort}
+\end{figure}
+
+
+In \cite{frindle1996implementation} a  feed-forward design with static behaviour as in previous work, but with different dynamic characteristics, is presented. Here an integrator filter is applied in the log domain resulting in a linear attack and release phase. Furthermore a hold parameter is introduced delaying the release phase. To smooth out the decay, the release rate is progressively increased until the defined release rate is reached. This characteristic is illustrated in Fig \ref{fig:findle_dynamics}
+%============================
+\begin{figure}
+\centerline{
+\subfile{\rootdir/figures/findle_dynamics}
+}
+\caption{The dynamic characteristics described in \cite{findle1996implementation}}
+\label{fig:findle_dynamics}
 \end{figure}
 %============================
 TODO:
@@ -43,8 +57,8 @@ TODO:
 \item Reiss (the design that is proposed)
 \end{itemize}
 %============================
-\subsection*{Literature}
-In~\cite{zoe1997digital}~\cite{dafx02} the model introduced in ~\cite{mcnally1984dynamic} is thoroughly described. No modifications to the initial design is carried out, but in the latest editions,~\cite{zoelzer2005digital} ~\cite{dafx11}, a minor change in the peak detector is implemented, but not explained. This is discussed in section REEFFF.
+\subsection{Literature}
+In~\cite{zoe1997digital}~\cite{dafx02} the model introduced in ~\cite{mcnally1984dynamic} is thoroughly described. No modifications to the initial design is carried out, but in the latest editions,~\cite{zoelzer2005digital} ~\cite{dafx11}, a minor change in the peak detector is implemented, but not explained. This is discussed in the theory section \ref{theory}.
 %============================
 \subsection{Comparisons of designs}
 TODO:
@@ -57,9 +71,9 @@ In \cite{bitzer2006parameter} the chasm between the few described digital compre
 
 In \cite{reiss2012tutorial} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig \ref{fig:block_giannoulis}.
 \begin{figure}
-\subfile{\rootdir/figures/block_giannoulis}
+\centerline{\subfile{\rootdir/figures/block_giannoulis}}
 \caption{Block diagram of a feed-forward DDRC as described by Giannoulis et. al.}
 \label{fig:block_giannoulis}
 \end{figure}
-There are some notable features regarding this design to account for. To begin with Giannoulis et. al. discard the use of a delay with no motivation. The authors assume this is due to real-time application. Furthermore, when having dynamics before the gain computer, a lag is introduced before the compressor kicks in, due to the time constants.The level detector, in the sense of the dynamic behaviour, is therefor placed after the gain computer. Since the human sense of hearing is roughly logarithmic~\cite{fastl2007psychoacoustics} Giannoulis et. al. suggests the placement of the smoothing filter to be in the logarithmic domain.
+There are some notable features regarding this design to account for. To begin with Giannoulis et. al. discard the use of a delay with no motivation. The authors assume this is due to real-time application. Furthermore, when having dynamics before the gain computer, a lag is introduced before the compressor kicks in, due to the time constants. The level detector, in the sense of the dynamic behaviour, is therefor placed after the gain computer. Since the human sense of hearing is roughly logarithmic~\cite{fastl2007psychoacoustics} Giannoulis et. al. suggests the placement of the smoothing filter to be in the logarithmic domain. Further analysis of these result is conducted in the theory section\ref{theory}
  \end{document}
