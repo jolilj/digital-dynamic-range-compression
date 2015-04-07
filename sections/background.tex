@@ -27,7 +27,9 @@ An early description of a digital dynamic range compressor is given in~\cite{mcn
 \label{fig:block_mcnally}
 \end{figure}
 %================================
-Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced, \todo{Ref:Theory section discussing harmonics due to non-linearity} see section \ref{...}. At the end of the sidechain an adaptive low pass filter is introduced to smooth out the calculated gain to avoid distortion. In order for the compressor to be able to suppress sharp transients a delay is applied to the input signal resulting in a time-shifted gain reduction which compensates for the attack time due to the dynamics. A block diagram can be seen in Fig.~\ref{fig:block_mcnally}.
+Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. ~\cite{mcnally1984dynamic} also discusses the measurement error in the peak detector at frequencies which the sample frequency is divisible by. This measurement error is, however, considered to be at an acceptable level of performance.
+
+The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced, \todo{Ref:Theory section discussing harmonics due to non-linearity} see section \ref{...}. At the end of the sidechain an adaptive low pass filter is introduced to smooth out the calculated gain to avoid distortion. In order for the compressor to be able to suppress sharp transients a delay is applied to the input signal resulting in a time-shifted gain reduction which compensates for the attack time due to the dynamics. A block diagram can be seen in Fig.~\ref{fig:block_mcnally}.
 
 In~\cite{stikvoort1986digital} a similar feed-forward design, implemented for stereo signals, is described. The side-chain is structured in the same way as presented in \cite{mcnally1984dynamic}, but here a different time-behaviour is achieved by implementing higher-order filters to smooth out the signal. The mono version of the design can be seen as a block diagram in Fig \ref{fig:block_stikvoort}. 
 %============================
@@ -39,7 +41,9 @@ In~\cite{stikvoort1986digital} a similar feed-forward design, implemented for st
 \label{fig:block_stikvoort}
 \end{figure}
 
-In \cite{frindle1996implementation} a  feed-forward design with static behaviour as in previous work, but with different dynamic characteristics, is presented. Here an \todo{dubbelkolla detta, svårt att tolka i källan}integrator filter is applied in the log domain resulting in a linear attack and release phase. Furthermore a hold parameter is introduced delaying the release phase. To smooth out the decay, the release rate is progressively increased until the defined release rate is reached. This characteristic is illustrated in Fig \ref{fig:findle_dynamics}
+The measurement error in the peak detector, as discussed in ~\cite{mcnally1984dynamic}, is considered in \cite{frindle1996implementation} where a feed-forward compressor design is presented. To reduce this error the maximum of four interpolated values between the samples, is used. \cite{frindle1996implementation} also presents another approach to the dynamic characteristics. Here  a modified integrator filter is applied resulting in a \emph{linear} attack and release in the log domain. Furthermore a hold parameter is introduced delaying the release phase. To smooth out the decay, the release rate is progressively increased until the defined release rate is reached. This characteristic is illustrated in Fig \ref{fig:findle_dynamics}. 
+
+
 %============================
 \begin{figure}
 \centerline{
@@ -60,7 +64,6 @@ In the more recent publication \cite{reiss2012tutorial} a feed-forward DDRC with
 \todo[inline,caption={}]{TODO
 \begin{itemize}
 \item Bendiksen 97 om vi får tag i artikeln!
-\item L. Lu 98
 \end{itemize}}
 %============================
 \subsubsection{Literature}
