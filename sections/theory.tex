@@ -100,6 +100,15 @@ y_k &= \alpha_{att} z_k + (1-\alpha_{att}) y_{k-1}
 y_k = c^k+ k c^k (c - 1)(c - 3)/2 + k^2 c^k (1 - c)^2/2
 \end{equation}
 
+\begin{equation}
+\begin{split}
+u_k &= \text{max}(x_k, \alpha_{rel} u_{k-1}) \\
+v_k &= \text{max}(x_k, \alpha_{rel} v_{k-1} + (1-\alpha_{rel}) u_k) \\
+w_k &= \text{max}(x_k, \alpha_{rel} w_{k-1} + (1-\alpha_{rel}) v_k)\\
+y_k &= w_{k-1} \\
+\end{split}
+\end{equation}
+
 \paragraph{Time constants}
 All time constants in the above are defined in the same way, here only denoted by $\alpha$, and given by
 
