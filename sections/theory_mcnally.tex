@@ -1,0 +1,77 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{McNally 1984}
+In \cite{mcnally1984dynamic} a DDRC is introduced and is constructed as follows. The input signal is split into two parts. The first enters the side-chain where the to be applied gain is calculated, the second is delayed with the look-ahead and enters the amplifier where the signal is multiplied with the gain calculated in the side-chain. This is illustrated in Fig ~\ref{fig:block_mcnally_theory1}. %================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory1}}
+\caption{Block diagram of the DDRC in \cite{mcnally1984dynamic}}
+\label{fig:block_mcnally_theory1}
+\end{figure}
+%================================
+
+The sidechain takes the signal as input,$x_n$, and outputs the gain, $g_n$ and is composed of the following components:%================================
+\begin{itemize}
+\item{Level detector}
+\item{Gain computer}
+\item{Adaptive filtering/gain smoothing}
+\end{itemize}
+%================================
+In \cite{mcnally1984dynamic} two level detection methods are discussed based on digital first order infinite impulse response, IIR, filters.
+\subsubsection{RMS Detector}
+The difference equation for the first order IIR filter used in the rms detector in \cite{mcnally1984dynamic} is
+%================================
+\begin{align*}
+y_k = \alpha' y_{k-1} + (1-\alpha') x_k
+\end{align*}
+%================================
+where $x_k$ is the squared input signal and $\alpha$ is the filter coefficient. Assuming a step as input, the output is
+%================================
+\begin{align*}
+y_0 &= \alpha' \cdot 0 + (1-\alpha')x_0 = 0 \\
+y_1 &= \alpha' \cdot y_0 + (1-\alpha')x_1 = 1-\alpha'\\
+y_2 &= \alpha' y_1 + (1-\alpha')x_2 = 1-\alpha'^2 \\
+y_k &= 1-\alpha'^{k}
+\end{align*}
+%================================
+With $k = \tau f_s$ and the definition of the time constants, \eqref{eq:time_const}, the relation between the filter coefficient $\alpha$ and the time constant, here $\tau = \tau_a = \tau_r$, can be derived as
+%================================
+\begin{align*}
+1-e^{-1} &= 1-\alpha'^{\tau f_s} \Longrightarrow \\
+\alpha' &= e^{-1/\tau f_s}.
+\end{align*}
+%================================
+It is however common to define the filter coefficient as
+\begin{align}
+\alpha &\equiv 1-e^{-1/\tau f_s}.
+\end{align}
+which corresponds to the difference equation
+%================================
+\begin{align}
+y_k = \alpha x_k + (1-\alpha) y_{k-1}
+\end{align}
+%================================
+This definition of $\alpha$ will be used hereafter.
+
+A block representation of the rms detector can be seen in Fig ~\ref{fig:block_mcnally_theory_rms}. The input is, as mentioned, squared and passed through the filter. The logarithm of the output of the filter is taken and the squaring operation is compensated for by division by 2 in the logarithmic domain.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory_rms}}
+\caption{Block diagram of the RMS level detector in \cite{mcnally1984dynamic}}
+\label{fig:block_mcnally_theory_rms}
+\end{figure}
+%================================
+\subsubsection{Peak Detector}
+%================================
+\begin{equation}
+y_k = \begin{cases}
+    \alpha_{a} x_k + (1- (\alpha_{a} + \alpha_{r})) y_{k-1}  	& x_k > y_{k-1} \\
+    (1-\alpha_{r}) y_{k-1} 								& x_k \leq y_{k-1}
+\end{cases}
+\end{equation}
+%================================
+
+\end{document}}
