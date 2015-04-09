@@ -1,0 +1,93 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+
+\newcommand{\z}{z}
+% FIR filter as block diagram
+\begin{tikzpicture}
+
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
+		\node[coordinate]                  (m01) {};          &
+		\node[dspnodefull]                 (m02) {};           &
+		\node[sqrblock] (m03) {$z^{-d_{la}}$};         &
+	         \node[coordinate]                 (m04) {};           &
+		\node[coordinate]                   (m05) {}; 	&
+		\node[coordinate]                 (m06) {};           &
+		\node[coordinate]                   (m07) {}; 	&
+		\node[dspmixer]                  (m08) {};          &
+		\node[coordinate]                  (m09) {};          &
+		\node[dspnodeopen,dsp/label=above] (m0X) {$y_n$};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m10) {};          &
+		\node[coordinate]                  (m11) {};          &
+		\node[coordinate]   		   (m12) {};          &
+		\node[coordinate]                  (m13) {};          &
+		\node[coordinate]                  (m14) {};          &
+		\node[coordinate]                  (m15) {};          &
+		\node[coordinate]                  (m16) {};          &
+		\node[coordinate]                  (m17) {};          &
+		\node[coordinate]                  (m18) {};          &
+		\node[coordinate]                  (m19) {};          &
+		\node[coordinate]                  (m1X) {};          \\
+		%--------------------------------------------------------------------
+		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m20) {};          &
+		\node[coordinate]                  (m21) {};          &
+		\node[coordinate]                  (m22) {};          &
+		\node[coordinate]                  (m23) {};          &
+		\node[recblock,minimum width=40mm] (m24) {\small Sidechain};          &
+
+		\node[coordinate] (m25) {};          &
+		\node[coordinate]                  (m26) {};          &
+		\node[coordinate] (m27) {};          &
+		\node[coordinate]                  (m28) {};          &
+		\node[coordinate]                  (m29) {};          &
+		\node[coordinate]                  (m2X) {};          &  \\
+		%--------------------------------------------------------------------
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m30) {};          &
+		\node[coordinate]                  (m31) {};          &
+		\node[coordinate]   		   (m32) {};          &
+		\node[coordinate]                  (m33) {};          &
+		\node[coordinate]                  (m34) {};          &
+		\node[coordinate]                  (m35) {};          &
+		\node[coordinate]                  (m36) {};          &
+		\node[coordinate]                  (m37) {};          &
+		\node[coordinate]                  (m38) {};          &
+		\node[coordinate]                  (m39) {};          &
+		\node[coordinate]                  (m3X) {};          \\
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m00);
+		\chainin (m02) [join=by dspline];
+		\chainin (m22) [join=by dspline];
+		\chainin (m24) [join=by dspline];
+		\chainin (m25) [join=by dspline];
+		\chainin (m27) [join=by dspline];
+		\chainin (m28) [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+	\end{scope}
+	
+	\draw[dspconn] (m28) -- node[midway,right] {$g_n$} (m08);
+	
+	
+	\begin{scope}[start chain]
+		\chainin (m02);
+		\chainin (m03)  [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+		\chainin (m0X) [join=by dspconn];
+	\end{scope}
+	
+	\end{tikzpicture}
+
+\end{document}

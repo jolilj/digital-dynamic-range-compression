@@ -1,0 +1,54 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+
+\newcommand{\z}{z}
+% FIR filter as block diagram
+\begin{tikzpicture}
+
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=1.5mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m00) {$x_k$};    &
+		\node[dspnodefull]                  (m01) {};          &
+		\node[dspmixer]                 (m02) {};           &
+		\node[recblock] (m03) {\scriptsize IIR filter};         &
+		\node[sqrblock]                   (m05) {log}; 	&
+		\node[sqrblock]                   (m07) {$\frac{1}{2}$}; 	&
+		\node[dspnodeopen,dsp/label=above] (m0X) {$y_k$};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate] (m10) {};    &
+		\node[coordinate]                  (m11) {};          &
+		\node[coordinate]                 (m12) {};           &
+		\node[coordinate] (m13) {};         &
+	         \node[coordinate]                 (m14) {};           &
+		\node[coordinate]                   (m15) {}; 	&
+		\node[coordinate] (m1X) {};          \\
+		%--------------------------------------------------------------------
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m00);
+		\chainin (m01) [join=by dspline];
+		\chainin (m02) [join=by dspline];
+		\chainin (m03) [join=by dspconn];
+		\chainin (m05) [join=by dspconn];
+		\chainin (m07) [join=by dspconn];
+		\chainin (m0X) [join=by dspconn];
+	\end{scope}
+	
+	\begin{scope}[start chain]
+		\chainin (m01);
+		\chainin (m11) [join=by dspline];
+		\chainin (m12) [join=by dspline];
+		\chainin (m02) [join=by dspconn];
+	\end{scope}
+	
+	\end{tikzpicture}
+
+\end{document}
