@@ -1,0 +1,51 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+\begin{tikzpicture}[scale=0.9,baseline={(0,0)}]
+
+% AXES
+% horizontal axis
+\draw[->] (0,-0.5) -- (10,-0.5) node[anchor=north] {\scriptsize$t$};
+% vertical axis
+\draw[->] (0,-0.5) -- (0,6) node[anchor=east] {\scriptsize$x,y$};
+
+%GRAPH
+%input
+\draw[thin] (0,3) -- (1,3) -- (1,6) -- (6,6) -- (6,3) -- (10,3);
+%output without la
+\draw[ dashed,domain=1:6] plot (\x,{4+2*exp(-(\x-1)/0.5)});
+\draw[ dashed] (6, 1) -- (6, 3);
+\draw[ dashed,domain=6:10] plot (\x,{3-2*exp(-(\x-6)/0.7)});
+
+%LABES
+% attack
+\draw(3.5, 5.3) node{{\scriptsize Attack phase}};
+\draw[dotted] (1,-0.5) -- (1,6);
+\draw[dotted] (0,4.73) -- (10,4.73);
+\draw[dotted] (0,4.199) -- (10,4.199);
+\draw[dotted] (1.5,-0.5) -- (1.5,4.73);
+\draw[dotted] (2.151,-0.5) -- (2.151,4.199);
+\draw[<->] (1,0.8) -- (1.5, 0.8) node[anchor=north, xshift=-5pt]{\scriptsize $\tau_a$};
+\draw[<->] (1,0.5) -- (2.151, 0.5) node[anchor=north, xshift=-7pt]{\scriptsize $\tau_{a90}$};
+
+%release
+\draw[dotted] (6,-0.5) -- (6,1);
+\draw[dotted] (0,2.374) -- (10,2.374);
+\draw[dotted] (0,2.8) -- (10,2.8);
+\draw[dotted] (6.7,-0.5) -- (6.7,2.374);
+\draw[dotted] (7.61,-0.5) -- (7.61,2.8);
+\draw[<->] (6,0.8) -- (6.7, 0.8) node[anchor=north, xshift=-5pt]{\scriptsize $\tau_r$};
+\draw[<->] (6,0.5) -- (7.61, 0.5) node[anchor=north, xshift=-7pt]{\scriptsize $\tau_{r90}$};
+
+
+
+\draw(8.7,2) node{{\scriptsize Release phase}};
+
+%legend
+\draw[thin] (6.8,6) -- (7.4,6);
+\draw(8, 6) node{{\scriptsize input}};
+
+\draw[loosely dashed] (6.8,5.5) -- (7.4,5.5);
+\draw(8.1, 5.5) node{\scriptsize output};
+
+\end{tikzpicture}
+\end{document}
