@@ -1,0 +1,45 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+\begin{tikzpicture}[scale=0.9,baseline={(0,0)}]
+
+% AXES
+% horizontal axis
+\draw[->] (0,0) -- (10,0) node[anchor=north] {\scriptsize$t$};
+% vertical axis
+\draw[->] (0,0) -- (0,8) node[anchor=east] {\scriptsize$x,y$};
+
+%GRAPH
+%input
+\draw[thick] (0,3) -- (2,3) -- (2,6) -- (7,6) -- (7,3) -- (10,3);
+%output without la
+\draw[loosely dashed,domain=2:7] plot (\x,{4.3+1.7*exp(-(\x-2)/0.5)});
+\draw[loosely dashed] (7, 1.3) -- (7, 3);
+\draw[loosely dashed,domain=7:10] plot (\x,{3-1.7*exp(-(\x-7)/0.6)});
+
+%output with la
+\draw[densely dashdotted,domain=1.7:2] plot (\x,{1.3+1.7*exp(-(\x-1.7)/0.5)});
+\draw[densely dashdotted,domain=2:6.7] plot (\x,{4.3+1.7*exp(-(\x-1.7)/0.5)});
+\draw[densely dashdotted] (2, 2.23) -- (2, 3);	
+\draw[densely dashdotted] (7, 1.97) -- (7, 3);
+\draw[densely dashdotted,domain=6.7:7] plot (\x,{6-1.7*exp(-(\x-6.7)/0.6)});
+\draw[densely dashdotted,domain=7:10] plot (\x,{3-1.7*exp(-(\x-6.7)/0.6)});
+
+%LABES
+%threshold
+\draw[dotted] (0,4) -- (10,4);
+\draw(0.8,4.2) node{{\scriptsize Threshold}};
+
+\draw(4.5, 5.3) node{{\scriptsize Attack phase}};
+\draw(8.8,2) node{{\scriptsize Release phase}};
+
+%legend
+\draw[thick] (6.8,8) -- (7.4,8);
+\draw(8, 8) node{{\scriptsize input}};
+
+\draw[loosely dashed] (6.8,7.5) -- (7.4,7.5);
+\draw(8.9, 7.55) node{{\scriptsize output without $d_{la}$}};
+\draw[densely dashdotted] (6.8,7) -- (7.4,7);
+\draw(8.7, 7) node{{\scriptsize output with  $d_{la}$}};
+
+\end{tikzpicture}
+\end{document}

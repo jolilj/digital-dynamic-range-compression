@@ -6,19 +6,42 @@
 \begin{document}
 
 \section{Theory}\label{sec_theory}
+In this section the theory behind digital dynamic range compression is described. It is structured in relation to previous research where each subsection deals with the theory and method of corresponding work described in ~\ref{background}. However, a brief introduction with definition of necessary parameters is conducted in the first paragraph. 
 
-\subsection{Parameters}
-
+\subsection{Definitions}
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. In order to describe the behaviour the following parameters, corresponding to static and time dependent characteristics, are introduced.
+%================================
 \begin{itemize}
-\item \textbf{Threshold} - The defined limit above which compression is applied.
-\item \textbf{Ratio} - The input/output ratio above the threshold level.
-\item \textbf{Knee width} - Controls the sharpness of the knee, see Fig. \ref{fig:xy-graph}.
-\item \textbf{Attack time} - Determines how quickly the compression ratio is applied.
-\item \textbf{Release time} - Determines how quickly the compression is released as the input signal drops below the threshold level.
-\item \textbf{Look-ahead} - Difference in delay between direct signal path and side chain. 
-
+\item{Static}
+\begin{itemize}
+\item \textbf{Threshold} $T$ - The defined limit above which compression is applied.
+\item \textbf{Ratio} $R$ - The input/output ratio above the threshold level.
+\item \textbf{Knee width}  $W$- Controls the sharpness of the knee.
 \end{itemize}
+\item{Time Dependent}
+ \begin{itemize}
+\item \textbf{Attack time} $\tau_{att}$ - Determines how quickly the compression ratio is applied.
+\item \textbf{Release time} $\tau_{rel}$ - Determines how quickly the compression is released as the input signal drops below the threshold level.
+\item \textbf{Look-ahead} $d_{la}$ - Difference in delay between direct signal path and side chain. 
+\end{itemize}
+\end{itemize}
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_static_detailed}}
+\caption{Typical static characteristics of a DDRC}
+\label{fig:typical_static_detailed}
+\end{figure}
+%================================
+The static characteristics are depicted in Fig ~\ref{fig:typical_static_detailed}. Do note that the static curve is defined in the log-domain, hence capital letters. There are two ways of handle the threshold level, $T$, either with a sharp knee immediately switching slope from $1$ to $1/R$, or with a smooth transition by an intermediate second degree polynomial\cite{frindle1996implementation}\cite{reiss2012tutorial}. Thus $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for the polynomial to be continuous and have continuous derivatives at the points $X=T-W/2$ and $X=T+W/2$.
 
+The time dependent characteristics are depicted in Fig ~\ref{fig:typical_envelope_detailed}
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_envelope_detailed}}
+\caption{Typical dynamic characteristics of a DDRC. With a look-ahead delay sharp transients are effectively compressed.}
+\label{fig:typical_envelope_detailed}
+\end{figure}
+%================================
 \subsection{Side Chain Topologies}
 Something very short on feed forward and feed backward, as well as mono vs stereo compressors.
 Here we introduce our generic block diagram that can incorporate all designs mentioned in background.
