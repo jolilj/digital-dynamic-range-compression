@@ -1,6 +1,6 @@
 \documentclass[../main2.tex]{subfiles}
 \begin{document}
-\begin{tikzpicture}[axis/.style={path picture={ 
+\begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, axis/.style={path picture={ 
   \draw[black]
 (path picture bounding box.west) -- (path picture bounding box.east)
 (path picture bounding box.north) -- (path picture bounding box.south);
@@ -51,8 +51,9 @@
 		\node[recblock]                  (m24) {\small Release};          &
 		\node[sqrblock]                  (m25) {\small dB};          &
 		\node[recblock,text height=2em] (m26) {\small Gain \\ \small computer};          &
-		\node[recblock,text height=2em] (m27) {\small Loop \\ \small filter };          &
-		\node[sqrblock]                  (m28) {\small lin};          &
+		\node[sqrblock]                  (m27) {\small lin};          &
+		\node[recblock,text height=2em] (m28) {\small Loop \\ \small filter };          &
+
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m210) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\
