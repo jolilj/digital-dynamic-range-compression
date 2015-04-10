@@ -1,0 +1,82 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Stikvoort 1986}
+\FloatBarrier
+Although the original paper describes a stereo compressor, a mono version is presented here as we are mainly interested in the side chain. The side chain is comprised of a peak detector, release effect, a piecewise linear compression curve in the decibel domain, and a final smoothing of the gain with attack effect, see Fig.~\ref{fig:block_stikvoort}.
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/block_stikvoort}}
+\caption{Stikvoort feed forward topology}
+\label{fig:block_stikvoort}
+\end{figure}
+
+\subsubsection{Envelope Detection with Release Effect}
+Level detection is performed by full wave rectification, that is, the absolute value of the input signal is taken as level. An envelope is created from the level by a third-order filter defined as
+
+\begin{equation}\label{eq:stikvoort_release}
+\begin{split}
+u_k &= \text{max}(x_k, \alpha_{\text{rel}} u_{k-1}) \\
+v_k &= \text{max}(x_k, \alpha_{\text{rel}} v_{k-1} + (1-\alpha_{\text{rel}}) u_k) \\
+y_k &= \text{max}(x_k, \alpha_{\text{rel}} y_{k-1} + (1-\alpha_{\text{rel}}) v_k),\\
+\end{split}
+\end{equation}
+where $x_k$ is the level and $y_k$ the calculated signal envelope.  The time constant $\alpha_{\text{rel}}$ is defined as
+\begin{equation}
+\alpha_\text{rel} = e^{-1/\tau_0 f_s}
+\end{equation}
+where the downstep has fallen to 63.2 \% of it's final value after approximately $3.25 \tau_0$. The filter has instantaneous attack, and functions as both peak-hold and smooth release effect, see Fig.~\ref{fig:step_stikvoort_release}.
+
+\subsubsection{Gain computer}
+The gain computer is the standard one defined in \eqref{eq:XXXX}, but with hard knee only.
+
+\subsubsection{Gain smoothing}
+At the end of the side chain, the calculated gain is smoothed by a forth-order transitional Butterworth-Thomson low-pass filter, implemented in two steps as
+
+\begin{equation}\label{eq:stikvoort_attack}
+\begin{split}
+u_k &= b_0 x_k + b_1 x_{k-1} + b_2 x_{k-2} + a_1 u_{k-1} + a_2 u_{k-2}\\
+y_k &= d_0 u_k + d_1 u_{k-1} + d_2 u_{k-2} + c_1 y_{k-1} + c_2 y_{k-2}.
+\end{split}
+\end{equation}
+With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a minus sign, print error in original!} the group delay is about 35 ms (in the low frequency limit, as the filter is not linear phase) and cut off frequency 8.5 Hz for a sample rate of 44.100 Hz. The step response can be seen in Fig.~\ref{fig:step_stikvoort_attack}. \todo{A slight static error can be seen, probably due to insufficient accuracy in the coefficents given in stikvoorts original paper.}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{ c l | c l}	
+    \hline
+    $b_0$ & $0.1308 \cdot 10^{-5}$ &              &                          \\ \hline
+    $b_1$ & $0.2616 \cdot 10^{-5}$ & $a_1$ & 1.9967655     \\ \hline
+    $b_2$ & $0.1308 \cdot 10^{-5}$ & $a_2$ & -0.99677073  \\ \hline \hline
+
+    $d_0$ & $0.9464  \cdot 10^{-6}$   &         &                             \\ \hline
+    $d_1$ & $0.18928 \cdot 10^{-5}$ & $c_1$ & 1.9962282     \\ \hline
+    $d_2$ & $0.9464  \cdot 10^{-6}$  & $c_2$ & -0.99623194  \\ \hline
+\end{tabular}
+\caption{Coefficents for Stikvoort gain smoothing}
+\label{tab:coeff_stikvoort_attack}
+\end{center}
+\end{table}
+
+\FloatBarrier
+%=========================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/step_stikvoort_release}}
+\caption{Step and downstep response of third order release filter as defined in Eq.~\eqref{eq:stikvoort_release}, with $\tau_0 = 150 \text{ms}$.}
+\label{fig:step_stikvoort_release}
+\end{figure}
+%=========================
+
+%=========================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/step_stikvoort_attack}}
+\caption{Step and downstep response of attack filter as defined in Eq.~\eqref{eq:stikvoort_attack}, with coefficients as in Tab.~\ref{tab:stikvoort_attack}.}
+\label{fig:step_stikvoort_attack}
+\end{figure}
+%=========================
+
+
+\end{document}
