@@ -1,0 +1,105 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+
+\newcommand{\z}{z}
+% FIR filter as block diagram
+\begin{tikzpicture}
+
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=2.0mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[coordinate] (m00) {};    &
+		\node[coordinate]                  (m01) {};          &
+		\node[coordinate]                 (m02) {};           &
+		\node[coordinate]                 (m03) {};           &
+		\node[coordinate] (m04) {};         &
+	         \node[coordinate]                 (m05) {};           &
+		\node[coordinate]                   (m06) {}; 	&
+		\node[coordinate]                   (m07) {}; 	&
+		\node[coordinate]                   (m08) {}; 	&
+		\node[coordinate]                   (m09) {}; 	&
+		\node[coordinate]                   (m010) {}; 	&
+		\node[coordinate]                   (m011) {}; 	&
+		\node[coordinate] (m0X) {};          \\
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m10) {$x_n$};    &
+		\node[sqrblock]                 (m11) { abs};           &
+		\node[dspadder] (m12) {};         &
+		\node[coordinate] (m13) {};    &
+		\node[recblock]                 (m14) {max$(0,x_n')$};           &
+		\node[dspmixer]                 (m15) {};           &
+		\node[dspadder] (m16) {};         &
+		\node[dspadder] (m17) {};    &
+		\node[coordinate] (m18) {};    &
+		\node[dspnodefull]                   (m19) {}; 	&
+		\node[coordinate]                   (m110) {}; 	&
+		\node[dspnodeopen,dsp/label=above] (m1X) {$f_n$};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate] (m20) {};    &
+		\node[coordinate]                  (m21) {};          &
+		\node[coordinate]                 (m22) {};           &
+		\node[coordinate] (m23) {};         &
+		\node[coordinate] (m24) {};         &
+	         \node[coordinate]                 (m25) {};           &
+		\node[coordinate]                   (m26) {}; 	&
+		\node[dspmixer]                   (m27) {}; 	&
+		\node[coordinate]                   (m28) {}; 	&
+		\node[coordinate]                   (m29) {}; 	&
+		\node[coordinate]                   (m210) {}; 	&
+		\node[coordinate] (m2X) {};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate] (m30) {};    &
+		\node[coordinate]                  (m31) {};          &
+		\node[coordinate]                 (m32) {};           &
+		\node[coordinate]                 (m33) {};           &
+		\node[coordinate] (m34) {};         &
+	         \node[coordinate]                 (m35) {};           &
+		\node[dspnodefull]                   (m36) {}; 	&
+		\node[dspnodefull]                   (m37) {}; 	&
+		\node[sqrblock]                   (m38) {$z^{-1}$}; 	&
+		\node[coordinate]                   (m39) {}; 	&
+		\node[coordinate]                   (m310) {}; 	&
+		\node[coordinate] (m3X) {};          \\
+		%--------------------------------------------------------------------
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m10);
+		\chainin (m11) [join=by dspconn];
+		\chainin (m12) [join=by dspconn];
+		\chainin (m14) [join=by dspconn];
+		\chainin (m15) [join=by dspconn];
+		\chainin (m16) [join=by dspconn];
+		\chainin (m17) [join=by dspconn];
+		\chainin (m19) [join=by dspline];
+		\chainin (m1X) [join=by dspconn];
+	\end{scope}
+	
+	\begin{scope}[start chain]
+		\chainin (m19);
+		\chainin (m39) [join=by dspline];
+		\chainin (m38) [join=by dspline];
+	          \chainin (m34) [join=by dspline];
+		\chainin (m14) [join=by dspconn];
+		\chainin (m34) [join=by dspline];
+		\chainin (m32) [join=by dspline];
+	\end{scope}
+
+	\draw[dspconn] (m37) -- (m27) -- node[near end,left] {$-$} (m17);
+	\draw[dspconn] (m36) -- (m16);
+	\draw[dspconn] (m05) -- node[near start,right] {$\alpha_a$} (m15);
+	\draw[dspconn] (m28) -- node[near start,above] {$\alpha_r$} (m27);
+	
+	\draw[dspconn] (m32) -- (m22) -- node[near end,left] {$-$} (m12);
+	
+	\draw[dspconn] (m12) -- node[midway,above] {$x_k'$} (m14);
+	
+	\end{tikzpicture}
+
+\end{document}

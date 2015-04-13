@@ -16,7 +16,7 @@
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
 		\node[coordinate]                  (m01) {};          &
 		\node[dspnodefull]                 (m02) {};           &
-		\node[recblock] (m03) {\scriptsize Delay};         &
+		\node[recblock] (m03) {$z^{-d_{la}}$};         &
 	         \node[coordinate]                 (m04) {};           &
 		\node[coordinate]                   (m05) {}; 	&
 		\node[coordinate]                 (m06) {};           &
@@ -42,11 +42,11 @@
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[recblock,text height=2em] (m23) {\scriptsize Level \\ \scriptsize detector};          &
+		\node[recblock,text height=2em] (m23) {\scriptsize Peak/RMS \\ \scriptsize detector};          &
 		\node[coordinate]                  (m24) {};          &
 		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
 		\node[coordinate]                  (m26) {};          &
-		\node[recblock,text height=2em] (m27) {\scriptsize Gain \\ \scriptsize smoothing };          &
+		\node[recblock,text height=2em] (m27) {\scriptsize Adaptive \\ \scriptsize Filtering };          &
 		\node[coordinate]                  (m28) {};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\
@@ -71,18 +71,18 @@
 		\chainin (m02) [join=by dspline];
 		\chainin (m22) [join=by dspline];
 		\chainin (m23) [join=by dspconn];
-		\chainin (m25) [join=by dspconn];
-		\chainin (m27) [join=by dspconn];
-		\chainin (m28) [join=by dspline];
-		\chainin (m08) [join=by dspconn];
 	\end{scope}
 	
+	\draw[dspconn] (m23) -- node[midway,above] {$f_n$} (m25);
+	\draw[dspconn] (m25) -- node[midway,above] {$g'_n$} (m27);
+	\draw[dspconn] (m27) -- (m28) -- node[midway,right] {$g_n$} (m08);
+	
+	\draw[dspconn] (m03) -- node[midway,above] {$x_{n-d_{la}}$} (m08);
+	\draw[dspconn] (m08) -- (m0X);
 	
 	\begin{scope}[start chain]
 		\chainin (m02);
-		\chainin (m03)  [join=by dspconn];
-		\chainin (m08) [join=by dspconn];
-		\chainin (m0X) [join=by dspconn];
+		\chainin (m03)  [join=by dspline];
 	\end{scope}
 	
 	\draw[dashed] (m11) -- (m19);
