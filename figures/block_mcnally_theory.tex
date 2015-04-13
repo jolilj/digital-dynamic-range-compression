@@ -10,7 +10,7 @@
 
 
 	% Place nodes using a matrix
-	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	\matrix (m1) [row sep=2.5mm, column sep=6mm]
 	{
 		%--------------------------------------------------------------------
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
@@ -43,9 +43,9 @@
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
 		\node[recblock,text height=2em] (m23) {\scriptsize Peak/RMS \\ \scriptsize detector};          &
-		\node[coordinate]                  (m24) {};          &
+		\node[sqrblock]                  (m24) {$\frac{1}{2}$log};          &
 		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
-		\node[coordinate]                  (m26) {};          &
+		\node[sqrblock]                  (m26) {lin};          &
 		\node[recblock,text height=2em] (m27) {\scriptsize Adaptive \\ \scriptsize Filtering };          &
 		\node[coordinate]                  (m28) {};          &
 		\node[coordinate]                  (m29) {};          &
@@ -73,8 +73,10 @@
 		\chainin (m23) [join=by dspconn];
 	\end{scope}
 	
-	\draw[dspconn] (m23) -- node[midway,above] {$f_n$} (m25);
-	\draw[dspconn] (m25) -- node[midway,above] {$g'_n$} (m27);
+	\draw[dspconn] (m23) -- node[midway,above] {$f_n^2$} (m24);
+	\draw[dspconn] (m24) -- node[midway,above] {$F_n$} (m25);
+	\draw[dspconn] (m25) -- node[midway,above] {$G'_n$} (m26);
+	\draw[dspconn] (m26) -- node[midway,above] {$g'_n$} (m27);
 	\draw[dspconn] (m27) -- (m28) -- node[midway,right] {$g_n$} (m08);
 	
 	\draw[dspconn] (m03) -- node[midway,above] {$x_{n-d_{la}}$} (m08);
