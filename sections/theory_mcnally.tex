@@ -7,15 +7,15 @@
 \subsection{McNally 1984}
 In \cite{mcnally1984dynamic} a DDRC is introduced and is constructed as follows. The input signal is split into two parts. The first enters the side-chain where the to be applied gain is calculated, the second is delayed with the look-ahead and enters the amplifier where the signal is multiplied with the gain calculated in the side-chain. This is illustrated in Fig ~\ref{fig:block_mcnally_theory1}. %================================
 \begin{figure}
-\centerline{\subfile{\rootdir/figures/block_mcnally_theory1}}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory}}
 \caption{Block diagram of the DDRC in \cite{mcnally1984dynamic}}
 \label{fig:block_mcnally_theory1}
 \end{figure}
 %================================
 
-The sidechain takes the signal as input,$x_n$, and outputs the gain, $g_n$ and is composed of the following components:%================================
+The sidechain takes the signal as input, $x_n$, and outputs the gain, $g_n$ and is composed of the following components:%================================
 \begin{itemize}
-\item{Level detector}
+\item{Peak/RMS detector}
 \item{Gain computer}
 \item{Adaptive filtering/gain smoothing}
 \end{itemize}
@@ -25,19 +25,19 @@ In \cite{mcnally1984dynamic} two level detection methods are discussed based on 
 The difference equation for the first order IIR filter used in the rms detector in \cite{mcnally1984dynamic} is
 %================================
 \begin{align*}
-y_k = \alpha' y_{k-1} + (1-\alpha') x_k
+f_n^2 = \alpha' f_{n-1}^2+ (1-\alpha') x_n^2
 \end{align*}
 %================================
-where $x_k$ is the squared input signal and $\alpha$ is the filter coefficient. Assuming a step as input, the output is
+where $x_n$ is the input signal and $\alpha$ is the filter coefficient. Assuming a step as input, the output is
 %================================
 \begin{align*}
-y_0 &= \alpha' \cdot 0 + (1-\alpha')x_0 = 0 \\
-y_1 &= \alpha' \cdot y_0 + (1-\alpha')x_1 = 1-\alpha'\\
-y_2 &= \alpha' y_1 + (1-\alpha')x_2 = 1-\alpha'^2 \\
-y_k &= 1-\alpha'^{k}
+f_0^2 &= \alpha' \cdot 0 + (1-\alpha')x_0^2 = 0 \\
+f_1^2 &= \alpha' \cdot f_0^2 + (1-\alpha')x_1^2 = 1-\alpha'\\
+f_2^2 &= \alpha' f_1^2+ (1-\alpha')x_2^2 = 1-\alpha'^2 \\
+f_n^2 &= 1-\alpha'^{n}
 \end{align*}
 %================================
-With $k = \tau f_s$ and the definition of the time constants, \eqref{eq:time_const}, the relation between the filter coefficient $\alpha$ and the time constant, here $\tau = \tau_a = \tau_r$, can be derived as
+With $n = \tau f_s$ and the definition of the time constants, \eqref{eq:time_const}, the relation between the filter coefficient $\alpha$ and the time constant, here $\tau = \tau_a = \tau_r$, can be derived as
 %================================
 \begin{align*}
 1-e^{-1} &= 1-\alpha'^{\tau f_s} \Longrightarrow \\
@@ -51,7 +51,7 @@ It is however common to define the filter coefficient as
 which corresponds to the difference equation
 %================================
 \begin{align}
-y_k = \alpha x_k + (1-\alpha) y_{k-1}
+f_n^2 = \alpha x_n^2 + (1-\alpha) f_{n-1}^2
 \end{align}
 %================================
 This definition of $\alpha$ will be used hereafter.
@@ -65,13 +65,57 @@ A block representation of the rms detector can be seen in Fig ~\ref{fig:block_mc
 \end{figure}
 %================================
 \subsubsection{Peak Detector}
+In order to get a fast peak detection with a slower release time a detector with two time constants is used. The difference equation for the peak detector in \cite{mcnally1984dynamic} is
 %================================
 \begin{equation}
-y_k = \begin{cases}
-    \alpha_{a} x_k + (1- (\alpha_{a} + \alpha_{r})) y_{k-1}  	& x_k > y_{k-1} \\
-    (1-\alpha_{r}) y_{k-1} 								& x_k \leq y_{k-1}
+f_n = \begin{cases}
+    \alpha_{a} f_n + (1- (\alpha_{a} + \alpha_{r})) f_{n-1}  	& x_n \geq f_{n-1} \\
+    (1-\alpha_{r}) f_{n-1} 								& x_n < f_{n-1}
 \end{cases}
 \end{equation}
 %================================
+and its corresponding block representation can be seen in Fig ~\ref{}. A couple of things are worth to note. The release time constant is leaked into the attack phase, which introduces a static error, as shown in \cite{giannoulis2012}. However, as mentioned in \cite{mcnally1984dynamic}, the attack time is assumed to be $\sim 10$ ms and the release time   $\sim 100$ ms thus making $\alpha_r << \alpha_a$. \todo{How refer to ourselves?}We believe the peak detector was constructed this way to optimize performance, since at the time computational power was limited. In a modern context, the peak detector can easily be modified with a simple \emph{if}-statement, removing the "leakage" of $\alpha_r$ into the attack phase. For this implementation, see section \todo{future reference to Reiss}\ref{}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory_peak}}
+\caption{Block diagram of the peak level detector in \cite{mcnally1984dynamic}}
+\label{fig:block_mcnally_theory_rms}
+\end{figure}
+%================================
+\subsection{Effect of Non-Linear Operations}
+The non-linear operations carried out in the rms and peak detector introduces higher harmonics. A simple example of a pure sinusoidal signal illustrates this for the squaring operation
+%================================
+\begin{align}
+\sin^2{\omega t} = \frac{1}{2}(1-\cos{2\omega t}) 
+\end{align}
+%================================
+showing that only the second harmonic is generated. This can be eliminated by the lowpass filter of the rms detector described above. A typical time constant of 50 ms would result in a measurement error $< 0.1$ dB \cite{mcnally1984dynamic}.
 
+For the magnitude operation carried out in the peak detector, the Fourier expansion of a sinusoidal input yields
+%================================
+\begin{align}
+\left |\sin{\omega t}\right | = \frac{2}{\pi}\left (1 - \sum_{n=1}^{\infty}\frac{4}{4n^2-1} n\omega t \right) 
+\end{align}
+%================================
+introducing an infinite number of even harmonics. A problem arises if the generated harmonic is close to the sample frequency, $f_s$ it would be aliased into zero frequency creating a static measurement error. This cannot be removed by a lowpass filter. Furthermore, the non-linear filter of the peak detector introduces distortion as well, but to a much lesser degree\cite{mcnally1984dynamic} and is not analysed further. Higher harmonics would also contribute to the error. 
+%================================
+\subsubsection{Gain Computer}
+The gain computer calculates the gain reduction, $g_n$, to be applied with respect to the static characteristics of the compressor. These are described in section \ref{theory_definitions} and Fig ~\ref{fig:typical_static_detailed}.
+\subsubsection{Adaptive Lowpass Filter}
+To reduce the distortion described above a first order lowpass filter is added at the end of the sidechain in the linear domain. Here is where the attack and release parameters are introduced. A block diagram of the filter can be seen in ~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
+\begin{equation}
+g_n = \begin{cases}
+    \alpha_{a} g'_n + (1-\alpha_{a}) g_{n-1} 	& g'_n > g_{n-1} \\
+    \alpha_{r} g'_n + (1-\alpha_{r}) g_{n-1} 	& g'_n \leq g_{n-1}
+\end{cases}
+\label{eq:mcnally_gain_smoothing}
+\end{equation}
+The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02}\cite{dagx11}\cite{zolzer1997digital}\cite{zolzer1997digital}\cite{zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic}\cite{dafx02}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory_adap_filter}}
+\caption{Block diagram of the adaptive filter in \cite{mcnally1984dynamic}}
+\label{fig:block_mcnally_theory_rms}
+\end{figure}
+%================================
 \end{document}}

@@ -10,7 +10,7 @@
 
 
 	% Place nodes using a matrix
-	\matrix (m1) [row sep=4.0mm, column sep=5mm]
+	\matrix (m1) [row sep=2.0mm, column sep=5mm]
 	{
 		%--------------------------------------------------------------------
 		\node[coordinate] (m00) {};    &
@@ -26,9 +26,9 @@
 		\node[coordinate]                   (m05) {}; 	&
 		\node[coordinate] (m0X) {};          \\
 		%--------------------------------------------------------------------
-		\node[dspnodeopen,dsp/label=above] (m10) {$x_n$};    &
+		\node[dspnodeopen,dsp/label=above] (m10) {$g'_n$};    &
 		\node[dspnodefull]                  (m11) {};          &
-		\node[dspmixer]                 (m12) {};           &
+		\node[coordinate]                 (m12) {};           &
 		\node[dspadder] (m13) {};         &
 		\node[dspmixer]                 (m14) {};           &
 		\node[dspadder] (m15) {};         &
@@ -36,11 +36,11 @@
 		\node[dspnodefull] (m18) {};    &
 		\node[coordinate]                   (m19) {}; 	&
 		\node[coordinate]                   (m110) {}; 	&
-		\node[dspnodeopen,dsp/label=above] (m1X) {$f_k^2$};          \\
+		\node[dspnodeopen,dsp/label=above] (m1X) {$g_n$};          \\
 		%--------------------------------------------------------------------
 		\node[coordinate] (m20) {};    &
 		\node[coordinate]                  (m21) {};          &
-		\node[coordinate]                 (m22) {};           &
+		\node[recblock]                 (m22) {\scriptsize Control};           &
 		\node[coordinate] (m23) {};         &
 	         \node[coordinate]                 (m24) {};           &
 		\node[coordinate]                   (m25) {}; 	&
@@ -87,14 +87,16 @@
 		\chainin (m11);
 		\chainin (m21) [join=by dspline];
 		\chainin (m22) [join=by dspline];
-		\chainin (m12) [join=by dspconn];
+		\chainin (m24) [join=by dspline];
+		\chainin (m14) [join=by dspconn];
 	\end{scope}
 	
-	\draw[dspconn] (m04)++(0,0.3) -- node[near start,right] {$\alpha$} (m14);
+	\draw[dspconn] (m32)++(-0.4,0) --  node[near start,left] {$\alpha_a$} +(0,0.7);
+	\draw[dspconn] (m32)++(0.4,0) --  node[near start,right] {$\alpha_r$} +(0,0.7);
 	
 	\draw[dspconn](m35) -- (m15);
 	
-	\draw[dspconn] (m33) -- node[near end,left] {$-$} (m13);
+	\draw[dspconn] (m33) -- (m23) -- node[near end,left] {$-$} (m13);
 	
 	\end{tikzpicture}
 
