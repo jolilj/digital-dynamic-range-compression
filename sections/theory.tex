@@ -9,7 +9,12 @@
 In this section the theory behind digital dynamic range compression is described. It is structured in relation to previous research where each subsection deals with the theory and method of corresponding work described in ~\ref{background}. However, a brief introduction with definition of necessary parameters is conducted in the first paragraph. 
 
 \subsection{Definitions} \label{theory_definitions}
-A DDRC maps the dynamic range of a signal to a smaller, compressed, range. In order to describe the behaviour the following parameters, corresponding to static and time dependent characteristics, are introduced.
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. In a compressor $0<g_n\leq 1$. The input signal, eventually delayed, is multiplied by the gain factor
+\begin{align}
+y_n = g_nx_{n-d}
+\label{eq:gainfactor}
+\end{align}
+The task is then to find the time-variant $g_n$ corresponding to the desired behaviour of the DDRC. In order to do so, the following parameters, corresponding to static and time dependent characteristics, are introduced.
 %================================
 \begin{itemize}
 \item{Static}
@@ -34,7 +39,63 @@ A DDRC maps the dynamic range of a signal to a smaller, compressed, range. In or
 \label{fig:typical_static_detailed}
 \end{figure}
 %================================
-The static characteristics are depicted in Fig ~\ref{fig:typical_static_detailed}. Do note that the static curve is defined in the log-domain, hence capital letters. There are two ways of handle the threshold level, $T$, either with a sharp knee immediately switching slope from $1$ to $1/R$, or with a smooth transition by an intermediate second degree polynomial\cite{frindle1996implementation}\cite{reiss2012tutorial}. Thus $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for the polynomial to be continuous and have continuous derivatives at the points $X=T-W/2$ and $X=T+W/2$. A knee width of $W=0$ corresponds to a sharp knee. The make-up gain is defined as a constant amount of gain added to the signal. Since the compressor lowers the amplitude of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input.
+The static characteristics are depicted in Fig ~\ref{fig:typical_static_detailed}. Do note that the static curve is defined in the log-domain, hence capital letters. There are two ways of handle the threshold level, $T$, either with a sharp knee immediately switching slope from $1$ to $1/R$, or with a smooth transition by an intermediate second degree polynomial\cite{frindle1996implementation}\cite{reiss2012tutorial}. Thus $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for the polynomial to be continuous and have continuous derivatives at the points $X=T-W/2$ and $X=T+W/2$. A knee width of $W=0$ corresponds to a sharp knee. Derivation of $g_n$ given a sharp knee, is done by first examining the static curve of Fig ~\ref{fig:typical_static_detailed} and calculating the intermediate polynomial which yields the following piecewise continuous function
+%================================
+\begin{equation} \label{eq:gaincomp}
+Y = \begin{cases}
+    X & \quad \text{if }X> T-\frac{1}{2}W \\[0.8em]
+    \dfrac{X+(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
+\end{cases}
+\end{equation}
+%================================
+Expressing equation \eqref{eq:gainfactor} in the logarithmic domain
+%================================
+\begin{align}
+y_n &= x_ng_n   \\
+\log|y_n| & = \log|x_n| + \log|g_n|   \\
+Y &= X + G \label{eq:cv}
+\end{align}
+%================================
+Equation (\ref{eq:cv}) and (\ref{eq:gaincomp}) yields
+%================================
+\begin{equation}
+X+G = \begin{cases}
+    X & \quad \text{if }X > T-\frac{1}{2}W \\[0.8em]
+    X + \dfrac{(1/R-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
+\end{cases}
+\end{equation}
+%================================
+Solving for $G \rm \Rightarrow$
+\begin{equation} \label{eq:c}
+G = \begin{cases}
+    0 & \quad \text{if }X >T -\frac{1}{2}W \\[0.8em]
+    \dfrac{(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    \left(R^{-1}-1\right)\left(X-T\right) & \quad \text{if } X > T + \frac{1}{2}W.
+ \end{cases}
+\end{equation}
+%================================
+The typical gain factor curve is depicted in Fig ~\ref{fig:typical_gain_detailed}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_gain_detailed}}
+\caption{Typical gain curve in log domain.}
+\label{fig:typical_gain_detailed}
+\end{figure}
+%================================
+
+The make-up gain is defined as a constant amount of gain added to the signal. Since the compressor lowers the amplitude of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input.
+
+With instant gain reduction the wave shape of the input signal is changed introducing higher harmonics, i.e. distortion, see Fig. \ref{fig:instant_comp}. 
+%================================
+\begin{figure}[ht]
+\centering
+\subfile{../figures/fig_instant_comp}
+\caption{Instant compression changes the shape of the wave and thus introduces distortion.} 
+\label{fig:instant_comp}
+\end{figure}
+%================================
 The time dependent characteristics are depicted in Fig ~\ref{fig:typical_envelope_detailed}. The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2 \% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
 %================================
 \begin{align}
@@ -57,7 +118,7 @@ Another definition of the time constant, used in a more general DRC context ~\ci
 \caption{Illustration of the defined time constants.}
 \label{fig:time_constants}
 \end{figure}
-
+%================================
 As can be seen in Fig ~\ref{fig:typical_envelope_detailed} the look-ahead, $d_{la}$, is defined as the applied delay to the input signal before the gain reduction, thus having the gain applied time-shifted. Sharp transients can thus be compressed effectively despite the smooth attack phase.
 
 \subsection{Side Chain Topologies}
