@@ -14,7 +14,7 @@
 
 
 	% Place nodes using a matrix
-	\matrix (m1) [row sep=2.5mm, column sep=6mm]
+	\matrix (m1) [row sep=2.5mm, column sep=8mm]
 	{
 		%--------------------------------------------------------------------
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
@@ -50,8 +50,8 @@
 		\node[coordinate]                  (m22) {};          &
 		\node[sqrblock] (m23) {abs};          &
 		\node[sqrblock]                  (m24) {log};          &
-		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
-		\node[recblock,text height=2em] (m26) {\scriptsize Gain \\ \scriptsize smoothing };          &
+		\node[recblock,text height=2em] (m25) {\scriptsize Compression \\ \scriptsize computer};          &
+		\node[recblock,text height=2em] (m26) {\scriptsize Compression \\ \scriptsize smoothing };          &
 		\node[dspadder]                  (m27) {};          &
 		\node[sqrblock]                  (m28) {lin};          &
 		\node[coordinate]                  (m29) {};          &
@@ -63,8 +63,8 @@
 		\node[coordinate]                  (m31) {};          &
 		\node[coordinate]   		   (m32) {};          &
 		\node[coordinate]                  (m33) {};          &
-		\node[coordinate]                  (m34) {};          &
-		\node[label,below=1mm]                  (m35) {\scriptsize Sidechain};          &
+		\node[label]                  (m34) {};          &
+		\node[coordinate]                  (m35) {};          &
 		\node[coordinate]                  (m36) {};          &
 		\node[coordinate]                  (m37) {};          &
 		\node[coordinate]                  (m38) {};          &
@@ -83,8 +83,8 @@
 	
 	\draw[dspconn] (m23) -- node[midway,above]{$f_n$} (m24);
 	\draw[dspconn] (m24) -- node[midway,above]{$F_n$} (m25);
-	\draw[dspconn] (m25) -- node[midway,above]{$G'_n$} (m26);
-	\draw[dspconn] (m26) --(m27) -- node[midway,above]{$G_n$} (m28);
+	\draw[dspconn] (m25) -- node[midway,above]{$C'_n$} (m26);
+	\draw[dspconn] (m26) --node[midway, above]{$C_n$}(m27) -- node[midway,above]{$G_n$} (m28);
 	\draw[dspline] (m28) -- (m29);
 	\draw[dspconn] (m29) -- node[midway,right]{$g_n$} (m09);
 	
@@ -102,6 +102,9 @@
 	
 	\draw[dspconn]([yshift=2mm]m37) -- (m27);
 	\node[black, below=2.5mm](M) at ([xshift=2.5mm] m27){M};
+	\node[black, above=0.5mm](M) at ([xshift=-2.2mm] m27){$-$};
+	\node[black, below=2.5mm](M) at ([xshift=6.5mm,yshift=1mm] m35){\scriptsize Sidechain};
+	
 	
 	%\coordinate (dB1) at ([xshift=7.5mm]m24.center);
 	%\coordinate (dB2) at ([xshift=7.5mm,yshift=-2mm] m14);
