@@ -1,0 +1,77 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Frindle \& Easty 1996}
+In \cite{frindle1996implementation} some new techniques are employed to achieve transparent compression. The article points out that a naive implementation of peak detection in the digital domain will introduce a static error due to sampling, and provides a solution. The time dependent attack and release behaviour is implemented to be linear in the log domain. 
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/block_frindle}}
+\caption{Frindle \& Easty feed forward topology}
+\label{fig:block_frindle}
+\end{figure}
+
+\subsubsection{Peak detection}
+McNally \cite{mcnally1984dynamic} pointed out that since full wave rectification is a nonlinear process, a phase dependent oscillating or static error will occur at certain frequencies as their harmonics get aliased to near or at 0 Hz. Frindle \& East notes that this problem decreases with increasing sample rate, and suggests up-sampling before peak detection as a solution. This however increases the computational load by the up-sampling factor, and thus another similar but more computationally effectient solution is proposed.
+
+The input signal is filtered by 4 different 5th order FIR filters with a phase shift of 2.125, 2.375, 2.625 and 2.875 samples respectively. The filters are constructed by taking a sinc-filter with cutoff frequency at $f_s/2$ and window it with a raised cosine window function. In mathematical terms:
+\begin{equation}
+\begin{split}
+f^1_n &= a_0 x_{n} + a_1 x_{n-1} + a_2 x_{n-2} + a_3 x_{n-3} + a_4 x_{n-4} + a_5 x_{n-5} \\
+f^2_n &= b_0 x_{n} + b_1 x_{n-1} + b_2 x_{n-2} + b_3 x_{n-3} + b_4 x_{n-4} + b_5 x_{n-5} \\
+f^3_n &= c_0 x_{n} + c_1 x_{n-1} + c_2 x_{n-2} + c_3 x_{n-3} + c4 x_{n-4} + c_5 x_{n-5} \\
+f^4_n &= d_0 x_{n} + d_1 x_{n-1} + d_2 x_{n-2} + d_3 x_{n-3} + d_4 x_{n-4} + d_5 x_{n-5} \\
+\end{split}
+\end{equation}
+where the coefficents are given by
+\begin{equation}
+\begin{split}
+a_k &= \frac{\sin (2 \pi \frac{1}{2} (0.125+k-3) )}{(0.125+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.125+k-3)}{6} \right) \right] \\
+b_k &= \frac{\sin (2 \pi \frac{1}{2} (0.375+k-3) )}{(0.375+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.375+k-3)}{6} \right) \right] \\
+c_k &= \frac{\sin (2 \pi \frac{1}{2} (0.625+k-3) )}{(0.625+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.625+k-3)}{6} \right) \right] \\
+d_k &= \frac{\sin (2 \pi \frac{1}{2} (0.875+k-3) )}{(0.125+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.875+k-3)}{6} \right) \right]. \\
+\end{split}
+\end{equation}
+The peak estimate is then taken as the maximum absolute value of the 4 filter outputs:
+\begin{equation}
+f_n = \text{max}(|f^1_n|, |f^2_n|, |f^3_n|, |f^4_n|)
+\end{equation}
+This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. \todo{show this here? in an appendix?}
+
+Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. Sadly, the exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
+
+\subsubsection{Gain computer}
+The gain computer is the usual one defined by Eq.~\ref{XXXX} including smooth knee width.
+
+\subsubsection{Gain smoothing}
+A gain smoothing is implemented in the log domain as
+\begin{equation}
+\begin{split}
+Z_n &= \text{max}(X_n, Y_{n-1} - A_{\text{rel}} H_{n-1} )\\
+Y_n &= \text{min}(Z_n, Y_{n-1} + A_{\text{att}}) \\
+H_n &=
+\begin{cases}
+    \text{min}(1,A_{\text{hold}} + H_{n-1})	& Y_n < Y_{n-1}; \\
+    A_{\text{hold}}					& \text{otherwise}
+\end{cases} \\
+\end{split}
+\end{equation}
+where
+\begin{equation}
+\begin{split}
+A_{\text{att}} &= \frac{1}{f_s \tau_{\text{att}}} \\
+A_{\text{rel}} &= \frac{1}{f_s \tau_{\text{rel}}} \\
+A_{\text{hold}} &= \frac{0.5}{f_s \tau_{\text{hold}}}. \\
+\end{split}
+\end{equation}
+and the time constants $\tau_{\text{att}}, \tau_{\text{rel}}$ and $\tau_{\text{hold}}$ are given in seconds per dBFS. The attack and release trajectories are linear in the log domain, as can be seen in Fig.~\ref{fig:step_frindle_gain}. In the release phase the hold timer $H_n$ scales the release time constant up to it's final value. The goal of this is to get a smooth release characteristic with low distortion for low frequency content and a smooth transition from hold to release phase.
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/step_frindle_gain}}
+\caption{Frindle \& Easty gain smoothing step and downstep response}
+\label{fig:step_frindle_gain}
+\end{figure}
+
+\end{document}

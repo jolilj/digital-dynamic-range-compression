@@ -1,0 +1,113 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+\begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, axis/.style={path picture={ 
+  \draw[black]
+(path picture bounding box.west) -- (path picture bounding box.east)
+(path picture bounding box.north) -- (path picture bounding box.south);
+}},rectifier/.style={path picture={ 
+  \draw[black,thick]
+(path picture bounding box.center) -- (path picture bounding box.north west) (path picture bounding box.center) -- (path picture bounding box.north east);
+}}]
+
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
+		\node[coordinate]                  (m01) {};          &
+		\node[dspnodefull]                 (m02) {};           &
+		\node[recblock] (m03) {\small Delay};         &
+	         \node[coordinate]                 (m04) {};           &
+		\node[coordinate]                   (m05) {}; 	&
+		\node[coordinate]                 (m06) {};           &
+		\node[coordinate]                   (m07) {}; 	&
+		\node[dspmixer]                  (m08) {};          &
+		\node[coordinate]                  (m09) {};          &
+		\node[dspnodeopen,dsp/label=above] (m010) {$y_n$};   \\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m10) {};          &
+		\node[coordinate]                  (m11) {};          &
+		\node[coordinate]   		   (m12) {};          &
+		\node[coordinate]                  (m13) {};          &
+		\node[coordinate]                  (m14) {};          &
+		\node[coordinate]                  (m15) {};          &
+		\node[coordinate]                  (m16) {};          &
+		\node[coordinate]                  (m17) {};          &
+		\node[coordinate]                  (m18) {};          &
+		\node[coordinate]                  (m19) {};          &
+		\node[coordinate]                  (m110) {}; 	\\
+		%--------------------------------------------------------------------
+		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m20) {};          &
+		\node[coordinate]                  (m21) {};          &
+		\node[coordinate]                  (m22) {};          &
+		\node[recblock,text height=2em] (m23) {Peak\\detector};          &
+		\node[sqrblock]                  (m24) {\small dB};          &
+		\node[recblock,text height=2em] (m25) {\small Gain \\ \small computer};     &
+		\node[recblock,text height=2em] (m26) {\small Gain smoothing/ \\Dynamics }; &
+		\node[sqrblock]                  (m27) {\small lin};          &
+		\node[coordinate]                  (m28) {};          &
+		\node[coordinate]                  (m29) {};          &
+		\node[coordinate]                  (m210) {};        \\
+		%--------------------------------------------------------------------
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m30) {};          &
+		\node[coordinate]                  (m31) {};          &
+		\node[coordinate]   		   (m32) {};          &
+		\node[coordinate]                  (m33) {};          &
+		\node[coordinate]                  (m34) {};          &
+		\node[coordinate]                  (m35) {};          &
+		\node[coordinate]                  (m36) {};          &
+		\node[coordinate]                  (m37) {};          &
+		\node[coordinate]                  (m38) {};          &
+		\node[coordinate]                  (m39) {};          &
+		\node[coordinate]                  (m310) {};       \\
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m00);
+		\chainin (m02) [join=by dspline];
+		\chainin (m22) [join=by dspline];
+		\chainin (m23) [join=by dspconn];
+		\chainin (m24) [join=by dspconn];
+		\chainin (m25) [join=by dspconn];
+		\chainin (m26) [join=by dspconn];
+		\chainin (m27) [join=by dspconn];
+		\chainin (m28) [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+	\end{scope}
+	
+	\begin{scope}[start chain]
+		\chainin (m02);
+		\chainin (m03)  [join=by dspline];
+		\chainin (m08) [join=by dspconn];
+		\chainin (m010) [join=by dspconn];
+	\end{scope}
+	
+	\draw[dashed] (m11) -- (m19);
+	\draw[dashed] (m11) -- ([yshift=-2mm]m31);
+	\draw[dashed] ([yshift=-2mm]m31) -- ([yshift=-2mm]m39);
+	\draw[dashed] ([yshift=-2mm]m19) -- ([yshift=-2mm]m39);
+	
+	\node[label,left=2mm] at ([yshift=-5mm]m36) {Sidechain}; 
+	
+	%\coordinate (dB1) at ([xshift=7.5mm]m24.center);
+	%\coordinate (dB2) at ([xshift=7.5mm,yshift=-2mm] m14);
+	%\coordinate (dB3) at ([yshift=-2mm] m16);
+	
+	%\draw[dspline](dB1) -- (dB2); 
+	%\draw[dspline](dB2) -- (dB3); 
+	%\draw[dspline](dB3) -- (m26); 
+	
+	
+	%\node[axis, minimum width=10mm, minimum height=5mm ](rectifier) at (m23){};
+	%\node[rectifier, minimum width=6mm, minimum height=5mm ](rectifier) at (m23){};
+	
+	\end{tikzpicture}
+
+\end{document}
