@@ -15,7 +15,8 @@
 		%--------------------------------------------------------------------
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
 		\node[coordinate]                  (m01) {};          &
-		\node[dspnodefull]                 (m02) {};           &
+		\node[dspnodefull]                  (m01) {};          &
+		\node[coordinate]                 (m02) {};           &
 		\node[recblock] (m03) {$z^{-d_{la}}$};         &
 	         \node[coordinate]                 (m04) {};           &
 		\node[coordinate]                   (m05) {}; 	&
@@ -25,6 +26,7 @@
 		\node[coordinate]                  (m09) {};          &
 		\node[dspnodeopen,dsp/label=above] (m0X) {$y_n$};          \\
 		%--------------------------------------------------------------------
+		\node[coordinate]                  (m10) {};          &
 		\node[coordinate]                  (m10) {};          &
 		\node[coordinate]                  (m11) {};          &
 		\node[coordinate]   		   (m12) {};          &
@@ -37,60 +39,102 @@
 		\node[coordinate]                  (m19) {};          &
 		\node[coordinate]                  (m1X) {};          \\
 		%--------------------------------------------------------------------
-		\\
-		%--------------------------------------------------------------------
+		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[recblock,text height=2em] (m23) {\scriptsize Peak/RMS \\ \scriptsize detector};          &
+		\node[recblock,text height=2em] (m23) {\scriptsize RMS \\ \scriptsize Detector};       &
 		\node[sqrblock]                  (m24) {$\frac{1}{2}$log};          &
-		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
-		\node[sqrblock]                  (m26) {lin};          &
-		\node[recblock,text height=2em] (m27) {\scriptsize Adaptive \\ \scriptsize Filtering };          &
+		\node[coordinate]                  (m25) {};          &
+		\node[coordinate]                  (m26) {};          &
+		\node[coordinate]                  (m27) {};          &
 		\node[coordinate]                  (m28) {};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\
 		%--------------------------------------------------------------------
-		%--------------------------------------------------------------------
 		\node[coordinate]                  (m30) {};          &
-		\node[coordinate]                  (m31) {};          &
+		\node[coordinate]                  (m30) {};          &
+		\node[dspnodeopen]                  (m31) {};          &
 		\node[coordinate]   		   (m32) {};          &
-		\node[coordinate]                  (m33) {};          &
-		\node[coordinate]                  (m34) {};          &
-		\node[label,below=1mm]                  (m35) {\scriptsize Sidechain};          &
-		\node[coordinate]                  (m36) {};          &
-		\node[coordinate]                  (m37) {};          &
-		\node[coordinate]                  (m38) {};          &
+		\node[coordinate]   		   (m33) {};          &
+		\node[dspnodefull]                  (m34) {};          &
+		\node[recblock,text height=2em] (m35) {\scriptsize Gain \\ \scriptsize Computer};          &
+		\node[sqrblock]                  (m36) {lin};          &
+		\node[recblock,text height=2em] (m37) {\scriptsize Adaptive \\ \scriptsize Filtering };          &		\node[coordinate]                  (m38) {};          &
 		\node[coordinate]                  (m39) {};          &
 		\node[coordinate]                  (m3X) {};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m40) {};          &
+		\node[coordinate]                  (m40) {};          &
+		\node[coordinate]                  (m41) {};          &
+		\node[coordinate]   		   (m42) {};          &
+		\node[recblock,text height=2em]                  (m43) {\scriptsize Peak \\ \scriptsize detector};          &
+		\node[sqrblock]                  (m44) {log};          &
+		\node[coordinate]                  (m45) {};          &
+		\node[coordinate]                  (m46) {};          &
+		\node[coordinate]                  (m47) {};          &
+		\node[coordinate]                  (m48) {};          &
+		\node[coordinate]                  (m49) {};          &
+		\node[coordinate]                  (m4X) {};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate]                  (m50) {};          &
+		\node[coordinate]                  (m50) {};          &
+		\node[coordinate]                  (m51) {};          &
+		\node[coordinate]   		   (m52) {};          &
+		\node[coordinate]                  (m53) {};          &
+		\node[coordinate]                  (m54) {};          &
+		\node[label,below=1mm]                  (m55) {\scriptsize Sidechain};          &
+		\node[coordinate]                  (m56) {};          &
+		\node[coordinate]                  (m57) {};          &
+		\node[coordinate]                  (m58) {};          &
+		\node[coordinate]                  (m59) {};          &
+		\node[coordinate]                  (m5X) {};          \\
 	};
 	
 	% Draw connections
 	\begin{scope}[start chain]
 		\chainin (m00);
-		\chainin (m02) [join=by dspline];
-		\chainin (m22) [join=by dspline];
-		\chainin (m23) [join=by dspconn];
+		\chainin (m01) [join=by dspline];
 	\end{scope}
 	
-	\draw[dspconn] (m23) -- node[midway,above] {$f_n^2$} (m24);
-	\draw[dspconn] (m24) -- node[midway,above] {$F_n$} (m25);
-	\draw[dspconn] (m25) -- node[midway,above] {$G'_n$} (m26);
-	\draw[dspconn] (m26) -- node[midway,above] {$g'_n$} (m27);
-	\draw[dspconn] (m27) -- (m28) -- node[midway,right] {$g_n$} (m08);
+	\draw[dspline] (m01) -- (m31);
+	
+	%Switch
+	\draw[dspconn](m31)--($(m32)+(-0.05,0.55)$);
+		%rms
+	\draw[dspline] (m32)++(0,0.6) -- (m22);
+	\node[dspnodeopen, above=0.5] at (m32){};
+	\draw[dspconn](m22)--(m23);
+		%peak
+	\draw[dspline] (m32)++(0,-0.6) -- (m42);
+	\node[dspnodeopen, below=0.5] at (m32){};
+	\draw[dspconn](m42)--(m43);
+	
+	\draw[dspconn] (m42) -- (m43);
+	
+	\draw[dspconn] (m23) -- node[midway,above] {$f_n^2$} (m24) ;
+	\draw[dspline] (m24) -- (m34);
+	
+	\draw[dspconn] (m43) -- node[midway,above] {$f_n$} (m44);
+	\draw[dspline] (m44) -- (m34);
+	
+	\draw[dspconn] (m34) -- node[midway,above] {$F_n$} (m35);
+	\draw[dspconn] (m35) -- node[midway,above] {$G'_n$} (m36);
+	\draw[dspconn] (m36) -- node[midway,above] {$g'_n$} (m37);
+	\draw[dspconn] (m37) -- (m38) -- node[midway,right] {$g_n$} (m08);
 	
 	\draw[dspconn] (m03) -- node[midway,above] {$x_{n-d_{la}}$} (m08);
 	\draw[dspconn] (m08) -- (m0X);
 	
 	\begin{scope}[start chain]
-		\chainin (m02);
+		\chainin (m01);
 		\chainin (m03)  [join=by dspline];
 	\end{scope}
 	
-	\draw[dashed] (m11) -- (m19);
-	\draw[dashed] (m11) -- (m31);
-	\draw[dashed] (m31) -- (m39);
-	\draw[dashed] (m19) -- (m39);
+	\draw[dashed] (m10) -- (m19);
+	\draw[dashed] (m10) -- (m50);
+	\draw[dashed] (m50) -- (m59);
+	\draw[dashed] (m19) -- (m59);
 	
 	\end{tikzpicture}
 

@@ -1,0 +1,63 @@
+\documentclass[../main2.tex]{subfiles}
+\begin{document}
+
+\newcommand{\z}{z}
+% FIR filter as block diagram
+\begin{tikzpicture}
+
+\tikzset{recblock/.style={dspfilter,minimum width=18mm, minimum height=10mm}};
+\tikzset{sqrblock/.style={dspfilter,minimum size=10mm}};
+
+
+	% Place nodes using a matrix
+	\matrix (m1) [row sep=4.0mm, column sep=5mm]
+	{
+		%--------------------------------------------------------------------
+		\node[coordinate] (m00) {};    &
+		\node[coordinate]                  (m01) {};          &
+		\node[coordinate]                 (m02) {};           &
+		\node[coordinate] (m03) {};         &
+	         \node[coordinate]                 (m04) {};           &
+		\node[coordinate]                   (m05) {}; 	&
+		\node[coordinate]                   (m08) {}; 	&
+		\node[coordinate]                   (m09) {}; 	&
+		\node[coordinate]                   (m010) {}; 	&
+		\node[coordinate] (m0X) {};          \\
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=above] (m10) {$x_n$};    &
+		\node[coordinate]                 (m14) {};           &
+		\node[sqrblock]                  (m11) {$z^{-d_{la}}$};          &
+		\node[coordinate] (m15) {};         &
+		\node[coordinate] (m17) {};    &
+		\node[dspmixer] (m18) {};    &
+		\node[coordinate]                   (m19) {}; 	&
+		\node[coordinate]                   (m110) {}; 	&
+		\node[dspnodeopen,dsp/label=above] (m1X) {$y_n$};          \\
+		%--------------------------------------------------------------------
+		\node[coordinate] (m20) {};    &
+		\node[coordinate]                  (m21) {};          &
+	         \node[coordinate]                 (m24) {};           &
+		\node[coordinate]                   (m25) {}; 	&
+		\node[coordinate]                   (m26) {}; 	&
+		\node[coordinate]                   (m28) {}; 	&
+		\node[coordinate]                   (m29) {}; 	&
+		\node[coordinate]                   (m210) {}; 	&
+		\node[coordinate] (m2X) {};          \\
+		%--------------------------------------------------------------------
+	};
+	
+	% Draw connections
+	\begin{scope}[start chain]
+		\chainin (m10);
+		\chainin (m11) [join=by dspconn];
+		\chainin (m18) [join=by dspconn];
+		\chainin (m1X) [join=by dspconn];
+	\end{scope}
+
+	
+	\draw[dspconn] (m28)++(0,-0.3) -- node[near start,right] {$g_n$} (m18);
+
+	
+	\end{tikzpicture}
+
+\end{document}

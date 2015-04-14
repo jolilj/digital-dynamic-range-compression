@@ -1,0 +1,44 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Giannoulis, Massberg and Reiss 2012}
+In \cite{reiss2012tutorial} the design seen in Fig ~\ref{fig:block_reiss_theory} is proposed.
+\subsubsection{Level Detection and Gain Computer}
+For level detection the absolute value of the signal is taken. No filtering is applied here, with the non-linearity of the full rectification leading to measurement error in the gain computer, see section ~\ref{}. The gain computer works in the logarithmic domain and is constructed as described in section \ref{theory_definitions}. In the evaluation carried out a sharp knee is used. 
+\subsubsection{Gain Smoothing}
+In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level detection}, although it is a \emph{smoothing filter} applied to the calculated gain factor. Two different implementations are proposed, here named in accordance with \cite{reiss2012tutorial}.
+\begin{itemize}
+\item{Decoupled filter}
+\item{Branching filter}
+\end{itemize}
+\todo[inline, caption={Decoupled}]{Beskriv filtret och bifoga step och downstep response}
+%================================
+\begin{equation}
+\begin{split}
+z_k &= \begin{cases}
+    x_k 								& x_k > z_{k-1} \\
+    \alpha_{r} x_k + (1-\alpha_{r}) z_{k-1} 	& x_k \leq z_{k-1}
+\end{cases} \\
+y_k &= \alpha_{a} z_k + (1-\alpha_{a}) y_{k-1}
+\end{split}
+\end{equation}
+%================================
+\todo[inline, caption={Branching}]{Beskriv filtret och bifoga step och downstep response}
+%================================
+\begin{equation}
+y_k = \begin{cases}
+    \alpha_{a} x_k + (1-\alpha_{a}) y_{k-1} 	& x_k > y_{k-1} \\
+    \alpha_{r} x_k + (1-\alpha_{r}) y_{k-1} 	& x_k \leq y_{k-1}
+\end{cases}
+\end{equation}
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_giannoulis_theory}}
+\caption{Block diagram of the proposed compressor design in \cite{reiss2012tutorial}}
+\label{fig:block_reiss_theory}
+\end{figure}
+%================================
+\end{document}}

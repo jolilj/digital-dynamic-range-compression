@@ -9,12 +9,20 @@
 In this section the theory behind digital dynamic range compression is described. It is structured in relation to previous research where each subsection deals with the theory and method of corresponding work described in ~\ref{background}. However, a brief introduction with definition of necessary parameters is conducted in the first paragraph. 
 
 \subsection{Definitions} \label{theory_definitions}
-A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. In a compressor $0<g_n\leq 1$. The input signal, eventually delayed, is multiplied by the gain factor
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. In a compressor $0<g_n\leq 1$. The input signal, in general delayed, is multiplied by the gain factor, see Fig ~\ref{fig:block_gain},
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_gain}}
+\caption{Input signal multiplied by time-variant gain factor}
+\label{fig:block_gain}
+\end{figure}
+%================================
 \begin{align}
-y_n = g_nx_{n-d}
+y_n = g_nx_{n-d_{la}}.
 \label{eq:gainfactor}
 \end{align}
-The task is then to find the time-variant $g_n$ corresponding to the desired behaviour of the DDRC. In order to do so, the following parameters, corresponding to static and time dependent characteristics, are introduced.
+%================================
+The task is then to find the time-variant $g_n$ corresponding to the desired behaviour of the DDRC. In order to do so, the following parameters, corresponding to static and temporal characteristics, are introduced.
 %================================
 \begin{itemize}
 \item{Static}
@@ -24,7 +32,7 @@ The task is then to find the time-variant $g_n$ corresponding to the desired beh
 	\item \textbf{Knee width}  $W$ - Controls the sharpness of the knee.
 	\item \textbf{Make-up gain}  $M$ - The amount of gain applied in the final step to balance the perceived loudness of the output signal with the input signal.
 \end{itemize}
-\item{Time Dependent}
+\item{Temporal}
 	\begin{itemize}
 	\item \textbf{Attack time} $\tau_{a}$ - Determines how quickly the compression ratio is applied.
 	\item \textbf{Release time} $\tau_{r}$ - Determines how quickly the compression is released as the input signal drops below the threshold level.
@@ -85,7 +93,7 @@ The typical gain factor curve is depicted in Fig ~\ref{fig:typical_gain_detailed
 \end{figure}
 %================================
 
-The make-up gain is defined as a constant amount of gain added to the signal. Since the compressor lowers the amplitude of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input.
+The make-up gain, $M$, is defined as a constant amount of gain added to the signal. Since the compressor lowers the amplitude of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input.
 
 With instant gain reduction the wave shape of the input signal is changed introducing higher harmonics, i.e. distortion, see Fig. \ref{fig:instant_comp}. 
 %================================
@@ -96,7 +104,7 @@ With instant gain reduction the wave shape of the input signal is changed introd
 \label{fig:instant_comp}
 \end{figure}
 %================================
-The time dependent characteristics are depicted in Fig ~\ref{fig:typical_envelope_detailed}. The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2 \% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
+The temporal characteristics are depicted in Fig ~\ref{fig:typical_envelope_detailed}. The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2 \% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
 %================================
 \begin{align}
 1-e^{-t / \tau}\rvert_{t=\tau} = 1-e^{-1} \approx 63.2 \% \label{eq:time_const}
