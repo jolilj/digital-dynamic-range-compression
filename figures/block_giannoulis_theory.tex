@@ -14,7 +14,7 @@
 
 
 	% Place nodes using a matrix
-	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	\matrix (m1) [row sep=2.5mm, column sep=6mm]
 	{
 		%--------------------------------------------------------------------
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
@@ -48,12 +48,12 @@
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[sqrblock] (m23) {\small abs};          &
-		\node[sqrblock]                  (m24) {\small dB};          &
-		\node[recblock,text height=2em] (m25) {\small Gain \\ \small computer};          &
-		\node[recblock,text height=2em] (m26) {\small Gain \\ \small smoothing };          &
+		\node[sqrblock] (m23) {abs};          &
+		\node[sqrblock]                  (m24) {log};          &
+		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
+		\node[recblock,text height=2em] (m26) {\scriptsize Gain \\ \scriptsize smoothing };          &
 		\node[dspadder]                  (m27) {};          &
-		\node[sqrblock]                  (m28) {\small lin};          &
+		\node[sqrblock]                  (m28) {lin};          &
 		\node[coordinate]                  (m29) {};          &
 		\node[coordinate]                  (m210) {};          &
 		\node[coordinate]                  (m2X) {};          &  \\
@@ -64,7 +64,7 @@
 		\node[coordinate]   		   (m32) {};          &
 		\node[coordinate]                  (m33) {};          &
 		\node[coordinate]                  (m34) {};          &
-		\node[label,below=1mm]                  (m35) {\small Sidechain};          &
+		\node[label,below=1mm]                  (m35) {\scriptsize Sidechain};          &
 		\node[coordinate]                  (m36) {};          &
 		\node[coordinate]                  (m37) {};          &
 		\node[coordinate]                  (m38) {};          &
@@ -79,15 +79,14 @@
 		\chainin (m02) [join=by dspline];
 		\chainin (m22) [join=by dspline];
 		\chainin (m23) [join=by dspconn];
-		\chainin (m24) [join=by dspconn];
-		\chainin (m25) [join=by dspconn];
-		\chainin (m26) [join=by dspconn];
-		\chainin (m27) [join=by dspconn];
-		\chainin (m28) [join=by dspconn];
-		\chainin (m29) [join=by dspline];
-		\chainin (m09) [join=by dspconn];
 	\end{scope}
 	
+	\draw[dspconn] (m23) -- node[midway,above]{$f_n$} (m24);
+	\draw[dspconn] (m24) -- node[midway,above]{$F_n$} (m25);
+	\draw[dspconn] (m25) -- node[midway,above]{$G'_n$} (m26);
+	\draw[dspconn] (m26) --(m27) -- node[midway,above]{$G_n$} (m28);
+	\draw[dspline] (m28) -- (m29);
+	\draw[dspconn] (m29) -- node[midway,right]{$g_n$} (m09);
 	
 	\begin{scope}[start chain]
 		\chainin (m02);
