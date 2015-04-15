@@ -1,0 +1,56 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\usepackage[autostyle]{csquotes}  
+
+\begin{document}
+
+\FloatBarrier
+\section{Background} \label{background}
+
+
+Over the years, a variety of DDRC designs have been proposed in academic literature. 
+
+Many of the designs are based on the same basic feed-forward side-chain that dates back to \cite{mcnally1984dynamic}.
+
+The possible variations on the theme is considerable.
+
+In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals.
+
+The performance is compromised, more or less implicitly, by hardware limitations of the time.
+
+Vague design goals make evaluation and comparisons between the resulting designs difficult.
+
+Few studies have been conducted that qualitatively evaluates and compares different designs. 
+
+\todo{Something about research in hearing aids, and the development of FES}
+
+In~\cite{reiss2012tutorial}, some common designs are analysed and formally compared using effective compression ratio (ECR), total harmonic distortion (THD), and fidelity of envelope shape (FES) as metrics. 
+
+The list of designs that is analysed by Reiss is far from complete.
+
+
+
+
+\textbf{Background}
+\begin{itemize}
+\item no definition of good
+\item many variations but on the same basic principle
+\item many proposed designs, but few comparisons
+\item When comparison is made, it's made with FES but on the wrong envelope and with a limited parameter set.
+\end{itemize}
+\textbf{This paper}
+\begin{itemize}
+\item Continue the work of Reiss and investigate some more designs
+\item Continue the work of Reiss and compare with modified FES as metric
+\item Take inspiration from Bitzer and try to optimise parameters to get as fair results as possible for different designs.
+\end{itemize}
+\textbf{Limitations}
+\begin{itemize}
+\item mono, single band compression
+\item feed forward topology
+\end{itemize}
+
+\end{document}
