@@ -1,7 +1,15 @@
 \documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
 \begin{document}
+\section{Previous Work}
+\subfile{\rootdir/sections/theory_mcnally}
 
-\subsection{Previous Work}
-previosvnelsnvs
+\subfile{\rootdir/sections/theory_stikvoort}
 
+\subfile{\rootdir/sections/theory_frindle}
+
+\subfile{\rootdir/sections/theory_reiss}
 \end{document}
