@@ -8,25 +8,25 @@
 \section{Introduction}
 Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC has a long history of applications in audio recording, production work and live performances, but is also used in hearing aids and cochlear implants. The effect of compression can be seen in Fig.~\ref{fig:comp_input} and Fig.~\ref{fig:comp_output}.
 
-In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. Although the exact behaviour depends on both implementation and input signal, the typical static and temporal properties of a compressor can be illustrated by Fig.~\ref{fig:typical_static} and Fig.~\ref{fig:typical_envelope}.
-
 \begin{figure}[ht]
 \captionsetup{justification=centering}
-
+\centerline{
 \begin{minipage}[t]{.5\textwidth}
  \centering
 \subfile{\rootdir/figures/comp_input}
-\caption{Input signal with signal level both above and below a defined threshold} 
+\caption{Signal with level\\ both above and below a defined threshold} 
 \label{fig:comp_input}
 \end{minipage}%
 \begin{minipage}[t]{.5\textwidth}
 \centering
 \subfile{\rootdir/figures/comp_output}
-\caption{Input signal with compressed dynamic range} 
+\caption{Signal with compressed dynamic range} 
 \label{fig:comp_output}
 \end{minipage}
+}
 \end{figure}
 
+In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. Although the exact behaviour depends on both implementation and input signal, the typical static and temporal properties of a compressor can be illustrated by Fig.~\ref{fig:typical_static} and Fig.~\ref{fig:typical_envelope}.
 \begin{figure}[ht]
 \captionsetup{justification=centering}
 
