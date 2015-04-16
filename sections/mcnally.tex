@@ -16,7 +16,7 @@
 Although being a widely used effect in many digital signal processing systems, the method of compressing the dynamic range of a digital signal is investigated in but a few publications. A majority of these are based on a feed-forward design with little modifications to the internal structure of the side-chain despite a quite extensive freedom in design choices leading to different characteristics.  In 2006, an investigation regarding the chasm in compressor design between academia and industry is carried out. But it is not until 2012 a formal comparison between the different design choices is carried out.
 
 \subsection*{Early publications}
-An early description of a digital dynamic range compressor is given in~\cite{mcnally1984dynamic}. The design, see Fig \ref{fig:mcnaBlock}, is feed-forward based and the side-chain is composed of the following key components
+An early description of a digital dynamic range compressor is given in~\cite{mcnally1984dynamic}. The design, see Fig.\ref{fig:mcnaBlock}, is feed-forward based and the side-chain is composed of the following key components
 \begin{itemize}
 \item{Level detector}
 \item{Gain computer}
@@ -29,7 +29,7 @@ An early description of a digital dynamic range compressor is given in~\cite{mcn
 \end{figure}
 Two level detectors are introduced, peak and RMS. These account, in part, for the dynamics of the compressor. The peak detector introduces two time constants, referred to as attack and release time whereas the RMS detector introduces one time averaging constant. The gain computer is responsible for the static behaviour of the compressor, where the desired amount of gain reduction is applied. Each time the signal passes through a non linear operation higher harmonics are introduced. McNally suggests that a last adaptive low pass filter should be introduced to smooth out the calculated gain to avoid distortion in the final output.
 
-In "Digital Dynamic Range Compressor for Audio" by E.F. Stikvoort, published in  Journal of the Audio Engineering Society, January/February 1986, a similar feed-forward design is described. The side-chain is structured in the same way as presented by McNally, but Stikvoort chooses different time-behaviour by implementing higher-order filters to smooth out the signal, see block diagram in Fig \ref{fig:stikvoortBlock}. Stikvoort's design seems to have had little impact on the field as all later publications we've encountered so far stick to one-pole smoothing filters.
+In "Digital Dynamic Range Compressor for Audio" by E.F. Stikvoort, published in  Journal of the Audio Engineering Society, January/February 1986, a similar feed-forward design is described. The side-chain is structured in the same way as presented by McNally, but Stikvoort chooses different time-behaviour by implementing higher-order filters to smooth out the signal, see block diagram in Fig.\ref{fig:stikvoortBlock}. Stikvoort's design seems to have had little impact on the field as all later publications we've encountered so far stick to one-pole smoothing filters.
 
 TODO Bendiksen om vi får tag i artikeln!
 
@@ -46,7 +46,7 @@ Another cornerstone in the field of digital audio is "DAFX: Digital Audio Effect
 \subsection*{Modern work}
 In \cite{bitzer2006parameter} the chasm between the few described digital compressor models in academic literature and the large variety of commercial products is investigated. It is shown that the commercial products do show similarities with the proposed model described in~\cite{mcnally1984dynamic}\cite{zolzer1997digital}\cite{dafx} although two of the investigated compressor algorithms calculate the gain reduction in the linear domain, likely to minimize computational load and all but one have slight deviation in the static and dynamic characteristics~\cite{bitzer2006parameter}. All tested compressors fall within an error margin of 1 dB, using the euclidean distance between the signals as metric.
 
-In \cite{reiss2012tutorial} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig \ref{fig:gian_ddrc_block}.
+In \cite{reiss2012tutorial} a thorough formal comparison between the different design choices is carried out, assuming feed-forward topology. Giannoulis et. al.  then presents a model as their recommended choice for compressor design, see Fig.\ref{fig:gian_ddrc_block}.
 \begin{figure}
 \caption{Block diagram of a feed-forward DDRC as described by Giannoulis et. al.}
 \label{fig:gian_ddrc_block}
