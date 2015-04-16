@@ -1,0 +1,28 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+%================================
+\section{Ideal Compression}
+In order to develop a method for comparing DDRC designs a definition of ideal compression is needed. Let $x$ be the input and $y$ be the compressed output. Further assume that $x$ can be expressed as a product of it's envelope $E$ and fine-structure $F$ \begin{align}
+x_n = E_nF_n.
+\end{align}
+The idea is illustrated in Fig. ~\ref{}. Let $G(x)$ be the gain computer, see section \ref{gain_computer}, and $g(x) = 10^{G/20}$. The ideal compression is then given by
+\begin{align}
+y_{n,I} \equiv g(E_n) F_n. 
+\end{align}
+
+
+\section{Fidelity of Ideal Envelope Shape} \label{fes}
+In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. The Pearson correlation coefficient is defined as
+\begin{align}
+r_{xy} = \dfrac{\sum(x-\bar{x})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^2}\sqrt{\sum(y-\bar{y})^2}}
+\end{align}
+where $\bar{x}$ and $\bar{y}$ denote the mean value of $x$ and $y$, respectively. To relate to ideal compression, the Fidelity of Ideal Envelope Shape (FEIS) coefficient is defined as
+
+\begin{align}
+c_{f} = \dfrac{\sum(g(E)F-\bar{})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^2}\sqrt{\sum(y-\bar{y})^2}}
+\end{align}
+\end{document}

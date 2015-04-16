@@ -1,0 +1,24 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+%================================
+\section{Effects of Non-Linear Operations} \label{non_lin_ops}
+Non-linear operations introduces higher harmonics. A simple example of a pure sinusoidal signal illustrates this for the squaring operation
+%================================
+\begin{align}
+\sin^2{\omega t} = \frac{1}{2}(1-\cos{2\omega t}) 
+\end{align}
+%================================
+showing that only the second harmonic is generated, which can be suppressed by a lowpass filter.
+For the magnitude operation the Fourier expansion of a sinusoidal input yields
+%================================
+\begin{align}
+\left |\sin{\omega t}\right | = \frac{2}{\pi}\left (1 - \sum_{n=1}^{\infty}\frac{4}{4n^2-1} n\omega t \right) 
+\end{align}
+%================================
+introducing an infinite number of even harmonics. A problem arises if the generated harmonic is close to the sample frequency, $f_s$ it would be aliased into zero frequency creating a static measurement error. This cannot be removed by a lowpass filter and has to be considered in implementations.
+
+\end{document}
