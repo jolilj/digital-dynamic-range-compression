@@ -16,7 +16,7 @@ showing that only the second harmonic is generated, which can be suppressed by a
 For the magnitude operation the Fourier expansion of a sinusoidal input yields
 %================================
 \begin{align}
-\left |\sin{\omega t}\right | = \frac{2}{\pi}\left (1 - \sum_{n=1}^{\infty}\frac{4}{4n^2-1} n\omega t \right) 
+\left |\sin{\omega t}\right | = \frac{2}{\pi}\left (1 - \sum_{n=1}^{\infty}\frac{4}{4n^2-1} \text{cos} (2n\omega t) \right) 
 \end{align}
 %================================
 introducing an infinite number of even harmonics. A problem arises if the generated harmonic is close to the sample frequency, $f_s$ it would be aliased into zero frequency creating a static measurement error. This cannot be removed by a lowpass filter and has to be considered in implementations.
