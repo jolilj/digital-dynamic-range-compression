@@ -1,0 +1,23 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\FloatBarrier
+\section{Theory} \label{theory}
+
+\subfile{\rootdir/sections/theory_definitions}
+
+\subfile{\rootdir/sections/theory_topologies}
+
+\subfile{\rootdir/sections/theory_static}
+
+\subfile{\rootdir/sections/theory_level_detection}
+
+\subfile{\rootdir/sections/theory_smoothing}
+
+\subfile{\rootdir/sections/theory_metrics}
+
+\end{document}

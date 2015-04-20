@@ -29,12 +29,20 @@ The task is then to find the time-variant $g_n$ corresponding to the desired beh
 	\item \textbf{Knee width}  $W$ - Controls the sharpness of the knee.
 	\item \textbf{Make-up gain}  $M$ - The amount of gain applied in the final step to balance the perceived loudness of the output signal with the input signal.
 \end{itemize}
-\item{Temporal}
+\item{Level detection}
+	\begin{itemize}
+	\item \textbf{Level attack/release time} $\tau_{la}, \tau_{lr}, \tau_{av}$ - Determines the overall smoothness and sensitivity of the level detector (Labelling depends on method used)
+	\end{itemize}
+\item{Smoothing}
 	\begin{itemize}
 	\item \textbf{Attack time} $\tau_{a}$ - Determines how quickly the compression ratio is applied.
 	\item \textbf{Release time} $\tau_{r}$ - Determines how quickly the compression is released as the input signal drops below the threshold level.
 	\item \textbf{Look-ahead} $d_{la}$ - Difference in delay between direct signal path and side chain. 
 	\end{itemize}
 \end{itemize}
+
+Logarithmic quantities in capital letters
+
+Other constants such as f_s, T etc
 
 \end{document}
