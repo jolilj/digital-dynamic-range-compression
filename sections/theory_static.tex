@@ -7,7 +7,9 @@
 
 \FloatBarrier
 \subsection{Static Characteristics}
-The static characteristics are depicted in Fig.~\ref{fig:typical_static_detailed}. Do note that the static curve is defined in the log-domain, hence capital letters. For signal levels below $T$ the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$. 
+The gain factor $g_n$ is calculated based on the level of the signal. In order to derive the $g_n$, the desired input/output relation of the signal level is defined. This is referred to as the static curve of the DDRC.
+\subsubsection{Static Curve}
+The static curve is depicted in Fig.~\ref{fig:typical_static_detailed}. For signal levels below $T$ the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$.  
 
 %================================
 \begin{figure}
@@ -19,4 +21,63 @@ The static characteristics are depicted in Fig.~\ref{fig:typical_static_detailed
 
 Observing the discontinuity at $T$, a smooth transition into the compressed curve, with slope $1/R$, is motivated. This is achieved by replacing the sharp knee by a second degree polynomial\cite{frindle1996implementation}\cite{reiss2012tutorial} across the knee. The knee width $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(X)$ to be continuous and have continuous derivatives at the points $X=T-W/2$ and $X=T+W/2$. A knee width of $W=0$ corresponds to a sharp knee. 
 %================================
+\subsubsection{Gain Computer} \label{gain_computer}
+The gain computer, Fig. ~\ref{fig:block_genericDDRC}, calculates logarithmic gain factor, $G_n(X)$, given the static characteristics and the signal. Derivation of $G_n$ is done by first examining the static curve of Fig.~\ref{fig:typical_static_detailed} and calculating the intermediate polynomial which yields the following piecewise continuous function
+%================================
+\begin{equation} \label{eq:gaincomp}
+Y(X) = \begin{cases}
+    X & \quad \text{if }X> T-\frac{1}{2}W \\[0.8em]
+    \dfrac{X+(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
+\end{cases}
+\end{equation}
+%================================
+Now  by expressing equation \eqref{eq:gainfactor} in the logarithmic domain
+%================================
+\begin{align}
+y_n &= x_ng_n   \\
+\log|y_n| & = \log|x_n| + \log|g_n|   \\
+Y &= X + G \label{eq:cv}
+\end{align}
+%================================
+and by inserting equation (\ref{eq:cv}) into (\ref{eq:gaincomp})
+%================================
+\begin{equation}
+X+G = \begin{cases}
+    X & \quad \text{if }X > T-\frac{1}{2}W \\[0.8em]
+    X + \dfrac{(1/R-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
+\end{cases}
+\end{equation}
+%================================
+Solving for $G$ yields
+\begin{equation} \label{eq:c}
+G = \begin{cases}
+    0 & \quad \text{if }X >T -\frac{1}{2}W \\[0.8em]
+    \dfrac{(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
+    \left(R^{-1}-1\right)\left(X-T\right) & \quad \text{if } X > T + \frac{1}{2}W.
+ \end{cases}
+\end{equation}
+%================================
+The typical gain factor curve is depicted in Fig.~\ref{fig:typical_gain_detailed}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_gain_detailed}}
+\caption{Typical gain curve in log domain.}
+\label{fig:typical_gain_detailed}
+\end{figure}
+%================================
+
+The make-up gain, $M$, is defined as a constant amount of gain added to the signal. Since the compressor lowers the amplitude of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input.
+
+With instant gain reduction the wave shape of the input signal is changed introducing higher harmonics, i.e. distortion, see Fig. \ref{fig:instant_comp}. To avoid this the compressor needs to be operating on the envelope of the signal which is achieved by introducing the level detector.
+%================================
+\begin{figure}[ht]
+\centering
+\subfile{\rootdir/figures/fig_instant_comp}
+\caption{Instant compression changes the shape of the wave and thus introduces distortion.} 
+\label{fig:instant_comp}
+\end{figure}
+%================================
+
 \end{document}

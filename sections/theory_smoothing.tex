@@ -5,10 +5,130 @@
 
 \begin{document}
 
-\subsection{Smoothing}
+\subsection{Gain Smoothing}
+To minimise distortion due to non-linear operations, see Appendix ~\ref{non_lin_ops}, and further smooth the control signal various filters are introduced in the end of the side-chain operationg in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion.
+%================================
+\subsubsection{Adaptive Filter} \label{adaptive_filter}
+A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter as depicted in \cite{mcnally1984}, can be seen in ~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
+%================================
+\begin{equation}
+g_n = \begin{cases}
+    \alpha_{a} g'_n + (1-\alpha_{a}) g_{n-1} 	& g'_n > g_{n-1} \\
+    \alpha_{r} g'_n + (1-\alpha_{r}) g_{n-1} 	& g'_n \leq g_{n-1}
+\end{cases}
+\label{eq:mcnally_gain_smoothing}
+\end{equation}
+%================================
+The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02}\cite{dagx11}\cite{zolzer1997digital}\cite{zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic}\cite{dafx02}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_mcnally_theory_adap_filter}}
+\caption{Block diagram of the adaptive filter in \cite{mcnally1984dynamic}}
+\label{fig:block_mcnally_theory_rms}
+\end{figure}
+%================================
+\subsubsection{Butterworth-Thomson Low-pass Filter}
+In \cite{stikvoort1986digital} the calculated gain in the linear domain is smoothed by a fourth-order transitional Butterworth-Thomson low-pass filter, implemented in two steps as
+%=========================
+\begin{equation}\label{eq:stikvoort_attack}
+\begin{split}
+u_k &= b_0 x_k + b_1 x_{k-1} + b_2 x_{k-2} + a_1 u_{k-1} + a_2 u_{k-2}\\
+y_k &= d_0 u_k + d_1 u_{k-1} + d_2 u_{k-2} + c_1 y_{k-1} + c_2 y_{k-2}.
+\end{split}
+\end{equation}
+%=========================
+With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a minus sign, print error in original!} the group delay is about 35 ms (in the low frequency limit, as the filter is not linear phase) and cut off frequency 8.5 Hz for a sample rate of 44.100 Hz. The step response can be seen in Fig.~\ref{fig:step_stikvoort_attack}. \todo{A slight static error can be seen, probably due to insufficient accuracy in the coefficents given in stikvoorts original paper. Comment instability?}
+%=========================
+\begin{table}[h]
+\begin{center}
+\caption{Coefficents for Stikvoort gain smoothing}
+\label{tab:coeff_stikvoort_attack}
+ \begin{tabular}{ c l | c l}	
+    \hline
+    $b_0$ & $0.1308 \cdot 10^{-5}$ &              &                          \\ \hline
+    $b_1$ & $0.2616 \cdot 10^{-5}$ & $a_1$ & 1.9967655     \\ \hline
+    $b_2$ & $0.1308 \cdot 10^{-5}$ & $a_2$ & -0.99677073  \\ \hline \hline
 
-List of smoothing schemes used in different literature. Log vs Lin etc
+    $d_0$ & $0.9464  \cdot 10^{-6}$   &         &                             \\ \hline
+    $d_1$ & $0.18928 \cdot 10^{-5}$ & $c_1$ & 1.9962282     \\ \hline
+    $d_2$ & $0.9464  \cdot 10^{-6}$  & $c_2$ & -0.99623194  \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+%=========================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/step_stikvoort_attack}}
+\caption{Step and downstep response of attack filter as defined in Eq.~\eqref{eq:stikvoort_attack}, with coefficients as in Tab.~\ref{tab:stikvoort_attack}.}
+\label{fig:step_stikvoort_attack}
+\end{figure}
+%=========================
+\subsubsection{Linear Smoothing in Log Domain}
+In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as
+\begin{equation}
+\begin{split}
+Z_n &= \text{max}(X_n, Y_{n-1} - A_{\text{rel}} H_{n-1} )\\
+Y_n &= \text{min}(Z_n, Y_{n-1} + A_{\text{att}}) \\
+H_n &=
+\begin{cases}
+    \text{min}(1,A_{\text{hold}} + H_{n-1})	& Y_n < Y_{n-1}; \\
+    A_{\text{hold}}					& \text{otherwise}
+\end{cases} \\
+\end{split}
+\end{equation}
+where
+\begin{equation}
+\begin{split}
+A_{\text{att}} &= \frac{1}{f_s \tau_{\text{att}}} \\
+A_{\text{rel}} &= \frac{1}{f_s \tau_{\text{rel}}} \\
+A_{\text{hold}} &= \frac{0.5}{f_s \tau_{\text{hold}}}. \\
+\end{split}
+\end{equation}
+and the time constants $\tau_{\text{att}}, \tau_{\text{rel}}$ and $\tau_{\text{hold}}$ are given in seconds per dBFS. The attack and release trajectories are linear in the log domain, as can be seen in Fig.~\ref{fig:step_frindle_gain}. In the release phase the hold timer $H_n$ scales the release time constant up to it's final value. The goal of this is to get a smooth release characteristic with low distortion for low frequency content and a smooth transition from hold to release phase.
+%================================
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/step_frindle_gain}}
+\caption{Frindle \& Easty gain smoothing step and downstep response}
+\label{fig:step_frindle_gain}
+\end{figure}
+%================================
+\subsubsection{Smooth Decoupled and Branching Filters}
+In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level detection}, although it is a \emph{smoothing filter} applied to the calculated gain factor, $G'_n$. Two different implementations are proposed, here named in accordance with \cite{reiss2012tutorial}.
+\begin{itemize}
+\item{Smooth decoupled filter}
+\item{Smooth branching filter}
+\end{itemize}
+The difference equation of the smooth decoupled filter is
+%================================
+\begin{equation}
+\begin{split}
+Z_n &= \begin{cases}
+   G'_n								& G'_n > Z_{n-1} \\
+    \alpha_{r} C'_n + (1-\alpha_{r}) Z_{n-1} 	& G'_n \leq Z_{n-1}
+\end{cases} \\
+G_n &= \alpha_{a} Z_n + (1-\alpha_{a}) G_{n-1}
+\end{split}
+\end{equation}
+%================================
+which result in a smooth transition between the attack and release phase without discontinuities. The name is poorly chosen since it in fact couples the attack and release parameters in the release phase. In \cite{reiss2012tutorial} it is derived from it's analogue counterpart, hence the name, and it is shown that the actual release time is $\approx \tau_a + \tau_r$.
 
+To obtain a filter with attack and release parameters independent of each other the branching filter, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
+%================================
+\begin{equation}
+G_n = \begin{cases}
+    \alpha_{a} G'_n + (1-\alpha_{a}) G_{n-1} 	& G'_n > G_{n-1} \\
+    \alpha_{r} G'_n + (1-\alpha_{r}) G_{n-1} 	& G'_n \leq G_{n-1}.
+\end{cases}
+\end{equation}
+%================================
+As shown in ~\ref{reiss2012tutorial} the branching conditions does however introduce a discontinuity where the attack phase switches to the release phase. The step and downstep response in Fig.~\ref{fig:step_reiss_filter} shows the different release trajectories and the discontinuity of the branching filter at the downstep.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/step_reiss_filter}}
+\caption{Step and downstep response of the decoupled and branching filter, with $\tau_a = 50$ ms, $\tau_r = 150$ ms}
+\label{fig:step_reiss_filter}
+\end{figure}
+%================================
+\subsubsection{Time Constants and Look-ahead}
 The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2\% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
 %================================
 \begin{align}
@@ -21,7 +141,7 @@ Another definition of the time constant, used in a more general DRC context ~\ci
 %================================
 \begin{figure}
 \centerline{\subfile{\rootdir/figures/typical_envelope_detailed}}
-\caption{Typical dynamic characteristics of a DDRC. With a look-ahead delay sharp transients are effectively compressed.}
+\caption{Typical temporal characteristics of a DDRC. With a look-ahead delay sharp transients are effectively compressed. The attack and release trajectories are highly dependent on the type of level detection and gain smoothing.}
 \label{fig:typical_envelope_detailed}
 \end{figure}
 %================================
@@ -33,4 +153,5 @@ Another definition of the time constant, used in a more general DRC context ~\ci
 \end{figure}
 %================================
 As can be seen in Fig.~\ref{fig:typical_envelope_detailed} the look-ahead, $d_{la}$, is defined as the applied delay to the input signal before the gain reduction, thus having the gain applied time-shifted. Sharp transients can thus be compressed effectively despite the smooth attack phase.
+%================================
 \end{document}
