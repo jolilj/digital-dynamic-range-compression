@@ -71,12 +71,12 @@
 		\chainin (m02) [join=by dspline];
 		\chainin (m22) [join=by dspline];
 		\chainin (m23) [join=by dspconn];
-		\chainin (m25) [join=by dspconn];
-		\chainin (m27) [join=by dspconn];
-		\chainin (m28) [join=by dspline];
-		\chainin (m08) [join=by dspconn];
 	\end{scope}
 	
+	\draw[dspconn] (m23) -- node[midway, above]{$F_n$}(m25);
+	\draw[dspconn] (m25) -- node[midway, above]{$G'_n$}(m27);
+	\draw[dspline](m27) -- (m28);
+	\draw[dspconn] (m28) -- node[midway, right]{$g_n$}(m08);
 	
 	\begin{scope}[start chain]
 		\chainin (m02);
