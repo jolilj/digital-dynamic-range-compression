@@ -1,0 +1,21 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Static Characteristics}
+The static characteristics are depicted in Fig.~\ref{fig:typical_static_detailed}. Do note that the static curve is defined in the log-domain, hence capital letters. For signal levels below $T$ the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$. 
+
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_static_detailed}}
+\caption{Typical static characteristics of a DDRC}
+\label{fig:typical_static_detailed}
+\end{figure}
+%================================
+
+Observing the discontinuity at $T$, a smooth transition into the compressed curve, with slope $1/R$, is motivated. This is achieved by replacing the sharp knee by a second degree polynomial\cite{frindle1996implementation}\cite{reiss2012tutorial} across the knee. The knee width $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(X)$ to be continuous and have continuous derivatives at the points $X=T-W/2$ and $X=T+W/2$. A knee width of $W=0$ corresponds to a sharp knee. 
+%================================
+\end{document}
