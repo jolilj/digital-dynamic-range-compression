@@ -1,0 +1,40 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Definitions}\label{theory_definitions}
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. In a compressor $0<g_n\leq 1$. The input signal, in general delayed, is multiplied by the gain factor, see Fig.~\ref{fig:block_gain},
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/block_gain}}
+\caption{Input signal multiplied by time-variant gain factor}
+\label{fig:block_gain}
+\end{figure}
+%================================
+\begin{align}
+y_n = g_nx_{n-d_{la}}.
+\label{eq:gainfactor}
+\end{align}
+%================================
+The task is then to find the time-variant $g_n$ corresponding to the desired behaviour of the DDRC. In order to do so, the following parameters, corresponding to static and temporal characteristics, are introduced.
+%================================
+\begin{itemize}
+\item{Static}
+	\begin{itemize}
+	\item \textbf{Threshold} $T$ - The defined limit above which compression is applied.
+	\item \textbf{Ratio} $R$ - The input/output ratio above the threshold level.
+	\item \textbf{Knee width}  $W$ - Controls the sharpness of the knee.
+	\item \textbf{Make-up gain}  $M$ - The amount of gain applied in the final step to balance the perceived loudness of the output signal with the input signal.
+\end{itemize}
+\item{Temporal}
+	\begin{itemize}
+	\item \textbf{Attack time} $\tau_{a}$ - Determines how quickly the compression ratio is applied.
+	\item \textbf{Release time} $\tau_{r}$ - Determines how quickly the compression is released as the input signal drops below the threshold level.
+	\item \textbf{Look-ahead} $d_{la}$ - Difference in delay between direct signal path and side chain. 
+	\end{itemize}
+\end{itemize}
+
+\end{document}
