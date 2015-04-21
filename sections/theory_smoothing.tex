@@ -4,12 +4,12 @@
 \providecommand{\rootdir}{..}
 
 \begin{document}
-
+\FloatBarrier
 \subsection{Gain Smoothing}
-To minimise distortion due to non-linear operations, see Appendix ~\ref{non_lin_ops}, and further smooth the control signal various filters are introduced in the end of the side-chain operationg in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion.
+To further smooth the control signal, various filters are introduced in the end of the side-chain operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion.
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
-A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter as depicted in \cite{mcnally1984}, can be seen in ~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
+A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter as depicted in \cite{mcnally1984dynamic}\todo{replace the control block with $z^{-1}$ to illustrate the problem mentioned below (Fig.10 Mcnally)}, can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
 %================================
 \begin{equation}
 g_n = \begin{cases}
@@ -19,16 +19,16 @@ g_n = \begin{cases}
 \label{eq:mcnally_gain_smoothing}
 \end{equation}
 %================================
-The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02}\cite{dagx11}\cite{zolzer1997digital}\cite{zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic}\cite{dafx02}.
+The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02}\cite{dafx11}\cite{zolzer1997digital}\cite{zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic}\cite{dafx02}.
 %================================
 \begin{figure}
 \centerline{\subfile{\rootdir/figures/block_mcnally_theory_adap_filter}}
 \caption{Block diagram of the adaptive filter in \cite{mcnally1984dynamic}}
-\label{fig:block_mcnally_theory_rms}
+\label{fig:block_mcnally_theory_adap_filter}
 \end{figure}
 %================================
 \subsubsection{Butterworth-Thomson Low-pass Filter}
-In \cite{stikvoort1986digital} the calculated gain in the linear domain is smoothed by a fourth-order transitional Butterworth-Thomson low-pass filter, implemented in two steps as
+In \cite{stikvoort1986digital} the calculated gain in the linear domain is smoothed by a fourth-order transitional Butterworth-Thomson low-pass filter, cascaded as
 %=========================
 \begin{equation}\label{eq:stikvoort_attack}
 \begin{split}
@@ -103,7 +103,7 @@ The difference equation of the smooth decoupled filter is
 \begin{split}
 Z_n &= \begin{cases}
    G'_n								& G'_n > Z_{n-1} \\
-    \alpha_{r} C'_n + (1-\alpha_{r}) Z_{n-1} 	& G'_n \leq Z_{n-1}
+    \alpha_{r} G'_n + (1-\alpha_{r}) Z_{n-1} 	& G'_n \leq Z_{n-1}
 \end{cases} \\
 G_n &= \alpha_{a} Z_n + (1-\alpha_{a}) G_{n-1}
 \end{split}
@@ -128,30 +128,5 @@ As shown in ~\ref{reiss2012tutorial} the branching conditions does however intro
 \label{fig:step_reiss_filter}
 \end{figure}
 %================================
-\subsubsection{Time Constants and Look-ahead}
-The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2\% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
-%================================
-\begin{align}
-1-e^{-t / \tau}\rvert_{t=\tau} = 1-e^{-1} \approx 63.2\% \label{eq:time_const}
-\end{align}
-%================================
-If not specified otherwise this definition will be used throughout the thesis.
 
-Another definition of the time constant, used in a more general DRC context ~\cite{mcnally1984dynamic}, is the time it takes to achieve 90\% of the final gain change. These time constants will be referred to as $\tau_{a90}$ and $\tau_{r90}$ for attack and release respectively, see Fig.~\ref{fig:time_constants}.
-%================================
-\begin{figure}
-\centerline{\subfile{\rootdir/figures/typical_envelope_detailed}}
-\caption{Typical temporal characteristics of a DDRC. With a look-ahead delay sharp transients are effectively compressed. The attack and release trajectories are highly dependent on the type of level detection and gain smoothing.}
-\label{fig:typical_envelope_detailed}
-\end{figure}
-%================================
-%================================
-\begin{figure}
-\centerline{\subfile{\rootdir/figures/time_constants}}
-\caption{Illustration of the defined time constants.}
-\label{fig:time_constants}
-\end{figure}
-%================================
-As can be seen in Fig.~\ref{fig:typical_envelope_detailed} the look-ahead, $d_{la}$, is defined as the applied delay to the input signal before the gain reduction, thus having the gain applied time-shifted. Sharp transients can thus be compressed effectively despite the smooth attack phase.
-%================================
 \end{document}

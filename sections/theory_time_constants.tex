@@ -1,0 +1,34 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsubsection{Time Constants and Look-ahead}
+The time constants, $\tau_{att}$ and $\tau_{rel}$, referred to as attack time and release time, can be seen as a measure of the reaction time of the compressor. There are various ways of defining them. In \cite{mcnally1984dynamic} the attack time is defined as the time it takes to achieve 63.2\% of the final change in gain in accordance with the conventional notion. The same applies to the release time such as the time it takes for the output to reach 63.2\% of the input value as it has decreased below the threshold level. The definitions can be understood by noting that with exponential characteristics
+%================================
+\begin{align}
+1-e^{-t / \tau}\rvert_{t=\tau} = 1-e^{-1} \approx 63.2\% \label{eq:time_const}
+\end{align}
+%================================
+If not specified otherwise this definition will be used throughout the thesis.
+
+Another definition of the time constant, used in a more general DRC context ~\cite{mcnally1984dynamic}, is the time it takes to achieve 90\% of the final gain change. These time constants will be referred to as $\tau_{a90}$ and $\tau_{r90}$ for attack and release respectively \todo{we will probably not use these definitions, so this can be removed...}, see Fig.~\ref{fig:time_constants}.
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/typical_envelope_detailed}}
+\caption{Typical temporal characteristics of a DDRC. With a look-ahead delay sharp transients are effectively compressed. The attack and release trajectories are highly dependent on the type of level detection and gain smoothing.}
+\label{fig:typical_envelope_detailed}
+\end{figure}
+%================================
+%================================
+\begin{figure}
+\centerline{\subfile{\rootdir/figures/time_constants}}
+\caption{Illustration of the defined time constants.}
+\label{fig:time_constants}
+\end{figure}
+%================================
+As can be seen in Fig.~\ref{fig:typical_envelope_detailed} the look-ahead, $d_{la}$, is defined as the applied delay to the input signal before the gain reduction, thus having the gain applied time-shifted. Sharp transients can thus be compressed effectively despite the smooth attack phase.
+%================================
+
+\end{document}
