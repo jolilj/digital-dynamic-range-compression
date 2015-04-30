@@ -26,7 +26,7 @@ The gain computer, Fig. ~\ref{fig:block_genericDDRC}, calculates logarithmic gai
 %================================
 \begin{equation} \label{eq:gaincomp}
 Y(X) = \begin{cases}
-    X & \quad \text{if }X> T-\frac{1}{2}W \\[0.8em]
+    X & \quad \text{if }X<T-\frac{1}{2}W \\[0.8em]
     \dfrac{X+(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
     T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
 \end{cases}
@@ -44,7 +44,7 @@ and by inserting equation (\ref{eq:cv}) into (\ref{eq:gaincomp})
 %================================
 \begin{equation}
 X+G = \begin{cases}
-    X & \quad \text{if }X > T-\frac{1}{2}W \\[0.8em]
+    X & \quad \text{if }X < T-\frac{1}{2}W \\[0.8em]
     X + \dfrac{(1/R-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
     T+ R^{-1}(X-T) & \quad \text{if } X > T + \frac{1}{2}W.
 \end{cases}
@@ -53,7 +53,7 @@ X+G = \begin{cases}
 Solving for $G$ yields
 \begin{equation} \label{eq:c}
 G = \begin{cases}
-    0 & \quad \text{if }X >T -\frac{1}{2}W \\[0.8em]
+    0 & \quad \text{if }X <T -\frac{1}{2}W \\[0.8em]
     \dfrac{(R^{-1}-1)(X-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |X-T| \leq \frac{1}{2}W\\[1.2em]
     \left(R^{-1}-1\right)\left(X-T\right) & \quad \text{if } X > T + \frac{1}{2}W.
  \end{cases}

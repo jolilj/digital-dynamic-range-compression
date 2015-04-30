@@ -1,0 +1,26 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+%================================
+\subsection{Test Signal} \label{test_signal}
+To comply with the metrics proposed the test signal should exhibit the following properties
+\begin{itemize}
+\item{The signal should be a product of an envelope $> 0$ and a fine structure}
+\item{ECR measures the modulating depth of the signal in the logarithmic domain. It is therefor beneficial having the envelope defined in the logarithmic domain}
+\end{itemize}
+\todo{Should we let the envelope be modulated above threshold and test FES aswell?}
+
+The test signal $x_n$ is thus constructed as
+%================================
+\begin{align}
+E_n &= A_{\text{max}} + \left(A_{\text{min}} - A_{\text{max}}\right)\left(1+\cos \left(2\pi\frac{f_m}{f_s}n\right)\right)\\
+e_n &= 10^{E_n/20}\\
+f_n &= \sin \left( 2\pi \frac{f_c}{f_s} t\right) \\
+x_n &= e_n \cdot f_n
+\end{align}
+%================================
+where $A_{\text{max}}$ is the upper bound and $A_{\text{min}}$ is the lower bound of the envelope in the logarithmic domain, $f_m$ is the modulation frequency and $f_c$ the carrier, or fine structure, frequency.
+\end{document}
