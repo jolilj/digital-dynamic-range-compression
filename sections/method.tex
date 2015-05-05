@@ -3,5 +3,27 @@
 \begin{document}
 
 \section{Method}
+\begin{itemize}
+\item{Define ideal compression}
+\begin{itemize}
+	\item{$x(t) = e(t)f(t)$}
+	\item{Envelope modulated in log domain}
+\end{itemize}
+\item{Comparison of envelope detection filters}
+\begin{itemize}
+	\item{An arbitrary modulation frequency, $\sim 1-5$ Hz}	
+	\item{Define a frequency range based on sample frequency. Simplex algroithm for determining best parameters based on carrier frequency in the mid-range}
+	\item{Sweep across the frequency range and compare evaluated envelope with original envelope by normalized euclidean distance}
+	\item{Discuss eventual up-sampling since introduced harmonics causes measurement error in the peak detection method}
+\end{itemize}
+\item{Comparison of compressor topologies}
+\begin{itemize}
+	\item{Same setup as above, but also sweep across multiple modulation frequencies}
+	\item{Measure euclidean norm, FEIS (AND FES??),THD and ECR}
+\end{itemize}
+\end{itemize}
 
+\subfile{\rootdir/sections/method_ideal_comp}
+\subfile{\rootdir/sections/method_fies}
+\subfile{\rootdir/sections/method_test_signal}
 \end{document}

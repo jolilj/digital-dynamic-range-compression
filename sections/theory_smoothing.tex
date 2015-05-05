@@ -58,12 +58,12 @@ With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a
 %=========================
 \begin{figure}
 \centerline{\subfile{\rootdir/figures/step_stikvoort_attack}}
-\caption{Step and downstep response of attack filter as defined in Eq.~\eqref{eq:stikvoort_attack}, with coefficients as in Tab.~\ref{tab:stikvoort_attack}.}
+\caption{Step and downstep response of attack filter as defined in Eq.~\eqref{eq:stikvoort_attack}, with coefficients as in Tab.~\ref{tab:coeff_stikvoort_attack}.}
 \label{fig:step_stikvoort_attack}
 \end{figure}
 %=========================
 \subsubsection{Linear Smoothing in Log Domain}
-In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as
+In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as\todo{FIX NOTATION!}
 \begin{equation}
 \begin{split}
 Z_n &= \text{max}(X_n, Y_{n-1} - A_{\text{rel}} H_{n-1} )\\

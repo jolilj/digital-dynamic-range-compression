@@ -5,24 +5,42 @@
 
 \begin{document}
 %================================
-\subsection{Ideal Compression}
-In order to develop a method for comparing DDRC designs a definition of ideal compression is needed. Let $x$ be the input and $y$ be the compressed output. Further assume that $x$ can be expressed as a product of it's envelope $E$ and fine-structure $F$ \begin{align}
-x_n = E_nF_n.
-\end{align}
-The idea is illustrated in Fig. ~\ref{}. Let $G(x)$ be the gain computer, see section \ref{gain_computer}, and $g(x) = 10^{G/20}$. The ideal compression is then given by
-\begin{align}
-y_{n,I} \equiv g(E_n) F_n. 
-\end{align}
-
-
 \subsection{Fidelity of Ideal Envelope Shape} \label{fes}
-In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. The Pearson correlation coefficient is defined as
-\begin{align}
-r_{xy} = \dfrac{\sum(x-\bar{x})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^2}\sqrt{\sum(y-\bar{y})^2}}
-\end{align}
-where $\bar{x}$ and $\bar{y}$ denote the mean value of $x$ and $y$, respectively. To relate to ideal compression, the Fidelity of Ideal Envelope Shape (FEIS) coefficient is defined as
+In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. 
 
-\begin{align}
-c_{f} = \dfrac{\sum(g(E)F-\bar{})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^2}\sqrt{\sum(y-\bar{y})^2}}
+The Fidelity of Envelope Shape intends to measure the correlation between the input and output envelope assuming ideal compression, see section \ref{ideal_compression}.
+With $O(t)$ is the output envelope, $G(t)$ the gain and $E(t)$ the input envelope in the logarithmic domain the input output relationship can be expressed as
+%================================
+ \begin{align}
+O(t) = G(t) + E(t).
+\label{eq:out_env}
 \end{align}
+%================================
+Assuming the envelope is above the threshold, $T$, thus escaping the discontinuity at the knee, the gain can be expressed as, see section ~\ref{gain_computer},
+%================================
+\begin{align}
+G(t) = (R^{-1}-1)(X(t)-T) = C + (R^{-1}-1)\tilde{E}(t)
+\label{eq:gain_env}
+\end{align}
+%================================
+where $C = (1-R^{-1})T$, $R$ being the compression ratio and $\tilde{E}$ is the smoothed envelope detected by the compressor. Eq. \eqref{eq:out_env} with Eq. \eqref{eq:gain_env} yields
+\begin{align}
+O(t) = C + (R^{-1}-1)\tilde{E}(t) + E(t).
+\end{align}
+%================================
+The Fidelity of Envelope Shape is thus defined as the correlation between $E(t)$ and $O(t)$ using the Pearson correlation coefficient
+\begin{align}
+FES = \dfrac{\sum(E-\overline{E})(O-\overline{O})}{\sqrt{\sum(E-\overline{E})^2}\sqrt{\sum(O-\overline{O})^2}}
+\end{align}
+where $\overline{E}$ and $\overline{O}$ denote the mean value of $E$ and $O$, respectively.
+%================================
+
+Another approach would be to include the nonlinearity of the dynamic range mapping introduced by either a smooth or sharp knee. Assuming the input signal can be expressed as a product of it's envelope and fine structure, $x  = e\cdot f$, see section \ref{ideal_compression}, we thus propose measuring the correlation between the ideally compressed envelope $e_{I}=\dfrac{y_{I}}{f} = g(e)$ and the compressed envelope  given by $e_c = \dfrac{y}{f}$. The Fidelity of Ideal Envelope Shape (FEIS) coefficient is defined as
+%================================
+\begin{align}
+c_{f} = \dfrac{\sum\left(E_I-\overline{E_I}\right)\left(E_c-\overline{E_c}\right)}{\sqrt{\sum\left(E_I-\overline{E_I}\right)^2}\sqrt{\sum\left(E_c-\overline{E_c}\right)^2}}
+\end{align}
+%================================
+where $E_I$ and $E_c$ are the logarithm of $e_I$ and $e_c$, respectively.
+\todo[inline]{Eftersom vi nu jämför det idealt komprimerade envelopet med det "uppskattade" komprimerade envelopet så är det ju egentligen ganska dumt att använda korrelation..dom ska ju vara lika -.-}
 \end{document}
