@@ -1,0 +1,29 @@
+\documentclass[../main2.tex]{subfiles}
+\providecommand{\rootdir}{..}
+\begin{document}
+
+\subsection{Parameter Optimization}
+In \cite{reiss2012tutorial} the placement, type and domain of the level detector is partly motivated by comparing step and down-step response of the compressors with equal parameter settings. The fact that various topologies exhibit different characteristics with equal parameters does however bias the result. 
+
+In Fig.~\ref{fig:param_opt} two compressor topologies presented in \cite{reiss2012} are examined, the recommended branching log domain peak detector placed after the gain computer (1) and the linear domain return to zero peak detector placed before the gain computer (2). The left plot shows the input and output of the two compressors with equal parameter settings. In the right plot the parameter settings of the second compressor has been optimized using the euclidean distance to the output of the first compressor as cost function. 
+
+It is evident that the two compressors in fact show similar behaviour and thus overcoming the differences observed in the left plot thus motivating the use of parameter optimization when comparing compressor design.
+%================================
+\begin{figure}[ht]
+\captionsetup*{justification=centering}
+\begin{minipage}[t]{.5\textwidth}
+ \centering
+\subfile{\rootdir/figures/param_opt_left}
+\caption*{(a)} 
+\label{fig:comp_input}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\subfile{\rootdir/figures/param_opt_right}
+\caption*{(b)} 
+\end{minipage}
+\caption{The output of two feed forward compressor topologies, log domain decoupled peak detector after gain computer (1) and linear domain return to zero peak detector before gain computer (2), as discussed in \cite{reiss2012tutorial}. The left plot, (a), shows the step and down-step response of the compressors with equal parameter settings: $T = -5$ dBFS, $R=4$, $W=0$ dBFS, $\tau_a = 20$ ms, $\tau_r = 100$ ms and $d_{la}=0$ ms. The right plot, (b), shows the response of the same compressors where the parameters of the second (2) compressor has been optimized to $T = -8.9$ dBFS, $R=1.73$, $W=15.7$ dBFS, $\tau_a = 22.4$ ms, $\tau_r = 151$ ms and $d_{la}=5$ ms.}
+\label{fig:param_opt}
+\end{figure}
+%================================
+\end{document}
