@@ -6,38 +6,42 @@
 \begin{document}
 %================================
 \subsection{Ideal Compression} \label{ideal_compression}
-In order to develop a method for comparing DDRC designs, a definition of ideal compression is needed. Let $x$ be the input and $y$ be the compressed output. Further assume that $x$ can be expressed as a product of it's envelope $e$ and fine-structure $f$ \begin{align}
+Let $x$ be the input and $y$ be the compressed output. Further assume that $x$ can be expressed as a product of an \emph{envelope} $e$ and a real-valued \emph{fine structure} $f$ 
+%================================
+\begin{align}
 x_n = e_n\cdot f_n.
 \end{align}
-The idea is illustrated in Fig. ~\ref{fig:signal_env_fine_struct}, ~\ref{fig:signal_fine_struct} and ~\ref{fig:signal_env}. 
+%================================
+as illustrated in Fig. ~\ref{fig:signal_env_fine_struct}, ~\ref{fig:signal_env} and~\ref{fig:signal_fine_struct} . 
 
 Let $G(x)$ be the gain computer, see section \ref{gain_computer}, and $g(x) = 10^{G/20}$. The ideal compression is then given by
 \begin{align}
 y_{n,I} \equiv g(e_n) f_n. 
 \end{align}
 %================================
-\begin{figure}[ht]
-\centerline{\subfile{\rootdir/figures/signal_env_fine_struct}}
-\caption{Signal $x_n = e_n\cdot f_n.$}
-\label{fig:signal_env_fine_struct}
-\end{figure}
-%================================
-\begin{figure}[ht]
+\begin{figure}
 \captionsetup{justification=centering}
-\centerline{
-\begin{minipage}[t]{.5\textwidth}
- \centering
-\subfile{\rootdir/figures/signal_fine_struct}
-\caption{Fine structure of the signal} 
-\label{fig:signal_fine_struct}
-\end{minipage}%
-\begin{minipage}[t]{.5\textwidth}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/signal_env_fine_struct}}
+\caption{Complete signal}
+\label{fig:signal_env_fine_struct}
+\end{subfigure}
+\par\bigskip
+\begin{subfigure}{.5\linewidth}
 \centering
 \subfile{\rootdir/figures/signal_env}
-\caption{Envelope of the signal} 
+\caption{Envelope}
 \label{fig:signal_env}
-\end{minipage}
-}
+\end{subfigure}
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/signal_fine_struct}
+\caption{Fine structure}
+\label{fig:signal_fine_struct}
+\end{subfigure}%
+\caption{Signal $x_n = e_n\cdot f_n$ split into it's envelope $e_n$ and fine structure $f_n$.}
+\label{fig:analytic_signal}
 \end{figure}
 %================================
 \end{document}

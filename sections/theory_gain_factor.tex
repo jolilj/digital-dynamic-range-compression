@@ -1,0 +1,24 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Gain Factor}
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. The input signal, in general delayed by $d_\text{la}$, is multiplied by the gain factor, see Fig.~\ref{fig:block_gain},
+%================================
+\begin{align}
+y_n = g_nx_{n-d_\text{la}}.
+\label{eq:gainfactor}
+\end{align}
+%================================
+The task is then to find the time-variant gain factor $g_n$ corresponding to the desired behaviour of the DDRC. 
+%================================
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/block_gain}}
+\caption{Input signal multiplied by time-variant gain factor.}
+\label{fig:block_gain}
+\end{figure}
+%================================
+\end{document}

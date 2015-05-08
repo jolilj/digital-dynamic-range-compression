@@ -4,11 +4,11 @@
 \providecommand{\rootdir}{..}
 
 \begin{document}
-%================================
-\subsection{Fidelity of Ideal Envelope Shape} \label{fes}
+\subsection{Metrics}
+\subsubsection{Fidelity of Ideal Envelope Shape} \label{fes}
 In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. 
 
-The Fidelity of Envelope Shape intends to measure the correlation between the input and output envelope assuming ideal compression, see section \ref{ideal_compression}.
+The \emph{fidelity of envelope shape} intends to measure the correlation between the input and output envelope assuming ideal compression, see section \ref{ideal_compression}.
 With $O(t)$ is the output envelope, $G(t)$ the gain and $E(t)$ the input envelope in the logarithmic domain the input output relationship can be expressed as
 %================================
  \begin{align}
@@ -34,13 +34,16 @@ FES = \dfrac{\sum(E-\overline{E})(O-\overline{O})}{\sqrt{\sum(E-\overline{E})^2}
 \end{align}
 where $\overline{E}$ and $\overline{O}$ denote the mean value of $E$ and $O$, respectively.
 %================================
-
-Another approach would be to include the nonlinearity of the dynamic range mapping introduced by either a smooth or sharp knee. Assuming the input signal can be expressed as a product of it's envelope and fine structure, $x  = e\cdot f$, see section \ref{ideal_compression}, we thus propose measuring the correlation between the ideally compressed envelope $e_{I}=\dfrac{y_{I}}{f} = g(e)$ and the compressed envelope  given by $e_c = \dfrac{y}{f}$. The Fidelity of Ideal Envelope Shape (FEIS) coefficient is defined as
-%================================
+\subsubsection{Total Harmonic Distortion}
+A common measure of nonlinearity of a system is the \emph{total harmonic distortion} defined as \cite{dafx02}
 \begin{align}
-c_{f} = \dfrac{\sum\left(E_I-\overline{E_I}\right)\left(E_c-\overline{E_c}\right)}{\sqrt{\sum\left(E_I-\overline{E_I}\right)^2}\sqrt{\sum\left(E_c-\overline{E_c}\right)^2}}
+THD = \sqrt{\dfrac{A_2^2 + A_3^2 + ... + A_N^2}{A_1^2 + A_2^2 + ... + A_N^2}}
 \end{align}
-%================================
-where $E_I$ and $E_c$ are the logarithm of $e_I$ and $e_c$, respectively.
-\todo[inline]{Eftersom vi nu jämför det idealt komprimerade envelopet med det "uppskattade" komprimerade envelopet så är det ju egentligen ganska dumt att använda korrelation..dom ska ju vara lika -.-}
+which is the square root the ratio of the sum of powers of all harmonic frequencies above the fundamental frequency to the power of all harmonic frequencies including the fundamental frequency.
+\subsubsection{Effective Compression Ratio}
+A metric used in \cite{reiss2012tutorial} is the \emph{effective compression ratio} defined as
+\begin{align}
+ECR = \dfrac{\Delta S_o}{\Delta S_i}
+\end{align}
+where $\Delta S_i$ is the difference between the amplitude of the side-bands and the carrier of the test signal and $\Delta S_o$ is the difference between the amplitude of the side-bands and the carrier of the compressed signal.
 \end{document}

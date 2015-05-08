@@ -1,0 +1,21 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+%================================
+\subsection{Evaluation Method} \label{method_evaluation}
+As there are various designs placing an envelope detector in the beginning of the side-chain an evaluation of these is of interest. The comparison conducted in \cite{reiss2012tutorial} do shed light on the different characteristics but misses the fact that these differences tend to diminish as the parameters of one compressor is optimized to match that of an other. Furthermore there is little discussion regarding introduced harmonics due to nonlinearites. In \cite{frindle1996implementation} this problem is discussed and upsampling is proposed as a solution. With this in mind, the method for evaluating a specific algorithm, e.g. level detection, smoothing or a complete DDRC, is developed in the following steps assuming a test signal as defined in section~\ref{test_signal}.
+\begin{enumerate}
+\item{Define a carrier frequency range between 20 Hz (limit of human hearing) and the Nyquist frequency $f_s/2$ including frequencies at $f_s/n$ where $n$ is an integer due to the introduced harmonics by the nonlinearites.}
+\item{Pick a carrier frequency $f_c$ in the middle of the range and generate a test signal with an envelope modulated by the modulation frequency $f_m < 20$ Hz.}
+
+\item{Optimize the parameters of the algorithm using  MATLAB\textsuperscript{\textregistered}'s \emph{fminsearch} with the euclidean norm to the ideal case (ideal compression or predefined envelope) as cost function.}
+\item{Vary the carrier frequency of the test signal and plot the euclidean norm to the ideal case of the result against carrier frequency.}
+\item{Repeat step 2-4 with upsampled signal.}
+\end{enumerate}
+
+The method is then implemented for the envelope detectors, the rms detectors and the DDRC designs.
+
+\end{document}

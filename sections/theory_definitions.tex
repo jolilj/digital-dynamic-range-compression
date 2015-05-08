@@ -4,22 +4,9 @@
 \providecommand{\rootdir}{..}
 
 \begin{document}
+\subsection{Quantities}\label{theory_definitions}
+In order to describe a generic DDRC, the following quantities, are introduced.
 %================================
-\begin{figure}[h]
-\centerline{\subfile{\rootdir/figures/block_gain}}
-\caption{Input signal multiplied by time-variant gain factor}
-\label{fig:block_gain}
-\end{figure}
-%================================
-\subsection{Definitions}\label{theory_definitions}
-A DDRC maps the dynamic range of a signal to a smaller, compressed, range. Let $x_n$ be the input signal, $y_n$ the output signal and $g_n$ the gain factor. The input signal, in general delayed, is multiplied by the gain factor, see Fig.~\ref{fig:block_gain},
-%================================
-\begin{align}
-y_n = g_nx_{n-d_{la}}.
-\label{eq:gainfactor}
-\end{align}
-%================================
-The task is then to find the time-variant $g_n$ corresponding to the desired behaviour of the DDRC. In order to do so, the following quantities, are introduced.%================================
 \begin{itemize}
 \item{Static Characteristics}
 	\begin{itemize}
@@ -39,7 +26,7 @@ The task is then to find the time-variant $g_n$ corresponding to the desired beh
 	\end{itemize}
 \item{Other}
 	\begin{itemize}
-	\item \textbf{Look-ahead} $d_{la}$ - Difference in delay between direct signal path and side chain. 
+	\item \textbf{Look-ahead} $d_\text{la}$ - Difference in delay between direct signal path and side chain. 
 	\item \textbf{Sample frequency} $f_s$
 	\item \textbf{Sample period} $T = 1/f_s$
 	\end{itemize}

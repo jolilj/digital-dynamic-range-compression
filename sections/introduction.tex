@@ -6,26 +6,25 @@
 \begin{document}
 
 \section{Introduction}
-Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC has a long history of applications in audio recording, production work and live performances, but is also used in hearing aids and cochlear implants. The effect of compression can be seen in Fig.~\ref{fig:comp_input} and Fig.~\ref{fig:comp_output}.
+Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC has a long history of applications in audio recording, production work and live performances, but is also used in hearing aids and cochlear implants. The effect of compression can be seen in Fig.~\ref{fig:comp_input} and~\ref{fig:comp_output}.
 
 \begin{figure}[ht]
 \captionsetup{justification=centering}
-\centerline{
-\begin{minipage}[t]{.5\textwidth}
+\begin{subfigure}{.5\linewidth}
  \centering
 \subfile{\rootdir/figures/comp_input}
-\caption{Signal with level\\ both above and below a defined threshold} 
+\caption{Input} 
 \label{fig:comp_input}
-\end{minipage}%
-\begin{minipage}[t]{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.5\linewidth}
 \centering
 \subfile{\rootdir/figures/comp_output}
-\caption{Signal with compressed dynamic range} 
+\caption{Compressed output} 
 \label{fig:comp_output}
-\end{minipage}
-}
+\end{subfigure}
+\caption{Signal with level both above and below a defined threshold before and after compression.} 
+\label{fig:comp_inout}
 \end{figure}
-
 In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. Although the exact behaviour depends on both implementation and input signal, the typical static and temporal properties of a compressor can be illustrated by Fig.~\ref{fig:typical_static} and Fig.~\ref{fig:typical_envelope}.
 \begin{figure}[ht]
 \captionsetup{justification=centering}
@@ -51,6 +50,8 @@ In recent years the application of DRC in hearing aids and cochlear implants hav
 In this paper, we build upon the work of Guianullis Massberg and Reiss, but test a wider range of compressor designs and with the full parameter set of a modern compressor. We perform FES measurements on constructed test signals with full knowledge of the original envelope bla bla bla
 
 \todo[inline]{Introduktionen ej klar. Tillkommer beskrivning av vårt arbete och frågeställning}
+
+The level detection and smoothing techniques used is what in essence separates the various feed forward compressors from each other. An analysis and evaluation of the various filters used for this purpose is carried out allowing a thorough comparison of the most prominent digital dynamic range compressor designs. 
 
 %In this thesis, we develop a generic model for feed forward type DDRCs based on previous work. \todo{others work, that is. Not our own. How to emphazise this?} The various proposed designs are then categorised by their sub-components. With this model at hand we investigate the following problem: How close can the output of one compressor come that of another, given a full featured parameter set? The optimal parameter settings are found by fitting the output with a simplex algorithm. The results are quantified and verified by ABX listening tests.
 

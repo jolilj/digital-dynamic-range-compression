@@ -34,13 +34,13 @@ c_k &= \frac{\sin (2 \pi \frac{1}{2} (0.625+k-3) )}{(0.625+k-3)\pi} \cdot \frac{
 d_k &= \frac{\sin (2 \pi \frac{1}{2} (0.875+k-3) )}{(0.125+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.875+k-3)}{6} \right) \right]. \\
 \end{split}
 \end{equation}
-The peak estimate is then taken as the maximum absolute value of the 4 filter outputs:
+The peak estimate is then taken as the maximum absolute value of the four filter outputs:
 \begin{equation}
 f_n = \text{max}(|f^1_n|, |f^2_n|, |f^3_n|, |f^4_n|)
 \end{equation}
 This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. \todo{show this here? in an appendix?}
 
-Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. Sadly, the exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
+Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. Unfortunately, the exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
 
 \subsubsection{Gain computer}
 The gain computer is the usual one defined by Eq.~\ref{XXXX} including smooth knee width.

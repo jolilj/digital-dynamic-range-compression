@@ -7,12 +7,54 @@
 
 \subsection{Metrics}
 
+\subsubsection{Fidelity of Ideal Envelope Shape} \label{fes}
+In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. 
+
+The \emph{fidelity of envelope shape} intends to measure the correlation between the input and output envelope assuming ideal compression, see section \ref{ideal_compression}.
+With $O(t)$ is the output envelope, $G(t)$ the gain and $E(t)$ the input envelope in the logarithmic domain the input output relationship can be expressed as
+%================================
+ \begin{align}
+O(t) = G(t) + E(t).
+\label{eq:out_env}
+\end{align}
+%================================
+Assuming the envelope is above the threshold, $T$, thus escaping the discontinuity at the knee, the gain can be expressed as, see section ~\ref{gain_computer},
+%================================
+\begin{align}
+G(t) = (R^{-1}-1)(X(t)-T) = C + (R^{-1}-1)\tilde{E}(t)
+\label{eq:gain_env}
+\end{align}
+%================================
+where $C = (1-R^{-1})T$, $R$ being the compression ratio and $\tilde{E}$ is the smoothed envelope detected by the compressor. Eq. \eqref{eq:out_env} with Eq. \eqref{eq:gain_env} yields
+\begin{align}
+O(t) = C + (R^{-1}-1)\tilde{E}(t) + E(t).
+\end{align}
+%================================
+The Fidelity of Envelope Shape is thus defined as the correlation between $E(t)$ and $O(t)$ using the Pearson correlation coefficient
+\begin{align}
+FES = \dfrac{\sum(E-\overline{E})(O-\overline{O})}{\sqrt{\sum(E-\overline{E})^2}\sqrt{\sum(O-\overline{O})^2}}
+\end{align}
+where $\overline{E}$ and $\overline{O}$ denote the mean value of $E$ and $O$, respectively.
+%================================
+
 \subsubsection{Total Harmonic Distortion}
+A common measure of nonlinearity of a system is the \emph{total harmonic distortion} defined as \cite{dafx02}
+\begin{align}
+THD = \sqrt{\dfrac{A_2^2 + A_3^2 + ... + A_N^2}{A_1^2 + A_2^2 + ... + A_N^2}}
+\end{align}
+which is the square root the ratio of the sum of powers of all harmonic frequencies above the fundamental frequency to the power of all harmonic frequencies including the fundamental frequency.
 
 \subsubsection{Effective Compression Ratio}
+A metric used in \cite{reiss2012tutorial} is the \emph{effective compression ratio} defined as
+\begin{align}
+ECR = \dfrac{\Delta S_o}{\Delta S_i}
+\end{align}
+where $\Delta S_i$ is the difference between the amplitude of the side-bands and the carrier of the test signal and $\Delta S_o$ is the difference between the amplitude of the side-bands and the carrier of the compressed signal.
 
-\subsubsection{Fidelity of Envelope Shape}
-
-\subsubsection{Euclidian Norm}
-
+\subsubsection{Euclidean Norm}
+The euclidean norm, or normalised euclidean distance, between two signals $x_n$, $y_n$ of equal length is defined as
+\begin{align}
+EN = ||x-y|| = \sqrt{\frac{1}{N}\sum_{n=0}^{N-1}(x_n-y_n)^2}
+\end{align}
+where $N$ is the length of the signals in samples.
 \end{document}
