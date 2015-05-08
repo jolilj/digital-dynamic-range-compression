@@ -1,0 +1,54 @@
+==============peakSmoothInstAttDet==============
+optimal params:
+        0.0569973107178933
+
+optimal delay:0
+optimal error:0.021726
+============================
+
+==============peakAnalogInstAttDet==============
+optimal params:
+         0.153610575397487
+
+optimal delay:0
+optimal error:0.020903
+============================
+
+
+==============peakAnalogDet==============
+optimal params:
+      1.20670724082112e-05         0.166985488771947
+
+optimal delay:6
+optimal error:0.018559
+============================
+
+==============peakBranchingSmoothDet==============
+optimal params:
+      3.93248471564873e-05         0.064125971974603
+
+optimal delay:6
+optimal error:0.016471
+============================
+
+==============peakCascadedSmoothDet==============
+optimal params:
+        0.0049967750171286         0.062954871391499
+
+optimal delay:10
+optimal error:0.013619
+============================
+
+==============peakWindowMaxDet==============
+optimal params:
+optimal delay:9
+optimal error:0.016189
+============================
+
+==============peakWindowMaxFilteredDet==============
+optimal params:
+        0.0115805788267331
+
+optimal delay:9
+optimal error:0.0058224
+============================
