@@ -1,0 +1,67 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Dynamic Range, Signal Level and Loudness}
+As the name suggests, the goal of dynamic range compression is to change the dynamic range of an audio signal. The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between levels of the loudest portion and the quietest \cite{davis1989sound}. The latter quantity is what is referred to in the term DRC and throughout this thesis. Unfortunately, even with this definition the term is still ambiguous as the "level of a portion of audio" is not a well defined concept.
+
+\subsubsection{Signal Level}
+\emph{Todos}
+\begin{itemize}
+\item Amplitude -> periodic signals -> peak and RMS
+\item For more complicated, aperiodic signals, we have no period to measure these quantities over. Therefore, their value depends greatly upon the timeframe chosen.
+\item reference the article of RMS in different timespans. Own experiment?
+\end{itemize}
+
+\paragraph{Peak Amplitude}
+With \emph{peak amplitude} we will mean the maximum absolute value of the signal. For a sine wave
+\begin{equation}\label{eq:sine_wave}
+x = a \sin(2 \pi f t),
+\end{equation}
+the peak amplitude is equal to $a$.
+
+When expressed in decibel, we will use the peak amplitude of $a_0=1$ as reference and call this quantity dB relative to \emph{Full Scale} (dB FS) \cite{XXXX}. The peak amplitude of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
+\begin{equation}
+A = 10 \logten \left( \frac{a^2}{a_0^2} \right) \text{dB FS} = 20 \log_{10} a \dBFS.
+\end{equation}
+Throughout the thesis, quantities relating to signal level or amplitude will be denoted by upper-case letters in the logarithmic domain, and lower-case letters in the linear.
+
+\paragraph{RMS}
+The \emph{root-mean-square amplitude} (RMS) of a periodic signal $x(t)$ with period time $T$ is defined as
+\begin{equation}
+a_\text{rms} = \sqrt{ \frac{1}{T} \int_{0}^{T} x(t)^2 dt }.
+\end{equation}
+For the signal in Eq.~\eqref{eq:sine_wave}, the RMS amplitude can be calculated as
+\begin{equation}
+a_\text{rms} =
+\sqrt{ \frac{1}{T} \int_{0}^{T} a^2 \sin^2 (2 \pi f t) dt } =
+\sqrt{ \frac{a^2}{2T} \int_{0}^{T}\left( 1 - \cos (4 \pi f t) \right) dt } =
+\frac{a}{\sqrt 2}.
+\end{equation}
+
+The square wave is a special case with $a_\text{peak} = a_\text{rms}$. When expressed in decibel, we will use the RMS amplitude of a square wave with amplitude $a_\text{peak} = a_\text{rms} = 1$ as reference:
+\begin{equation}
+A_\text{rms} =
+20 \log_{10} \left( \frac{a_\text{rms}}{a_{0, \text{rms}}} \right) \text{dB FS} =
+20 \log_{10} \left( a_\text{rms} \right) \text{dB FS}.
+\end{equation}.
+With this definition, the RMS amplitude of a sine wave is thus
+\begin{equation}
+A_\text{rms} = 20\log_{10} \left( \frac{a_\text{peak}}{\sqrt 2} \right) = A - 3.01 \text{dB FS}
+\end{equation}
+This is not in accordance with the EBU 3341 standard, but is used here as setting $a_{0, \text{rms}} = 1$ simplifies conversion between linear RMS values and logarithmic.
+
+\subsubsection{Timescales}
+Note that we will not cover the concept of perceived \emph{loudness} as defined by for example the ITU recommendation BS 1770 standard, or the Phon, Sone and dB(A) measures.
+
+\emph{todos}
+\begin{itemize}
+	\item Dynamic Range, not signal to noise ratio, but rather Level variability
+	\item Sound Level (dBFS, peak and rms), and Loudness
+	\item Envelope
+\end{itemize}
+
+\end{document}

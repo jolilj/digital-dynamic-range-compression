@@ -1,0 +1,63 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Peak Level Detection}
+
+\subsubsection{Optimisation of parameters}
+The frequency of the fine structure as defined in Eq.~\eqref{eq:XXXX} was set to $f_c = $ and the envelope modulation frequency was set to $f_m = $. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in the figure for clarity, with the ideal envelope dotted for each offset.
+
+\begin{table}[h]
+\begin{center}
+\caption{Optimised parameters for the various peak detectors, $f_c= $, $f_m= $}
+\label{tab:peak_det_opt_params}
+\caption*{(a) Attack and release peak detectors}
+\begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
+	\hline
+	
+	Analog 			& tat 		& trel 	& d		& e	\\ 
+	Branching smooth 	& tat 		& trel 	& d		& e	\\ 
+	Cascaded smooth	& tat 		& trel 	& d		& e	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\caption*{(b) Instant attack peak detectors}
+ \begin{tabular}{| l | c | c |}
+	\hline
+	Detector & $\tau_\text{r}$ [ms] & error [1/sample] \\
+	\hline
+	Analog instant att	& trel		& e	\\ 
+	Smooth instant att	& trel		& e	\\ 
+	\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\caption*{(c) Windowed peak detectors}
+\label{tab:peak_det_instatt_opt_params}
+ \begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+	\hline
+	Win. Max		& w		& -		& d		& e	\\ 
+	Win. Max Filt.	& w		& tav		& d		& e	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+\subsubsection{Carrier Frequency Dependence}
+The parameters were fixed from the previous optimisation, and the carrier frequency swept from 20 Hz to $f_s/2$ Hz as described in Sec.~\ref{sec:method}. The result can be seen in Fig.~\ref{fig:peak_det_opt_env_fc_dep}.
+
+\subsection{RMS Level Detection}
+
+
+\end{document}
