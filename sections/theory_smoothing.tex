@@ -97,7 +97,7 @@ In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level det
 \item{Smooth decoupled filter}
 \item{Smooth branching filter}
 \end{itemize}
-The difference equation of the smooth decoupled filter is
+The difference equation of the \emph{smooth decoupled filter} is
 %================================
 \begin{equation}
 \begin{split}
@@ -111,7 +111,7 @@ G_n &= \alpha_{a} Z_n + (1-\alpha_{a}) G_{n-1}
 %================================
 which result in a smooth transition between the attack and release phase without discontinuities. The name is poorly chosen since it in fact couples the attack and release parameters in the release phase. In \cite{reiss2012tutorial} it is derived from it's analogue counterpart, hence the name, and it is shown that the actual release time is $\approx \tau_a + \tau_r$.
 
-To obtain a filter with attack and release parameters independent of each other the branching filter, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
+To obtain a filter with attack and release parameters independent of each other the \emph{smooth branching filter}, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
 %================================
 \begin{equation}
 G_n = \begin{cases}
@@ -128,5 +128,5 @@ As shown in ~\ref{reiss2012tutorial} the branching conditions does however intro
 \label{fig:step_reiss_filter}
 \end{figure}
 %================================
-
+ Observe the similarities between the branching filter described in section \ref{peak_detection} and the \emph{smooth} branching filter described above. The latter was named \emph{smooth} in \cite{reiss2012tutorial} for it's return to signal level in it's release phase in contrast with the return to zero behaviour of the former.
 \end{document}

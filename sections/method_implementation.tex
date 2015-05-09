@@ -1,0 +1,45 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+%================================
+\subsection{Implementation} \label{method_implementation}
+\subsubsection{Peak Detection}
+As discussed in section \ref{dynamic_range}, the level detection stage is of great importance in constructing a DDRC motivating an evaluation of the various level detectors separated from the rest of the side-chain, as done in \cite{reiss2012tutorial}. The following detectors were tested with and without upsampled signal:
+\begin{itemize}
+\item{Analog Peak Detector} 
+\item{Branching Smooth Peak Detector}
+\item{Decoupled Smooth Peak Detector}
+\item{Windowed Peak Max Detector}
+\item{Windowed Peak Max Filtered Detector}
+\end{itemize}
+Results show, see section \ref{results} that the optimised parameters of the branching smooth and analog peak detector indicate instant attack, $\tau_a = 0$. These detectors were thus implemented and tested with instant attack.
+
+\begin{itemize}
+\item{Analog Instant Attack Peak Detector}
+\item{Smooth Instant Attack Peak Detector}
+\end{itemize}
+
+\subsubsection{RMS Detection}
+
+\subsubsection{Gain Smoothing}
+The gain smoothing stage is considered to be used mainly for artistic purposes where the end user can tweak the attack/release parameters to achieve the preferred sound. The filters used for gain smoothing are for this reason not tested separately, although a few of them are the same as in the level detection, see especially \cite{reiss2012tutorial}.
+\subsubsection{DDRC Design}
+The following designs that have been recommended in previous work were tested, without upsampling:
+\begin{itemize}
+\item{\cite{mcnally1984dynamic} Analog peak detection and branching smooth gain}
+\item{\cite{dafx11} Branching peak detection and branching smooth gain}
+\item{\cite{reiss2012tutorial} Full rectification peak detection and branching smooth gain}
+\item{\cite{reiss2012tutorial} Full rectification peak detection and decoupled smooth gain}
+\item{\cite{frindle1996implementation} Upsampled peak detector and linear hold smooth gain}
+\end{itemize}
+Together with the following DDRC designed based on the results:
+\begin{itemize}
+\item{Upsampling}
+\item{Windowed filtered max peak detector??}
+\item{Branching gain smoothing??}
+\end{itemize}
+
+\end{document}

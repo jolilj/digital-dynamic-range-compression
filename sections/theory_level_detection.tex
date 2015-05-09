@@ -14,7 +14,7 @@ y_n = |x_n|.
 \end{equation}
 As shown in appendix A, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in the peak detectors in \cite{mcnally1984dynamic} \cite{stikvoort1986digital}. \todo{add references to zoelzers stuff? Lu? Other?}
 
-\subsubsection{Peak Detection}
+\subsubsection{Peak Detection}\label{peak_detection}
 In \cite{mcnally1984dynamic} and \cite{zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by an IIR-filter defined as
 \begin{equation}
 f_n = \begin{cases}
@@ -22,8 +22,7 @@ f_n = \begin{cases}
     (1-\alpha_{r}) f_{n-1} 							& |x_n| < f_{n-1}.
 \end{cases}
 \end{equation}
-Its corresponding block representation can be seen in Fig.~\ref{fig:block_mcnally_theory_peak}. The release time constant is leaked into the attack phase, which introduces a static error, as shown in \cite{reiss2012tutorial}. However, in \cite{mcnally1984dynamic}, the attack time is assumed to be $\sim 10$ ms and the release time   $\sim 100$ ms thus making $\alpha_r << \alpha_a$. As shown in \cite{reiss2012tutorial}, the design can be derived from an ideal model of a simple analog RC-circuit design
-
+Its corresponding block representation can be seen in Fig.~\ref{fig:block_mcnally_theory_peak}. The release time constant is leaked into the attack phase, which introduces a static error, as shown in \cite{reiss2012tutorial}. However, in \cite{mcnally1984dynamic}, the attack time is assumed to be $\sim 10$ ms and the release time   $\sim 100$ ms thus making $\alpha_r << \alpha_a$. As shown in \cite{reiss2012tutorial}, the design can be derived from an ideal model of a simple analog RC-circuit design, and is therefor named the \emph{analog peak detector} accordingly.
 %================================
 \begin{figure}
 \centerline{\subfile{\rootdir/figures/block_mcnally_theory_peak}}
@@ -32,19 +31,20 @@ Its corresponding block representation can be seen in Fig.~\ref{fig:block_mcnall
 \end{figure}
 %================================
 
-In \cite{zolzer2008digital} the release time constant is removed from the attack phase so that the level measurement and attack time is no longer scaled with release time.
+In \cite{zolzer2008digital} the release time constant is removed from the attack phase so that the level measurement and attack time is no longer scaled with release time
 \begin{equation}
-y_k = \begin{cases}
-    \alpha_{att} |x_k| + (1-\alpha_{att}) y_{k-1} 	& |x_k| > y_{k-1} \\
-    (1-\alpha_{rel}) y_{k-1} 					& |x_k| \leq y_{k-1}
+f_n = \begin{cases}
+    \alpha_{a} |x_n| + (1-\alpha_{a}) f_{n-1} 	& |x_n| > f_{n-1} \\
+    (1-\alpha_{r}) f_{n-1} 					& |x_n| \leq f_{n-1}.
 \end{cases}
 \end{equation}
+This filter is discussed in \cite{reiss2012tutorial} and referred to as the \emph{branching peak detector}.
 
 Another variant is described in \cite{stikvoort1986digital}, where the attack is instant, and the release phase is smoothed by a third order IIR filter:\begin{equation}\label{eq:stikvoort_release}
 \begin{split}
-u_k &= \text{max}(|x_k|, (1-\alpha_{\text{rel}}) u_{k-1}) \\
-v_k &= \text{max}(|x_k|, \alpha_{\text{rel}} u_k + (1-\alpha_{\text{rel}}) v_{k-1} \\
-y_k &= \text{max}(|x_k|, \alpha_{\text{rel}} v_k + (1-\alpha_{\text{rel}}) y_{k-1}. \\
+u_n &= \text{max}(|x_n|, (1-\alpha_{\text{r}}) u_{n-1}) \\
+v_n &= \text{max}(|x_n|, \alpha_{\text{r}} u_n + (1-\alpha_{\text{r}}) v_{n-1} \\
+f_n &= \text{max}(|x_n|, \alpha_{\text{r}} v_n + (1-\alpha_{\text{r}}) f_{n-1}. \\
 \end{split}
 \end{equation}
 The time constant $\alpha_{\text{rel}}$ is defined as
@@ -81,13 +81,25 @@ c_k &= \frac{\sin (2 \pi \frac{1}{2} (0.625+k-3) )}{(0.625+k-3)\pi} \cdot \frac{
 d_k &= \frac{\sin (2 \pi \frac{1}{2} (0.875+k-3) )}{(0.125+k-3)\pi} \cdot \frac{1}{2}\left[1+\cos \left(\frac{2 \pi (0.875+k-3)}{6} \right) \right]. \\
 \end{split}
 \end{equation}
-The peak estimate is then taken as the maximum absolute value of the 4 filter outputs:
+The peak estimate is then taken as the maximum absolute value of the four filter outputs:
 \begin{equation}
 f_n = \text{max}(|f^1_n|, |f^2_n|, |f^3_n|, |f^4_n|)
 \end{equation}
 This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. \todo{show this here? in an appendix?}
 
 Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. Sadly, the exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
+
+\subsubsection{Peak Windowed Max Detector}
+In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a component in a envelope detector constructed to avoid clipping in the output of a digital limiter. The windowed peak max filter takes the maximum value of the absolute value of the input signal over a window of $M$ samples.
+\begin{align}
+f_n = \text{max}(x_{n-M/2},x_{n-M/2+1},..., x_{n+M/2-1})
+\end{align}
+\subsubsection{Peak Windowed Max Filtered Detector}
+The windowed max detector above can be filtered by a first order avareging filter to achieve a smoother signal
+\begin{align}
+u_n &= \text{max}(x_{n-M/2},x_{n-M/2+1},..., x_{n+M/2-1}) \\
+f_n &= \alpha_{av} u_n + (1-\alpha_{av})f_{n-1}.
+\end{align}
 
 \subsubsection{RMS}
 The RMS of a signal computed on a window of $M$ samples is defined as
