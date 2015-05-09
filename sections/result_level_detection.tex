@@ -7,8 +7,8 @@
 
 \subsection{Peak Level Detection}
 
-\subsubsection{Optimisation of parameters}
-The frequency of the fine structure as defined in Eq.~\eqref{eq:XXXX} was set to $f_c = $ and the envelope modulation frequency was set to $f_m = $. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in the figure for clarity, with the ideal envelope dotted for each offset.
+\subsubsection{Parameter Optimisation}
+The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = $ and the envelope modulation frequency was set to $f_m = $. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. The sampling frequency was set to $f_s = 1000$.
 
 \begin{table}[h]
 \begin{center}
@@ -20,9 +20,9 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:XXXX} was set to
 	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
 	\hline
 	
-	Analog 			& tat 		& trel 	& d		& e	\\ 
-	Branching smooth 	& tat 		& trel 	& d		& e	\\ 
-	Cascaded smooth	& tat 		& trel 	& d		& e	\\
+	Analog 			& 0.012 		& 167 	& 6		& 0.0186	\\ 
+	Branching smooth 	& 0.039 		& 64.1 	& 6		& 0.0165	\\ 
+	Cascaded smooth	& 5.00		& 63.0 	& 10		& 0.0136	\\
 	\hline
 \end{tabular}
 \end{center}
@@ -33,8 +33,8 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:XXXX} was set to
 	\hline
 	Detector & $\tau_\text{r}$ [ms] & error [1/sample] \\
 	\hline
-	Analog instant att	& trel		& e	\\ 
-	Smooth instant att	& trel		& e	\\ 
+	Analog instant att	& 154		& 0.0210	\\ 
+	Smooth instant att	& 57.0		& 0.0217	\\ 
 	\hline
 \end{tabular}
 \end{center}
@@ -46,8 +46,8 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:XXXX} was set to
 	\hline
 	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
 	\hline
-	Win. Max		& w		& -		& d		& e	\\ 
-	Win. Max Filt.	& w		& tav		& d		& e	\\
+	Win. Max		& 19		& -		& 9		& 0.0162	\\ 
+	Win. Max Filt.	& 19		& 12		& 9		& 0.0058	\\
 	\hline
 \end{tabular}
 \end{center}
