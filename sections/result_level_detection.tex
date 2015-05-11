@@ -8,11 +8,11 @@
 \subsection{Peak Level Detection}
 
 \subsubsection{Parameter Optimisation}
-The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = $ and the envelope modulation frequency was set to $f_m = $. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. The sampling frequency was set to $f_s = 1000$.
+The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = 1000/ \pi$ Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was 1000 Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. The sampling frequency was set to $f_s = 1000$.
 
 \begin{table}[h]
 \begin{center}
-\caption{Optimised parameters for the various peak detectors, $f_c= $, $f_m= $}
+\caption{Optimised parameters for the various peak detectors, $f_c=1000/\pi $, $f_m=2 $}
 \label{tab:peak_det_opt_params}
 \caption*{(a) Attack and release peak detectors}
 \begin{tabular}{| l | c c c | c |}
@@ -20,34 +20,22 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
 	\hline
 	
-	Analog 			& 0.012 		& 167 	& 6		& 0.0186	\\ 
-	Branching smooth 	& 0.039 		& 64.1 	& 6		& 0.0165	\\ 
-	Cascaded smooth	& 5.00		& 63.0 	& 10		& 0.0136	\\
+	Analog 			& 0 			& 171 	& 5		& 0.0263	\\ 
+	Branching smooth 	& 0	 		& 66 	& 5		& 0.0233	\\ 
+	Cascaded smooth	& 5			& 66 	& 10		& 0.0206	\\
 	\hline
 \end{tabular}
 \end{center}
 
 \begin{center}
-\caption*{(b) Instant attack peak detectors}
- \begin{tabular}{| l | c | c |}
-	\hline
-	Detector & $\tau_\text{r}$ [ms] & error [1/sample] \\
-	\hline
-	Analog instant att	& 154		& 0.0210	\\ 
-	Smooth instant att	& 57.0		& 0.0217	\\ 
-	\hline
-\end{tabular}
-\end{center}
-
-\begin{center}
-\caption*{(c) Windowed peak detectors}
+\caption*{(b) Windowed peak detectors}
 \label{tab:peak_det_instatt_opt_params}
  \begin{tabular}{| l | c c c | c |}
 	\hline
 	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
 	\hline
-	Win. Max		& 19		& -		& 9		& 0.0162	\\ 
-	Win. Max Filt.	& 19		& 12		& 9		& 0.0058	\\
+	Win. Max		& 21		& -		& 10		& 0.0174	\\ 
+	Win. Max Filt.	& 20		& 11		& 10		& 0.0073	\\
 	\hline
 \end{tabular}
 \end{center}
@@ -68,6 +56,57 @@ The parameters were fixed from the previous optimisation, and the carrier freque
 \caption{Peak detectors optimised, $f_c$ dependence}
 \label{fig:peak_det_opt_env_fc_dep}
 \end{figure}
+
+\subsubsection{Theoretical Benefit of Upsampling}
+The test signal was generated at 8 times the sample rate, $f_s = 8000$, and the same test as above was run again. The parameters values was optimised again yielding the values in Tab.~\ref{tab:peak_det_opt_params_up}. The result can be seen in Fig.~\ref{peak_det_opt_env_th_up} and Fig.~\ref{fig:peak_det_opt_env_fc_dep_th_up}.
+The envelopes have now become extremely smooth, and the carrier frequencies that evenly divides the sampling frequency is considerably less problematic. The windowed detectors however get a rapidly increasing error as the carrier frequency drops below the frequency the parameters was optimised for.
+
+In practice, the up-sampled signal would have to be interpolated by an interpolating filter, and then down-sampled again after the level detector or later in the side-chain. This will probably downgrade the results seen here.\todo{discussion?}
+
+\begin{table}[h]
+\begin{center}
+\caption{Optimised parameters for the various peak detectors, $f_c=1000/\pi $, $f_m=2 $}
+\label{tab:peak_det_opt_params_up}
+\caption*{(a) Attack and release peak detectors}
+\begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
+	\hline
+	
+	Analog 			& 0 			& 141 	& 8		& 0.0067	\\ 
+	Branching smooth 	& 0	 		& 52 	& 8		& 0.0067	\\ 
+	Cascaded smooth	& 1.8		& 52 	& 22		& 0.0056	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\caption*{(b) Windowed peak detectors}
+\label{tab:peak_det_instatt_opt_params}
+ \begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+	\hline
+	Win. Max		& 33		& -		& 16		& 0.0034	\\ 
+	Win. Max Filt.	& 33		& 42		& 49		& 0.0017	\\
+	\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_th_up}}
+\caption{Upsampled peak detectors optimised envelope}
+\label{fig:peak_det_opt_env_th_up}
+\end{figure}
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc_dep_th_up}}
+\caption{Upsampled peak detectors optimised, $f_c$ dependence}
+\label{fig:peak_det_opt_env_fc_dep_th_up}
+\end{figure}
+
+
 
 \subsection{RMS Level Detection}
 

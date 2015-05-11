@@ -6,28 +6,58 @@
 \begin{document}
 
 \subsection{Dynamic Range, Signal Level and Loudness}
-As the name suggests, the goal of dynamic range compression is to change the dynamic range of an audio signal. The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between levels of the loudest portion and the quietest \cite{davis1989sound}. The latter quantity is what is referred to in the term DRC and throughout this thesis. Unfortunately, even with this definition the term is still ambiguous as the "level of a portion of audio" is not a well defined concept.
+As the name suggests, the goal of dynamic range compression is to change the dynamic range of an audio signal. The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between levels of the loudest portion and the quietest \cite{davis1989sound}. The latter quantity is what is referred to in the term DRC and throughout this thesis. Unfortunately, even with this definition the term is still ambiguous as the "loudness of a portion of audio" is not a well defined concept.
 
-\subsubsection{Signal Level}
-\emph{Todos}
+\subsubsection{Sound Level}
+\paragraph{Acoustic Sound and the Sound Pressure Level}
+While the perceived \emph{loudness} of a sound is a subjective quantity \cite{XXXX}, \emph{sound level} is a physical quantity that can be measured. \emph{Sound pressure level} (SPL) is the effective pressure deviation of an acoustic wave in air relative to a reference value, measured on a logarithmic scale. More formally,
+\begin{equation}
+L_{p/p0} = 10 \logten \left( \frac{p_\text{rms}^2}{p_0^2} \right) \dB = 20 \logten \left( \frac{p}{p_0} \right) \dB,
+\end{equation}
+where $p_\text{rms}$ is the root-mean-square (RMS) pressure deviation and $p_0$ the reference value \cite{XXXXX}. A common reference value is the threshold of human hearing, $p_0 = 20 \mPa$ \cite{XXXX}, denoted here by dB SPL\footnote{Although indicating the reference value by a suffix to the dB-unit is not an accepted SI standard, it is a common practice we will adopt in this thesis.}:
+\begin{equation}
+L_{p/20 \mu\text{Pa}} = 20 \logten \left( \frac{p_\text{rms}}{20 \mPa} \right) \dBSPL.
+\end{equation}
+
+\paragraph{Analog Signals and the Power Level}
+For analog electric signals, the level of a signal can be measured in terms of it's power relative a reference:
+\begin{equation}
+L_{P/P_0} = 10 \logten \left( \frac{P}{P_0} \right) \dB
+\end{equation}
+Since the effective power is proportional to the square of the RMS voltage, the signal level can also be measured as
+\begin{equation}
+L_{u/u_0} = 10 \logten \left( \frac{u_\text{rms}^2}{u_0^2} \right) \dB = 20 \logten \left( \frac{u_\text{rms}}{u_0} \right) \dB,
+\end{equation}
+where $u_\text{rms}$ is the RMS voltage and $u_0$ a reference voltage. Various reference powers and voltages exists, for example 
+
 \begin{itemize}
-\item Amplitude -> periodic signals -> peak and RMS
-\item For more complicated, aperiodic signals, we have no period to measure these quantities over. Therefore, their value depends greatly upon the timeframe chosen.
-\item reference the article of RMS in different timespans. Own experiment?
+\item \textbf{dBm} - $P_0 = 1$ mW corresponding to $u_0 \approx 0.775 V$ for an 600 $\Omega$ impedance
+\item \textbf{dBu} - $u_0 = 0.775$ V and no impedance given (u for unloaded)
+\item \textbf{dBV} - $u_0 = 1$ V and no impedance given.
 \end{itemize}
 
-\subsubsection{Peak Amplitude}
-With \emph{peak amplitude} we will mean the maximum absolute value of the signal. For a sine wave
-\begin{equation}\label{eq:sine_wave}
-x = a \sin(2 \pi f t),
-\end{equation}
-the peak amplitude is equal to $a$.
 
-When expressed in decibel, we will use the peak amplitude of $a_0=1$ as reference and call this quantity dB relative to \emph{Full Scale} (dB FS) \cite{XXXX}. The peak amplitude of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
+
+\subsubsection{Amplitude}
+
+\subsubsection{Peak Amplitude}
+For a periodic signal, the \emph{peak amplitude} can be unambiguously defined as the maximum absolute value over the signal's period. For a periodic signal $x(t)$ with period $T$ the peak amplitude is thus defined as
 \begin{equation}
-A = 10 \logten \left( \frac{a^2}{a_0^2} \right) \text{dB FS} = 20 \log_{10} a \dBFS.
+a_\text{pk} = \sup \{ |x(t)| :  0 \leq t < T \}
 \end{equation}
-Throughout the thesis, quantities relating to signal level or amplitude will be denoted by upper-case letters in the logarithmic domain, and lower-case letters in the linear.
+In the case of a sine wave with frequency $f$ the peak amplitude can be calculated as
+\begin{equation}\label{eq:sine_wave}
+a_\text{pk} = \sup \{ |a \sin(2 \pi f t) | : 0 \leq t < \frac{1}{f} \} = a.
+\end{equation}
+
+The above definition can be extended for arbitrary signals by letting $T$ go to infinity (or the length of the signal in question).
+
+\subsubsection{Instantanious Amplitude}
+If the amplitude is varied in time, as in the case of a amplitude modulated sine wave
+\begin{equation}
+x(t) = a(t) \sin (2 \pi f t)
+\end{equation}
+we call the time varying amplitude $a(t)$ the \emph{instantanious amplitude}, or the \emph{envelope} of the signal.
 
 \subsubsection{Envelope and Fine Structure}
 The envelope of an analytic signal $x(t) = a(t)e^{i(\omega t)}$ is defined as \cite{bedrosian1962analytic}
@@ -37,6 +67,52 @@ e(t) \equiv |x(t)| = a(t)
 where $e^{i(\omega t)}$ is referred to as the \emph{fine structure} of the signal.
 
 With more complex signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in \ref{level_detection}.
+
+
+
+
+\begin{equation}
+A_\text{rms} =
+10 \logten \left( \frac{a_\text{rms}^2}{a_0^2} \right) \dB
+\end{equation}
+
+
+
+With this definition, the RMS amplitude of a sine wave is thus
+\begin{equation}
+A_\text{rms} = 20\log_{10} \left( \frac{a_\text{pk}}{\sqrt 2} \right) \approx A_\text{pk} - 3.01 \dBFS.
+\end{equation}
+This is not in accordance with the EBU 3341 standard, but is used here as setting $a_{0, \text{rms}} = 1$ simplifies conversion between linear RMS values and logarithmic.
+
+
+\paragraph{interlude}
+
+Psychoacoustics? Loudness timbre and pitch? The compressor effects all of these components... Beyond the scope of this article. Via a sequence of definitions, we arrive at a term called transparent compression. That may be formally defined and tested.
+
+Signal level. Short note on RMS and it's relationship to average power.
+
+Why peak amplitude? Signal level should be measured in RMS?!?!?!
+=> If we are interested in the limiting effect, we need the signals peak values.
+But not the peak amplitude as defined over the whole time period. We need a "local" measure of peak amplitude. For analytic signals this is achieved by the quantity of \emph{instantaneous amplitude} can be defined for real signals as well, but not as easily extracted. Can be done thourgh the hilbert transform, but only as an approximation in real time. => Various different techniques. 
+
+RMS, may be defined unambiguously for periodic signals. For aperiodic signals, it depends entirely on the timespan used for averaging. From a global measure of the whole signal, to being equal to the instantaneous absolute signal value. (not the instantaneous amplitude!) As the desired effect of the compressor can range from controlling the microdynamics (ms scale) to normalising the volume over a whole track (s scale) this should be a user parameter. 
+
+\emph{Todos}
+\begin{itemize}
+\item Amplitude -> periodic signals -> peak and RMS
+\item For more complicated, aperiodic signals, we have no period to measure these quantities over. Therefore, their value depends greatly upon the timeframe chosen.
+\item reference the article of RMS in different timespans. Own experiment?
+\end{itemize}
+
+
+
+When expressed in decibel, we will use a peak amplitude of $a_{0, \text{pk}} = 1$ as reference and call this quantity dB relative to \emph{Full Scale} (dB FS) \cite{XXXX}. The peak amplitude of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
+\begin{equation}
+A_\text{pk} = 10 \logten \left( \frac{a_\text{pk}^2}{a_{0, \text{pk}}^2} \right) \text{dB FS} = 20 \log_{10} a_\text{pk} \dBFS.
+\end{equation}
+Throughout the thesis, quantities relating to signal level or amplitude will be denoted by upper-case letters in the logarithmic domain, and lower-case letters in the linear.
+
+
 
 \subsubsection{RMS}
 The \emph{root-mean-square amplitude} (RMS) of a periodic signal $x(t)$ with period time $T$ is defined as
@@ -48,20 +124,9 @@ For the signal in Eq.~\eqref{eq:sine_wave}, the RMS amplitude can be calculated 
 a_\text{rms} =
 \sqrt{ \frac{1}{T} \int_{0}^{T} a^2 \sin^2 (2 \pi f t) dt } =
 \sqrt{ \frac{a^2}{2T} \int_{0}^{T}\left( 1 - \cos (4 \pi f t) \right) dt } =
-\frac{a}{\sqrt 2}.
+\frac{a_\text{pk}}{\sqrt 2}.
 \end{equation}
 
-The square wave is a special case with $a_\text{peak} = a_\text{rms}$. When expressed in decibel, we will use the RMS amplitude of a square wave with amplitude $a_\text{peak} = a_\text{rms} = 1$ as reference:
-\begin{equation}
-A_\text{rms} =
-20 \log_{10} \left( \frac{a_\text{rms}}{a_{0, \text{rms}}} \right) \text{dB FS} =
-20 \log_{10} \left( a_\text{rms} \right) \text{dB FS}.
-\end{equation}.
-With this definition, the RMS amplitude of a sine wave is thus
-\begin{equation}
-A_\text{rms} = 20\log_{10} \left( \frac{a_\text{peak}}{\sqrt 2} \right) = A - 3.01 \text{dB FS}
-\end{equation}
-This is not in accordance with the EBU 3341 standard, but is used here as setting $a_{0, \text{rms}} = 1$ simplifies conversion between linear RMS values and logarithmic.
 
 \subsubsection{Timescales}
 Note that we will not cover the concept of perceived \emph{loudness} as defined by for example the ITU recommendation BS 1770 standard, or the Phon, Sone and dB(A) measures.
