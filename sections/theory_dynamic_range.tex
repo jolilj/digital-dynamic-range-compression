@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\subsection{Dynamic Range, Signal Level and Loudness}
+\subsection{Dynamic Range, Signal Level and Loudness}\label{theory_dynamic_range}
 As the name suggests, the goal of dynamic range compression is to change the dynamic range of an audio signal. The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between levels of the loudest portion and the quietest \cite{davis1989sound}. The latter quantity is what is referred to in the term DRC and throughout this thesis. Unfortunately, even with this definition the term is still ambiguous as the "level of a portion of audio" is not a well defined concept.
 
 \subsubsection{Signal Level}
@@ -36,7 +36,33 @@ e(t) \equiv |x(t)| = a(t)
 \end{align}
 where $e^{i(\omega t)}$ is referred to as the \emph{fine structure} of the signal.
 
-With more complex signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in \ref{level_detection}.
+With more complex signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in \ref{level_detection}. The idea is illustrated in Fig. ~\ref{fig:signal_env_fine_struct}, ~\ref{fig:signal_env} and~\ref{fig:signal_fine_struct} . 
+%================================
+\begin{figure}
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/signal_env_fine_struct}}
+\caption{Complete signal}
+\label{fig:signal_env_fine_struct}
+\end{subfigure}
+\par\bigskip
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/signal_env}
+\caption{Envelope}
+\label{fig:signal_env}
+\end{subfigure}
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/signal_fine_struct}
+\caption{Fine structure}
+\label{fig:signal_fine_struct}
+\end{subfigure}%
+\caption{Signal $x_n = e_n\cdot f_n$ split into it's envelope $e_n$ and fine structure $f_n$.}
+\label{fig:analytic_signal}
+\end{figure}
+%================================
 
 \subsubsection{RMS}
 The \emph{root-mean-square amplitude} (RMS) of a periodic signal $x(t)$ with period time $T$ is defined as
