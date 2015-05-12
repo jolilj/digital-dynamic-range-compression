@@ -66,7 +66,33 @@ e(t) \equiv |x(t)| = a(t)
 \end{align}
 where $e^{i(\omega t)}$ is referred to as the \emph{fine structure} of the signal.
 
-With more complex signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in \ref{level_detection}.
+With more complex signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in \ref{level_detection}. The idea is illustrated in Fig. ~\ref{fig:signal_env_fine_struct}, ~\ref{fig:signal_env} and~\ref{fig:signal_fine_struct} . 
+%================================
+\begin{figure}
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/signal_env_fine_struct}}
+\caption{Complete signal}
+\label{fig:signal_env_fine_struct}
+\end{subfigure}
+\par\bigskip
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/signal_env}
+\caption{Envelope}
+\label{fig:signal_env}
+\end{subfigure}
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/signal_fine_struct}
+\caption{Fine structure}
+\label{fig:signal_fine_struct}
+\end{subfigure}%
+\caption{Signal $x_n = e_n\cdot f_n$ split into it's envelope $e_n$ and fine structure $f_n$.}
+\label{fig:analytic_signal}
+\end{figure}
+%================================
 
 
 

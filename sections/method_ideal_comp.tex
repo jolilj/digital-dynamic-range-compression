@@ -12,36 +12,8 @@ Let $x$ be the input and $y$ be the compressed output. Further assume that $x$ c
 x_n = e_n\cdot f_n.
 \end{align}
 %================================
-as illustrated in Fig. ~\ref{fig:signal_env_fine_struct}, ~\ref{fig:signal_env} and~\ref{fig:signal_fine_struct} . 
-
 Let $G(x)$ be the gain computer, see section \ref{gain_computer}, and $g(x) = 10^{G/20}$. The ideal compression is then given by
 \begin{align}
 y_{n,I} \equiv g(e_n) f_n. 
 \end{align}
-%================================
-\begin{figure}
-\captionsetup{justification=centering}
-\begin{subfigure}{\linewidth}
-\centering
-\centerline{\subfile{\rootdir/figures/signal_env_fine_struct}}
-\caption{Complete signal}
-\label{fig:signal_env_fine_struct}
-\end{subfigure}
-\par\bigskip
-\begin{subfigure}{.5\linewidth}
-\centering
-\subfile{\rootdir/figures/signal_env}
-\caption{Envelope}
-\label{fig:signal_env}
-\end{subfigure}
-\begin{subfigure}{.5\linewidth}
-\centering
-\subfile{\rootdir/figures/signal_fine_struct}
-\caption{Fine structure}
-\label{fig:signal_fine_struct}
-\end{subfigure}%
-\caption{Signal $x_n = e_n\cdot f_n$ split into it's envelope $e_n$ and fine structure $f_n$.}
-\label{fig:analytic_signal}
-\end{figure}
-%================================
 \end{document}
