@@ -8,7 +8,7 @@
 \subsection{Peak Level Detection}
 
 \subsubsection{Parameter Optimisation}
-The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = 1000/ \pi$ Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was 1000 Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. The sampling frequency was set to $f_s = 1000$.
+The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = 1000/ \pi$ Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was 1000 Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. 
 
 \begin{table}[h]
 \begin{center}
@@ -57,6 +57,7 @@ The parameters were fixed from the previous optimisation, and the carrier freque
 \label{fig:peak_det_opt_env_fc_dep}
 \end{figure}
 
+\FloatBarrier
 \subsubsection{Theoretical Benefit of Upsampling}
 The test signal was generated at 8 times the sample rate, $f_s = 8000$, and the same test as above was run again. The parameters values was optimised again yielding the values in Tab.~\ref{tab:peak_det_opt_params_up}. The result can be seen in Fig.~\ref{peak_det_opt_env_th_up} and Fig.~\ref{fig:peak_det_opt_env_fc_dep_th_up}.
 The envelopes have now become extremely smooth, and the carrier frequencies that evenly divides the sampling frequency is considerably less problematic. The windowed detectors however get a rapidly increasing error as the carrier frequency drops below the frequency the parameters was optimised for.
@@ -108,7 +109,7 @@ In practice, the up-sampled signal would have to be interpolated by an interpola
 
 
 
-\subsection{RMS Level Detection}
+%\subsection{RMS Level Detection}
 
 
 \end{document}

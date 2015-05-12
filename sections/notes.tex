@@ -24,6 +24,13 @@
 http://www.analog.com/en/education/landing-pages/001/relationship-data-word-size-dynamic-range.html#Appendix_-_References
 
 
+Vilket dynamiskt omfång är det som ska ommappas? medelvärde (RMS)? absolutbelopp (waveshaper)? Peak Envelope (peak detector)? Crestfactor? (blir förmodligen effekten av att mappa om peak..., men hur?)
+
+Kompressor, förmodligen RMS mest intressant givet ordvalet dynamic range controller.
+
+Limiter. Def. som ett special fall i Gain-Kurvan med R=inf. MEN även peak ist för RMS. Vad betyder R = 2, men peak?
+
+
 \subsection{Envelope}
 How does the envelope map to the dynamic range?
 
@@ -177,13 +184,39 @@ Questions:
 	\begin{itemize}
 	\item Envelope detection, Peak and RMS
 	\item The effect of upsampling
-	\item Gain smoothing as user param and interacting with envelope detection
-	\item Results for the whole compressor
+	\item Gain smoothing as user param and interacting with envelope detection $\Rightarrow$ Results for the whole compressor
 	\end{itemize}
 
 \end{itemize}
 
+ 
+
+\section{Questions}
+\begin{itemize}
+\item metoden?
+\item hur resultaten presenteras?
+\item dispositionen?
+\item annat?
+\item arbetsgången.
+\begin{itemize}
+	\item Förstår om det har framstått som rörigt, men hela forskningsfältet är rörigt.
+	\item Vi har gått från att inte veta någonting om DSP, till att förstå att tidigare arbeten innehåller luddiga termer och i vissa fall rena felaktigheter.
+	\item Lärt oss väldigt mycket kring själva arbetsprocessen. Vi skulle ha lyssnat på Anders, och läst mer bakgrund TIDIGT. Delvis dåliga på att hitta vetenskapliga rapporter. Google Scholar, tidningar etc. Källor framåt och bakåt.
+	\item Konsten att undvika bajsmackor genom att kolla på vilka metrics som finns, svårt med delvis subjektiva ämnen. Psychoacoustics etc...
+	\item Samtliga delar av rapporten är på sitt sätt ett resultat, av arbetet som helhet. 
+\end{itemize}
+\end{itemize}
+
+
 \section{Method}
+\begin{itemize}
+
+
+
+
+
+
+
 
 \begin{itemize}
 	\item the story of Stone and Moore vs Giannoulis
