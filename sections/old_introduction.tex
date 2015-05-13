@@ -13,6 +13,29 @@ As the dynamic range is compressed the overall gain can be increased, boosting t
 Different usages and opinions aside, this thesis focuses on the technical aspects of digital dynamic range compressor (DDRC) algorithms. Designs known from text books and scientific publications are described and analysed, together with metrics for quantifying their characteristics. A method for evaluating a compressor's performance is proposed based on previous work~\cite{stone1992syllabic}\cite{stone2007quantifying} \cite{reiss2012tutorial}, and a number of different designs are compared using this metric.
 
 %===============================
+\subsection{Basic Principle of Compression}
+\todo{remove this subsection completely? May be good to have for readers with no prior knowledge of compression?}
+In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. Although the exact behaviour depends on both implementation and input signal, the idea is illustrated in Fig.~\ref{fig:comp_inout}, depicting an artificial signal and it's compressed counterpart. Fig.~\ref{fig:comp_input} shows a sinusoidal input signal with an instant onset followed by a sudden down-step in amplitude, between which the amplitude is above a certain threshold. The result of compression can be seen in Fig.~\ref{fig:comp_output}, where the section with amplitude exceeding the threshold has been attenuated while the last portion is left unchanged. Transition regions can be seen at the onset and after the down-step, due to the attack and release characteristics of the compressor.
+
+\begin{figure}[h!]
+\captionsetup{justification=centering}
+\begin{subfigure}{.5\linewidth}
+ \centering
+\subfile{\rootdir/figures/comp_input}
+\caption{Input} 
+\label{fig:comp_input}
+\end{subfigure}
+\begin{subfigure}{.5\linewidth}
+\centering
+\subfile{\rootdir/figures/comp_output}
+\caption{Compressed output} 
+\label{fig:comp_output}
+\end{subfigure}
+\caption{Signal with level both above and below a defined threshold before and after compression.} 
+\label{fig:comp_inout}
+\end{figure}
+
+%===============================
 \subsection{Motivation}
 Various DDRC designs have been proposed in the literature and there exists an abundance of commercial implementations on the market.\footnote{For a list of popular commercial compressors, see~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals. Furthermore, lacking a clear definition of the dynamic range of a signal, confusion resides around whether the peak or average values of the signal is to be compressed. 
 
