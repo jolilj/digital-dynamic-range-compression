@@ -3,9 +3,6 @@
 
 \begin{tikzpicture}[scale=0.9]
 
-%\draw(1.8,9) node{{$x_k, y_k$}};
-\draw(14.3, 1.4) node{{$t$}};
-
 \begin{axis}[%
 width=4.5in,
 height=2.5in,
@@ -14,10 +11,11 @@ scale only axis,
 xmin=-0.05,
 xmax=0.449,
 xstep=0.1,
+xlabel={$t$ [s]},
 ymin=0,
 ymax=1.19,
-axis x line*=bottom,
-axis y line*=left,
+axis x line=bottom,
+axis y line=left,
 xtick={0, 0.1, 0.2, 0.3, 0.4},
 xticklabel style={/pgf/number format/fixed},
 legend style={legend cell align=left,align=left,draw=white!15!black}
@@ -246,7 +244,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 0.496598639455782	0.2\\
 0.498866213151927	0.2\\
 };
-\addlegendentry{input, $x_k$};
+\addlegendentry{input, $g'_n$};
 
 \addplot [color=black,dash pattern=on 1pt off 3pt on 3pt off 3pt]
   table[row sep=crcr]{%
@@ -472,7 +470,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 0.496598639455782	0.202520029691727\\
 0.498866213151927	0.202520024445666\\
 };
-\addlegendentry{output, $y_k$};
+\addlegendentry{output, $g_n$};
 
 \end{axis}
 \end{tikzpicture}%

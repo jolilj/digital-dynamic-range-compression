@@ -3,9 +3,6 @@
 
 \begin{tikzpicture}[scale=0.9]
 
-\draw(2,8.5) node{$|\text{dBFS}|$};
-\draw(14.3, 1.4) node{{$t$}};
-
 \draw[->](3.7, 2.87) -- (4, 2.87);
 \draw[->](4.6, 2.87) -- (4.3, 2.87);
 \draw(5, 2.87) node{{$\tau_{\text{att}}$}};
@@ -26,10 +23,12 @@ at={(1.011111in,0.641667in)},
 scale only axis,
 xmin=-0.2,
 xmax=1.39,
+xlabel={$t$ [s]},
 ymin=0,
 ymax=5.09,
-axis x line*=bottom,
-axis y line*=left,
+ylabel={$[\dBFS\,]$},
+axis x line=bottom,
+axis y line=left,
 legend style={legend cell align=left,align=left,draw=white!15!black}
 ]
 \addplot [color=black,thick]
@@ -176,7 +175,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 1.39	2\\
 1.4	2\\
 };
-\addlegendentry{input, $X_n$};
+\addlegendentry{input, $C'_n$};
 
 \addplot [color=black,dash pattern=on 1pt off 3pt on 3pt off 3pt]
   table[row sep=crcr]{%
@@ -322,7 +321,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 1.39	2\\
 1.4	2\\
 };
-\addlegendentry{output, $Y_n$};
+\addlegendentry{output, $C_n$};
 
 \addplot [color=black,dotted]
   table[row sep=crcr]{%
