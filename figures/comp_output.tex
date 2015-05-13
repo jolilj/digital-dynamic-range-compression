@@ -1,6 +1,6 @@
 \documentclass[../main2.tex]{subfiles}
 \begin{document}
-\begin{tikzpicture}[scale=1,baseline={(0,0)}]
+\begin{tikzpicture}[scale=0.9,baseline={(0,0)}]
 
 %AXES
 % horizontal axis
@@ -14,7 +14,7 @@
 %\draw[dashed,domain=0:3] plot (\x,{2+0.7*exp(-(\x)/0.25)});
 
 %Input
-\draw[samples=1000,domain=0:2.5] plot(\x,{(0.6+0.4*exp(-(\x)/0.25))*(2.5*sin(deg(2*pi*5*(\x))))});
+\draw[samples=1000,domain=0.4:2.501] plot(\x,{(0.6+0.4*exp(-(\x-0.4)/0.25))*(2.5*sin(deg(2*pi*5*(\x))))});
 
 \draw[samples=1000,domain=2.5:5] plot(\x,{(1-0.6*exp(-(\x-2.5)/0.3))*sin(deg(2*pi*5*(\x)))});
 

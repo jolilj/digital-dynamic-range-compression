@@ -6,11 +6,18 @@
 \begin{document}
 
 \section{Introduction}
-Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC is used extensively in a broad range of applications ranging from music production and audio recording, to broadcasting and marketing as well as in hearing aids and cochlear implants. As the dynamic range is compressed, the overall gain can be increased thus boosting the perceived loudness of the signal making it a popular effect used by mixing and mastering engineers. Over the years, the effort to increase the loudness  of commercial albums has been referred to as the "loudness war"\footnote{The wikipedia page~\cite{loudness_war} has an exstensive collection of articles regarding this subject.}, where critics believe the sound quality is reduced. This feat is as well exploited in the marketing business trying to have their ads be as "loud" as possible catching the viewers attention, for better or worse\footnote{Complaints against too loud commercials are not out of the ordinary, see for example \cite{comp_ads}.}. 
+Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC has a broad range of applications from music production and audio recording to broadcasting and marketing as well as in hearing aids and cochlear implants.
 
-In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. To illustrate the idea, an artificial signal and it's compressed counterpart are depicted in Fig.~\ref{fig:comp_inout}. In Fig.~\ref{fig:comp_input} a sinusoidal signal has constant amplitude above a defined threshold up until it abruptly changes to an amplitude below that threshold. After compression is applied, the range above the threshold is mapped to a smaller range producing the typical characteristics depicted in Fig.~\ref{fig:comp_output}. Observe the temporal evolution of the applied compression, as the signal exceeds or drops below the threshold the attack and release time determine the reaction time of the compressor.
-%================================
-\begin{figure}[ht]
+As the dynamic range is compressed the overall gain can be increased, boosting the perceived loudness of the signal, making it a popular effect among mixing and mastering engineers. Over the years, the effort to increase the loudness of commercial albums has been referred to as the "loudness war"\footnote{The wikipedia page~\cite{loudness_war} has an exstensive collection of articles regarding this subject.}, where critics claim the sound quality is reduced. This feature is exploited in the marketing business as well, trying to make ads as loud as possible catching the viewers attention.\footnote{Complaints against too loud commercials are not out of the ordinary, see for example~\cite{comp_ads}.} However, compression cannot only be used to increase loudness. It is also used extensively for artistic purposes both in the studio and live as a powerful tool for shaping the sound of individual instruments and audio tracks.
+
+Different usages and opinions aside, this thesis focuses on the technical aspects of digital dynamic range compressor (DDRC) algorithms. Designs known from text books and scientific publications are described and analysed, together with metrics for quantifying their characteristics. A method for evaluating a compressor's performance is proposed based on previous work~\cite{stone1992syllabic}\cite{stone2007quantifying} \cite{reiss2012tutorial}, and a number of different designs are compared using this metric.
+
+%===============================
+\subsection{Basic Principle of Compression}
+\todo{remove this subsection completely? May be good to have for readers with no prior knowledge of compression?}
+In more technical terms, the dynamic range compressor is a nonlinear system with memory in the family of dynamic range controllers, that maps an input signal to a smaller dynamic range~\cite{dafx11}. Although the exact behaviour depends on both implementation and input signal, the idea is illustrated in Fig.~\ref{fig:comp_inout}, depicting an artificial signal and it's compressed counterpart. Fig.~\ref{fig:comp_input} shows a sinusoidal input signal with an instant onset followed by a sudden down-step in amplitude, between which the amplitude is above a certain threshold. The result of compression can be seen in Fig.~\ref{fig:comp_output}, where the section with amplitude exceeding the threshold has been attenuated while the last portion is left unchanged. Transition regions can be seen at the onset and after the down-step, due to the attack and release characteristics of the compressor.
+
+\begin{figure}[h!]
 \captionsetup{justification=centering}
 \begin{subfigure}{.5\linewidth}
  \centering
@@ -27,31 +34,21 @@ In more technical terms, the dynamic range compressor is a nonlinear system with
 \caption{Signal with level both above and below a defined threshold before and after compression.} 
 \label{fig:comp_inout}
 \end{figure}
-%================================
-%Although the exact behaviour depends on both implementation and input signal, the typical static and temporal properties of a compressor can be illustrated by Fig.~\ref{fig:typical_static} and Fig.~\ref{fig:typical_envelope}.
-%================================
-%\begin{figure}[ht]
-%\captionsetup{justification=centering}
-%
-%\begin{minipage}[t]{.5\textwidth}
-% \centering
-%\subfile{\rootdir/figures/typical_static}
-%\caption{Output amplitude vs input amplitude} 
-%\label{fig:typical_static}
-%\end{minipage}%
-%\begin{minipage}[t]{.5\textwidth}
-%\centering
-%\subfile{\rootdir/figures/typical_envelope}
-%\caption{Input and output signal plotted over time} 
-%\label{fig:typical_envelope}
-%\end{minipage}
-%\end{figure}
-%================================
 
-Various designs have been proposed for a digital dynamic range compressor (DDRC) in the literature and there exists an abundance of commercial implementations on the market.\footnote{For a list of popular commercial compressors, see~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals. Furthermore, lacking a clear definition of the dynamic range of a signal, confusion resides around wether the peak or average values of the signal is to be compressed. 
+%===============================
+\subsection{Motivation}
+Various DDRC designs have been proposed in the literature and there exists an abundance of commercial implementations on the market.\footnote{For a list of popular commercial compressors, see~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals. Furthermore, lacking a clear definition of the dynamic range of a signal, confusion resides around whether the peak or average values of the signal is to be compressed. 
 
-The application of DRC in hearing aids and cochlear implants have increased the need for formal measures of compression characteristics, and metrics such as Effective Compression Ratio (ECR) and Fidelity of Envelope Shape (FES) have been developed~\cite{stone1992syllabic}\cite{stone2007quantifying}. In 2012, a study was conducted outlining different DDRC designs and comparing their respective characteristics with these measures~\cite{reiss2012tutorial}. However, the study was restricted to a limited set of design choices and biased set of parameters, as explained in section~\ref{parameter_optimisation}. Furthermore, FES were measured for compression applied to real world audio signals, making the measurements highly dependent on the original envelope estimation method and hard to generalise.
+The application of DRC in hearing aids and cochlear implants have increased the need for formal measures of compression characteristics, and metrics such as Effective Compression Ratio (ECR) and Fidelity of Envelope Shape (FES) have been developed~\cite{stone1992syllabic}\cite{stone2007quantifying}. In 2012, a study was conducted outlining different DDRC designs and comparing their respective characteristics with these measures~\cite{reiss2012tutorial}. However, it is not clear whether ECR or FES can be used to benchmark and compare the performance of different compressor designs. As the metrics was initially derived to characterise the effect of different compressor parameter settings on speech intelligibility, the chosen parameter values are likely to have a great impact on the results. Furthermore, the results are highly dependent on the original envelope estimation used.
 
-In this thesis a formal analysis and evaluation of the most prominent feed-forward DDRC designs known from formal literature and scientific publications was conducted. In section~\ref{theory} dynamic range and signal level is discussed and it's meaning within this thesis is defined followed by a thorough description of multiple design choices and used metrics in previous work. As the level detection and smoothing techniques used is what in essence separates the various feed forward compressors from each other, these filters are meticulously described. In section~\ref{method} the method developed is explained and motivated, including a definition of ideal compression. With the results presented in section~\ref{results} a discussion covering difficulties and ambiguities is made in section~\ref{discussion} with the final proposed design presented in section~\ref{conclusions}.
+This thesis builds on the work in ~\ref{reiss2012tutorial}, but covers a wider set of compressor designs and a new method for evaluating a compressor's performance is proposed and used to compare the different design choices.\todo{how to say that the method is improved, rather than new?}
+
+%===============================
+\subsection{Outline Of Thesis}
+First, necessary definitions and background theory is presented. The theory section is divided into three parts. In section~\ref{theory_dynamic_range}, the terms dynamic range and signal level are discussed and their meaning within this thesis is defined. This is followed by section~\ref{theory_compressor_design} where the investigated compressor designs known from text books and scientific publications are described and analysed. In particular, the different proposed level detection and smoothing techniques are investigated, as this is what in essence separates the various designs from each other. Lastly, the metrics used in \cite{stone1992syllabic}\cite{stone2007quantifying} and \cite{reiss2012tutorial} is described and discussed in section \ref{theory_metrics}.
+
+In section~\ref{method} the method used to evaluate different aspects of the compression algorithms is described. Ideal compression is defined and the method used to compare compressor performance is derived and explained.
+
+The results are presented in section~\ref{results}, followed by a discussion section~\ref{discussion} and a summary of conclusions that can be drawn from this work in section ~\ref{conclusions}.
 
 \end{document}
