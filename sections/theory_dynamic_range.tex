@@ -9,10 +9,10 @@
 Before plunging into the realm of dynamic range compression, a brief discussion of
 the peak amplitude and the root-mean-square of time-varying signals are presented as these are used frequently throughout the thesis.
 \subsubsection{Peak Amplitude}
-For a periodic signal, the \emph{peak amplitude} can be unambiguously defined as the maximum absolute value over the signal's period. For a signal $x(t)$ with period $T$ the peak amplitude is thus defined as
+For a periodic signal, the \emph{peak amplitude} can be unambiguously defined as the maximum absolute value over the signal's period. For a signal $x(t)$ with period $\tau$ the peak amplitude is thus defined as
 %================================
 \begin{equation}
-a_\text{pk} = \sup \{ |x(t)| :  0 \leq t < T \}
+a_\text{pk} = \sup \{ |x(t)| :  0 \leq t < \tau \}
 \end{equation}
 %================================
 In the case of a sine wave with frequency $f$ the peak amplitude can be calculated as
@@ -21,7 +21,7 @@ In the case of a sine wave with frequency $f$ the peak amplitude can be calculat
 a_\text{pk} = \sup \{ |a \sin(2 \pi f t) | : 0 \leq t < \frac{1}{f} \} = a.
 \end{equation}
 %================================
-\subsubsection{Envelope and Fine Structure}
+\subsubsection{Envelope and Fine Structure}\label{theory_envelope}
 The envelope of an analytic signal $x(t) = a(t)e^{i(\omega t)}$ is defined as \cite{bedrosian1962analytic}
 \begin{align}
 e(t) \equiv |x(t)| = a(t)
@@ -83,7 +83,7 @@ a_\text{rms} =
 \subsection{Dynamic Range and Signal Level}
 The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. 
 
-To distinguish between linear and logarithmic quantities the former are denoted by lowercase and the latter by uppercase letters.
+To distinguish between linear and logarithmic quantities the former are in general denoted by lowercase and the latter by uppercase letters\footnote{There are a few exceptions, for example the compression ratio $R$ and sample period $T_s$.}.
 %================================
 \subsubsection{Sound Level}
 The problem lies at defining the level of a signal. While the perceived \emph{loudness} of a sound is a subjective quantity \cite{american1973american}, \emph{sound level} is a physical quantity that can be measured. \emph{Sound pressure level} (SPL) is the effective pressure deviation of an acoustic wave in air relative to a reference value, measured on a logarithmic scale. More formally,

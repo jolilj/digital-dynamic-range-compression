@@ -6,7 +6,7 @@
 \begin{document}
 \FloatBarrier
 \subsection{Gain Smoothing}
-To further smooth the control signal, various filters are introduced in the end of the side-chain operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion.
+To further smooth the control signal, various filters are introduced in the end of the side-chain operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion. The fact that $0< g_n\leq 1$ and $G_n \leq 0$ motivates the logarithmic quantity \emph{compression} and the \emph{smoothed compression}  denoted by $C'_n = -G'_n$ and  $C_n = -G_n$, respectively. This way the filters operate on positive values, simplifying the difference equations.
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
 A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter as depicted in \cite{mcnally1984dynamic}\todo{replace the control block with $z^{-1}$ to illustrate the problem mentioned below (Fig.10 Mcnally)}, can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
@@ -32,12 +32,12 @@ In \cite{stikvoort1986digital} the calculated gain in the linear domain is smoot
 %=========================
 \begin{equation}\label{eq:stikvoort_attack}
 \begin{split}
-u_k &= b_0 x_k + b_1 x_{k-1} + b_2 x_{k-2} + a_1 u_{k-1} + a_2 u_{k-2}\\
-y_k &= d_0 u_k + d_1 u_{k-1} + d_2 u_{k-2} + c_1 y_{k-1} + c_2 y_{k-2}.
+u_n &= b_0 g'_n + b_1 g'_{n-1} + b_2 g'_{n-2} + a_1 u_{n-1} + a_2 u_{n-2}\\
+g_n &= d_0 u_n + d_1 u_{n-1} + d_2 u_{n-2} + c_1 g_{n-1} + c_2 g_{n-2}.
 \end{split}
 \end{equation}
 %=========================
-With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a minus sign, print error in original!} the group delay is about 35 ms (in the low frequency limit, as the filter is not linear phase) and cut off frequency 8.5 Hz for a sample rate of 44.100 Hz. The step response can be seen in Fig.~\ref{fig:step_stikvoort_attack}. \todo{A slight static error can be seen, probably due to insufficient accuracy in the coefficents given in stikvoorts original paper. Comment instability?}
+With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a minus sign, print error in original!} the group delay is about 35 ms (in the low frequency limit, as the filter is not linear phase) and cut off frequency 8.5 Hz for a sample rate of 44.100 Hz. The step response can be seen in Fig.~\ref{fig:step_stikvoort_attack}. A slight static error can be seen, probably due to insufficient accuracy in the coefficients given in the original paper. Furthermore the coefficients lies close to the instability region, when varied around the presented values.
 %=========================
 \begin{table}[h]
 \begin{center}
@@ -66,11 +66,11 @@ With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a
 In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as\todo{FIX NOTATION!}
 \begin{equation}
 \begin{split}
-Z_n &= \text{max}(X_n, Y_{n-1} - A_{\text{rel}} H_{n-1} )\\
-Y_n &= \text{min}(Z_n, Y_{n-1} + A_{\text{att}}) \\
+Z_n &= \text{max}(C'_n, C_{n-1} - A_{\text{rel}} H_{n-1} )\\
+C_n &= \text{min}(Z_n, C_{n-1} + A_{\text{att}}) \\
 H_n &=
 \begin{cases}
-    \text{min}(1,A_{\text{hold}} + H_{n-1})	& Y_n < Y_{n-1}; \\
+    \text{min}(1,A_{\text{hold}} + H_{n-1})	& C_n < C_{n-1}; \\
     A_{\text{hold}}					& \text{otherwise}
 \end{cases} \\
 \end{split}
@@ -87,7 +87,7 @@ and the time constants $\tau_{\text{att}}, \tau_{\text{rel}}$ and $\tau_{\text{h
 %================================
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/step_frindle_gain}}
-\caption{Frindle \& Easty gain smoothing step and downstep response}
+\caption{Linear Gain Smoothing, as implemented in \cite{frindle1996implementation}, step and downstep response}
 \label{fig:step_frindle_gain}
 \end{figure}
 %================================
@@ -102,10 +102,10 @@ The difference equation of the \emph{smooth decoupled filter} is
 \begin{equation}
 \begin{split}
 Z_n &= \begin{cases}
-   G'_n								& G'_n > Z_{n-1} \\
-    \alpha_{r} G'_n + (1-\alpha_{r}) Z_{n-1} 	& G'_n \leq Z_{n-1}
+   C'_n								& C'_n > Z_{n-1} \\
+    \alpha_{r} C'_n + (1-\alpha_{r}) Z_{n-1} 	& C'_n \leq Z_{n-1}
 \end{cases} \\
-G_n &= \alpha_{a} Z_n + (1-\alpha_{a}) G_{n-1}
+C_n &= \alpha_{a} Z_n + (1-\alpha_{a}) C_{n-1}
 \end{split}
 \end{equation}
 %================================
@@ -114,9 +114,9 @@ which result in a smooth transition between the attack and release phase without
 To obtain a filter with attack and release parameters independent of each other the \emph{smooth branching filter}, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
 %================================
 \begin{equation}
-G_n = \begin{cases}
-    \alpha_{a} G'_n + (1-\alpha_{a}) G_{n-1} 	& G'_n > G_{n-1} \\
-    \alpha_{r} G'_n + (1-\alpha_{r}) G_{n-1} 	& G'_n \leq G_{n-1}.
+C_n = \begin{cases}
+    \alpha_{a} C'_n + (1-\alpha_{a}) C_{n-1} 	& C'_n > C_{n-1} \\
+    \alpha_{r} C'_n + (1-\alpha_{r}) C_{n-1} 	& C'_n \leq C_{n-1}.
 \end{cases}
 \end{equation}
 %================================

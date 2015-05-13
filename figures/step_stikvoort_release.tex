@@ -3,7 +3,7 @@
 
 \begin{tikzpicture}[scale=0.9]
 
-%\draw(1.8,9) node{{$x_k, y_k$}};
+%\draw(1.8,9) node{{$x_n, \tilde{e}_n$}};
 \draw(14.3, 1.4) node{{$t$}};
 
 \begin{axis}[%
@@ -224,7 +224,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 2	0.2\\
 2.01	0.2\\
 };
-\addlegendentry{input, $x_k$};
+\addlegendentry{input, $x_n$};
 
 \addplot [color=black,dash pattern=on 1pt off 3pt on 3pt off 3pt]
   table[row sep=crcr]{%
@@ -430,7 +430,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 2	0.200745359102242\\
 2.01	0.20070184817015\\
 };
-\addlegendentry{output, $y_k$};
+\addlegendentry{output, $\tilde{e}_n$};
 \end{axis}
 
 \end{tikzpicture}%
