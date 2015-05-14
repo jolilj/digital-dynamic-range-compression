@@ -9,7 +9,7 @@
 To further smooth the control signal, various filters are introduced in the end of the side-chain operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion. The fact that $0< g_n\leq 1$ and $G_n \leq 0$ motivates the logarithmic quantity \emph{compression} and the \emph{smoothed compression}  denoted by $C'_n = -G'_n$ and  $C_n = -G_n$, respectively. This way the filters operate on positive values, simplifying the difference equations.
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
-A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter as depicted in \cite{mcnally1984dynamic}\todo{replace the control block with $z^{-1}$ to illustrate the problem mentioned below (Fig.10 Mcnally)}, can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter}. The difference equation of the filter is
+A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter} where the control block represents the branching condition as discussed below. The difference equation for one version of the filter is
 %================================
 \begin{equation}
 g_n = \begin{cases}
@@ -63,31 +63,31 @@ With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a
 \end{figure}
 %=========================
 \subsubsection{Linear Smoothing in Log Domain}
-In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as\todo{FIX NOTATION!}
+In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as
 \begin{equation}
 \begin{split}
-Z_n &= \text{max}(C'_n, C_{n-1} - A_{\text{rel}} H_{n-1} )\\
-C_n &= \text{min}(Z_n, C_{n-1} + A_{\text{att}}) \\
+Z_n &= \text{max}(C'_n, C_{n-1} - A_r H_{n-1} )\\
+C_n &= \text{min}(Z_n, C_{n-1} + A_a) \\
 H_n &=
 \begin{cases}
-    \text{min}(1,A_{\text{hold}} + H_{n-1})	& C_n < C_{n-1}; \\
-    A_{\text{hold}}					& \text{otherwise}
+    \text{min}(1,A_h + H_{n-1})	& C_n < C_{n-1}; \\
+    A_h					& \text{otherwise}
 \end{cases} \\
 \end{split}
 \end{equation}
 where
 \begin{equation}
 \begin{split}
-A_{\text{att}} &= \frac{1}{f_s \tau_{\text{att}}} \\
-A_{\text{rel}} &= \frac{1}{f_s \tau_{\text{rel}}} \\
-A_{\text{hold}} &= \frac{0.5}{f_s \tau_{\text{hold}}}. \\
+A_a &= \frac{1}{f_s \tau_a} \\
+A_r &= \frac{1}{f_s \tau_r} \\
+A_h &= \frac{0.5}{f_s \tau_h}. \\
 \end{split}
 \end{equation}
-and the time constants $\tau_{\text{att}}, \tau_{\text{rel}}$ and $\tau_{\text{hold}}$ are given in seconds per dBFS. The attack and release trajectories are linear in the log domain, as can be seen in Fig.~\ref{fig:step_frindle_gain}. In the release phase the hold timer $H_n$ scales the release time constant up to it's final value. The goal of this is to get a smooth release characteristic with low distortion for low frequency content and a smooth transition from hold to release phase.
+and the time constants $\tau_a, \tau_r$ and $\tau_h$ are given in seconds per dBFS. The attack and release trajectories are linear in the log domain, as can be seen in Fig.~\ref{fig:step_frindle_gain}. In the release phase the hold timer $H_n$ scales the release time constant up to it's final value. The goal of this is to get a smooth release characteristic with low distortion for low frequency content and a smooth transition from hold to release phase.
 %================================
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/step_frindle_gain}}
-\caption{Linear Gain Smoothing, as implemented in \cite{frindle1996implementation}, step and downstep response}
+\caption{Linear Gain Smoothing, as implemented in \cite{frindle1996implementation}, step and downstep response with $\tau_a=0.02$, $\tau_r=0.08$ and $\tau_h= 0.1$.}
 \label{fig:step_frindle_gain}
 \end{figure}
 %================================
