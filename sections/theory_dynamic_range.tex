@@ -74,11 +74,15 @@ a_\text{rms} = \sqrt{ \frac{1}{T} \int_{0}^{T} x(t)^2 dt }.
 For the signal in Eq.~\eqref{eq:sine_wave}, the RMS amplitude can be calculated as
 %================================
 \begin{equation}
-a_\text{rms} =
+a_\text{rms} \equiv
 \sqrt{ \frac{1}{T} \int_{0}^{T} a^2 \sin^2 (2 \pi f t) dt } =
 \sqrt{ \frac{a^2}{2T} \int_{0}^{T}\left( 1 - \cos (4 \pi f t) \right) dt } =
 \frac{a_\text{pk}}{\sqrt 2}.
 \end{equation}
+The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
+\begin{align}
+f_{crest} \equiv \frac{a_\text{pk}}{a_\text{rms}}. \label{eq:crest_factor}
+\end{align}
 %================================
 \subsection{Dynamic Range and Signal Level}
 The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. 
