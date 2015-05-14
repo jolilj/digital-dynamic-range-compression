@@ -5,34 +5,49 @@
 
 \begin{document}
 \subsection{Metrics}
-\subsubsection{Fidelity of Ideal Envelope Shape} \label{fes}
-In ~\cite{stone2007quantifying} a metric for measuring the correlation between the envelope shape before and after compression is proposed and further used in the design comparison conducted in ~\cite{reiss2012tutorial}. 
+\subsubsection{Fidelity of Envelope Shape} \label{fes}
 
-The \emph{fidelity of envelope shape} intends to measure the correlation between the input and output envelope assuming ideal compression, see section \ref{ideal_compression}.
-With $O(t)$ is the output envelope, $G(t)$ the gain and $E(t)$ the input envelope in the logarithmic domain the input output relationship can be expressed as
+
 %================================
- \begin{align}
-O(t) = G(t) + E(t).
-\label{eq:out_env}
-\end{align}
+\begin{equation}
+y_n = g_n x_n
+\end{equation}
+
+With x and y defined as envelope and fine-structure
+\begin{equation}
+o_n f_n = g_n e_n f_n
+\end{equation}
+
+In log domain
+\begin{equation}
+O_n + F_n = G_n + E_n + F_n
+\end{equation}
+
+ \begin{equation}\label{eq:out_env}
+O_n = G_n + E_n
+\end{equation}
+
 %================================
 Assuming the envelope is above the threshold, $T$, thus escaping the discontinuity at the knee, the gain can be expressed as, see section ~\ref{gain_computer},
 %================================
 \begin{align}
-G(t) = (R^{-1}-1)(X(t)-T) = C + (R^{-1}-1)\tilde{E}(t)
+G(t) = (R^{-1}-1)(\tilde{E}_n-T) = K + (R^{-1}-1)\tilde{E}_n
 \label{eq:gain_env}
 \end{align}
 %================================
-where $C = (1-R^{-1})T$, $R$ being the compression ratio and $\tilde{E}$ is the smoothed envelope detected by the compressor. Eq. \eqref{eq:out_env} with Eq. \eqref{eq:gain_env} yields
+where $K = (1-R^{-1})T$, $R$ is the compression ratio and $\tilde{E}$ is the estimated envelope detected by the compressor. Eq. \eqref{eq:out_env} with Eq. \eqref{eq:gain_env} yields
 \begin{align}
-O(t) = C + (R^{-1}-1)\tilde{E}(t) + E(t).
+O_n = K + (R^{-1}-1)\tilde{E}_n + E_n.
 \end{align}
+
+If the envelope estimation is perfect, $\tilde{E}_n = E_n$,
+\begin{equation}
+O_n = K + R^{-1} E_n.
+\end{equation}
+That is, $O_n$ will be a linear function of $E_n$, and $r_\text{FES} = 1$.
+
 %================================
-The Fidelity of Envelope Shape is thus defined as the correlation between $E(t)$ and $O(t)$ using the Pearson correlation coefficient
-\begin{align}
-FES = \dfrac{\sum(E-\overline{E})(O-\overline{O})}{\sqrt{\sum(E-\overline{E})^2}\sqrt{\sum(O-\overline{O})^2}}
-\end{align}
-where $\overline{E}$ and $\overline{O}$ denote the mean value of $E$ and $O$, respectively.
+
 %================================
 \subsubsection{Total Harmonic Distortion}
 A common measure of nonlinearity of a system is the \emph{total harmonic distortion} defined as \cite{dafx02}
