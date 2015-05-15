@@ -11,9 +11,8 @@
 \subsubsection{Fidelity of Envelope Shape} \label{fes}
 In~\cite{stone2007quantifying} Fidelity of Envelope Shape (FES) is proposed as a metric of the correlation between the envelope shape before and after compression. It is further used in the design comparison conducted in ~\cite{reiss2012tutorial}.
 
-FES is defined as the correlation between the input signal envelope $E_n$ and the output signal envelope $O_n$ using the Pearson correlation coefficient, denoted by $r_\text{FES}$ and defined as
-\begin{equation}
-r_\text{FES} = \dfrac{\sum(E_n - \langle E_n \rangle)(O_n - \langle O_n \rangle)}{\sqrt{\sum(E_n -\langle E_n \rangle )^2}\sqrt{\sum(O_n - \langle O_n \rangle )^2}},
+FES is defined as the correlation between the input signal envelope $E_n$ and the output signal envelope $O_n$ using the Pearson correlation coefficient: \begin{equation}
+\FES = \dfrac{\sum(E_n - \langle E_n \rangle)(O_n - \langle O_n \rangle)}{\sqrt{\sum(E_n -\langle E_n \rangle )^2}\sqrt{\sum(O_n - \langle O_n \rangle )^2}},
 \end{equation}
 where $\langle E_n \rangle$ and $\langle O_n \rangle$ denote the mean value of $E_n$ and $O_n$ respectively.
 
@@ -21,23 +20,23 @@ where $\langle E_n \rangle$ and $\langle O_n \rangle$ denote the mean value of $
 \subsubsection{Total Harmonic Distortion}
 A common measure of nonlinearity of a system is the \emph{total harmonic distortion} defined as \cite{dafx02}
 \begin{align}
-THD = \sqrt{\dfrac{A_2^2 + A_3^2 + ... + A_N^2}{A_1^2 + A_2^2 + ... + A_N^2}}
+\THDF = \dfrac{\sqrt{a_2^2 + a_3^2 + ... + a_N^2}}{a_1}
 \end{align}
-which is the square root the ratio of the sum of powers of all harmonic frequencies above the fundamental frequency to the power of all harmonic frequencies including the fundamental frequency.
+which is the square root the ratio of the sum of powers of all harmonic frequencies above the fundamental frequency to the fundamental frequency.
 
 % ============================
 \subsubsection{Effective Compression Ratio}
-A metric used in \cite{reiss2012tutorial} is the \emph{effective compression ratio} defined as
+A metric used in \cite{stone1992syllabic} is the \emph{effective compression ratio} defined as
 \begin{align}
-ECR = \dfrac{\Delta S_o}{\Delta S_i}
+\ECR = \dfrac{S_\text{I}}{S_\text{O}}
 \end{align}
-where $\Delta S_i$ is the difference between the amplitude of the side-bands and the carrier of the test signal and $\Delta S_o$ is the difference between the amplitude of the side-bands and the carrier of the compressed signal.
+where $S_\text{I}$ and $S_\text{O}$ is the input  and output dynamic range, respectively.
 
 % ============================
 \subsubsection{Euclidean Norm}
 The euclidean norm, or normalised euclidean distance, between two signals $x_n$, $y_n$ of equal length is defined as
 \begin{align}
-EN = ||x-y|| = \sqrt{\frac{1}{N}\sum_{n=0}^{N-1}(x_n-y_n)^2}
+\EN = ||x-y|| = \sqrt{\frac{1}{N}\sum_{n=0}^{N-1}(x_n-y_n)^2}
 \end{align}
 where $N$ is the length of the signals in samples.
 \end{document}

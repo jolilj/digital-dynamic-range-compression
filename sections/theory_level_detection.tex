@@ -8,7 +8,9 @@
 Level detection (logarithmic domain), envelope estimation (linear domain), is the process of extracting the level, or envelope, of the input signal. Various methods have been proposed for this task in the literature. Here follows a summary of the algorithms investigated in this thesis and a short analysis of their properties. The input signal will be denoted $x_n$, the estimated envelope $\tilde{e}_n$, the rms $\hat{x}$ and the detected level, either envelope based or rms-based, $L_n = 20\logten(\tilde{e})$ or $\hat{L}_n=20\logten(\hat{x})$. 
 
 \subsubsection{Full Wave Rectification}
-Full wave rectification is performed in the digital domain by simply taking the absolute value of the input signal. As shown in appendix A, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in the peak detectors in \cite{mcnally1984dynamic} \cite{stikvoort1986digital}. \todo{add references to zoelzers stuff? Lu? Other?}\subsubsection{Peak Detection}\label{peak_detection}
+Full wave rectification is performed in the digital domain by simply taking the absolute value of the input signal. As shown in appendix A, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in all following peak detectors.
+
+\subsubsection{Peak Detection}\label{peak_detection}
 In \cite{mcnally1984dynamic} and \cite{zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by an IIR-filter, estimating the envelope, defined as
 \begin{equation}
 \tilde{e}_n = \begin{cases}
