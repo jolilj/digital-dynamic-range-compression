@@ -1,0 +1,22 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Evaluation of Peak Level Compressors}\label{method_peak_compressors}
+The test signal defined by \eqref{eq:test_signal_am_modulated} was generated, and the wanted compression was defined by a threshold $T$ and ratio $R$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal $y_\text{I}$ was calculated according to Eq.~\eqref{eq:ideal_output}.
+
+\subsubsection{Distance to Ideal as Performance Indicator}
+Compressor performance was evaluated by comparing the output of the compressor to the ideal output. The distance to ideal was calculated using the euclidian norm
+\begin{equation}
+\EN = ||y_\text{I} - y||
+\end{equation}
+where $y_\text{I}$ is the ideal output and $y$ is the output from the compressor.
+
+The parameter settings for each compressor was optimised numerically with a fixed modulation frequency $f_m = f_{m,0}$ and carrier frequency $f_c = f_{c,0}$, using $\EN$ as cost function. The motivation for this procedure is partly the same as for the evaluation of peak level detectors, and partly following the discussion in section~\ref{method_param_opt}.
+
+\subsubsection{Carrier Frequency Dependence}
+As was the case for peak level detection, the optimised values are closely related to modulation frequency. Possible dependencies on carrier frequency however are still unwanted, since the fine structure ideally should not be affect the resulting dynamic range compression. To evaluate how compressor performance depends on the fine structure, the parameter values as well as modulation frequency was fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
+
+\end{document}
