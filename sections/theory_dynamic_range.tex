@@ -81,7 +81,13 @@ a_\text{rms} \equiv
 \end{equation}
 The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
 \begin{align}
-f_{crest} \equiv \frac{a_\text{pk}}{a_\text{rms}}. \label{eq:crest_factor}
+\crest \equiv \frac{a_\text{pk}}{a_\text{rms}}. \label{eq:crest_factor}
+\end{align}
+
+\subsubsection{RMS Envelope}
+Given a signal with fine-structure of constant crest factor, the RMS envelope is defined as
+\begin{align}
+\hat{x} \equiv \frac{e(t)}{\crest}.
 \end{align}
 %================================
 \subsection{Dynamic Range and Signal Level}
@@ -134,6 +140,13 @@ A_\text{rms} = 20\log_{10} \left( \frac{a_\text{pk}}{\sqrt 2} \right) \approx A_
 \end{equation}
 This is not in accordance with the EBU 3341 standard, but is used  since it simplifies the conversion between linear and logarithmic RMS values.
 
-For periodic signals, $A_\text{pk}$ and $A_\text{rms}$, are uniquely determined. For real-world signals however, the issue at hand is to define methods for how these are to be extracted. Essentially, it depends on the \emph{time scale} over where these are measured. This is a fundamental part of dynamic range control and is referred to as \emph{level detection} and is discussed in section~\ref{level_detection}.
+For periodic signals, $A_\text{pk}$ and $A_\text{rms}$, are uniquely determined. For real-world signals however, the issue at hand is to define methods for how these are to be extracted. Essentially, it depends on the \emph{time scale} over where these are measured. This is a fundamental part of dynamic range control and is referred to as \emph{level detection} and is discussed in section~\ref{level_detection}. 
+
+\subsubsection{Definition of Dynamic Range in DDRC}
+Given a time-varying detected peak or RMS level,  denoted by$A_{\text{pk},n}$ and $A_{\text{rms},n}$ respectively, the dynamic range of a signal can be defined as
+\begin{align}
+S_\text{pk} &\equiv \max(A_{\text{pk},n}) - \min(A_{\text{pk},n})\label{eq:s_peak}\\
+S_\text{rms} &\equiv \max(A_{\text{rms},n}) - \min(A_{\text{rms},n}).\label{eq:s_rms}
+\end{align}
 
 \end{document}
