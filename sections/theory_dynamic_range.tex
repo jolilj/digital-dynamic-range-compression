@@ -18,7 +18,7 @@ a_\text{pk} = \sup \{ |x(t)| :  0 \leq t < \tau \}
 In the case of a sine wave with frequency $f$ the peak amplitude can be calculated as
 %================================
 \begin{equation}\label{eq:sine_wave}
-a_\text{pk} = \sup \{ |a \sin(2 \pi f t) | : 0 \leq t < \frac{1}{f} \} = a.
+a_\text{pk} = \sup \{ |a \sin(2 \pi f t) | : 0 \leq t < \frac{1}{f} \} = a.\label{eq:a_pk}
 \end{equation}
 %================================
 \subsubsection{Envelope and Fine Structure}\label{theory_envelope}
@@ -77,7 +77,7 @@ For the signal in Eq.~\eqref{eq:sine_wave}, the RMS amplitude can be calculated 
 a_\text{rms} \equiv
 \sqrt{ \frac{1}{T} \int_{0}^{T} a^2 \sin^2 (2 \pi f t) dt } =
 \sqrt{ \frac{a^2}{2T} \int_{0}^{T}\left( 1 - \cos (4 \pi f t) \right) dt } =
-\frac{a_\text{pk}}{\sqrt 2}.
+\frac{a_\text{pk}}{\sqrt 2}.\label{eq:a_rms}
 \end{equation}
 The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
 \begin{align}

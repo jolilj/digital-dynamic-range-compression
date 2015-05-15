@@ -9,13 +9,17 @@
 \FloatBarrier
 \subsection{Ideal Peak Level Compression}\label{method_ideal_peak_compression}
 Given an input signal $x_n$, as before consisting of an envelope $e_n$ and a fine structure $f_n$ so that
+%================================
 \begin{equation}\label{eq:input_signal_env_finestruct}
 x_n = e_n f_n,
 \end{equation}
+%================================
 the dynamic range, Eq. \eqref{eq:s_peak}, can be expressed as
+%================================
 \begin{equation}
 S_\text{pk} =A_\text{max} - A_\text{min} = 20 \logten \left(\frac{\max(e_n)}{\min(e_n)}\right) \dBFS
 \end{equation}
+%================================
 where $A_\text{max} = \max(A_{\text{pk},n})$ and $A_\text{min} =  \min(A_{\text{pk},n})$.
  
 In this thesis \emph{ideal compression} is defined as the processes of mapping all or a part of this dynamic range to a smaller range, without changing the fine structure. This mapping is further defined to be linear in the logarithmic domain and with a threshold below which the signal level is unchanged. For the input signal in Eq.\eqref{eq:input_signal_env_finestruct}, the envelope of the ideal output signal can thus be described by the following equation
@@ -24,8 +28,8 @@ O_n =
 \begin{cases}
 	K E_n + M 					& E_n \geq T'  \\
 	E_n							& \text{otherwise},
-\end{cases}
-\end{equation}
+\end{cases} 
+\end{equation}\label{eq:ideal_output_envelope}
 where $K$, $M$ and $T'$ are constants defining the wanted mapping. This clearly corresponds to the static curve in Fig.\ref{fig:typical_static_detailed} described by Eq.\eqref{eq:gaincomp} with $W=0$ and the following change of variables:
 \begin{equation}
 \begin{split}
@@ -92,11 +96,11 @@ O_\text{min} &= K A_\text{min} + M.
 The output signal's dynamic range $S_\text{pk, out}$ is thus
 \begin{equation}
 S_\text{pk,out} = O_\text{max} - O_\text{min} = K (A_\text{max} - A_\text{min}).\end{equation}
-ECR can then be calculated as
+The effective compression ratio can then be calculated as
 \begin{equation}
-ECR = \frac{S_\text{pk,in}}{S_\text{pk,out}} = \frac{A_\text{max} - A_\text{min}}{K(A_\text{max} - A_\text{min})} = K^{-1} = R
+\ECR = \frac{S_\text{pk,in}}{S_\text{pk,out}} = \frac{A_\text{max} - A_\text{min}}{K(A_\text{max} - A_\text{min})} = K^{-1} = R
 \end{equation}
-Thus, the effective compression ratio is equal to the specified $R$.
+which is the specified compression ratio.
 
 Observe that, as was the case for FES, ECR will only be considered a valid metric of compressor performance for the case $A_\text{min} \geq T$.
 
