@@ -8,6 +8,47 @@
 %================================
 \FloatBarrier
 \subsection{Ideal RMS Level Compression}\label{method_ideal_rms_compression}
-
-
+The method for evaluating the ideal compression based on RMS level detection is similar to the ideal peak level compression although a few things are worth to note.
+With the definition of ideal RMS, Eq.~\eqref{eq:ideal_rms}, the crest factor of the fine structure needs to be constant. This condition is met by the test signal in Eq.~\eqref{eq:test_signal}.
+%================================
+\begin{align}
+\crest = \frac{a_\text{pk}}{a_\text{rms}} = \left\{\text{Eq.~\eqref{eq:a_rms} and \eqref{a_pk}}\right\} = \frac{1}{\sqrt{2}}
+\end{align}
+%================================
+The dynamic range that is to be compressed is the same as in the peak case
+%================================
+\begin{equation}
+\begin{split}
+S_\text{rms} = 20 \logten \left(\frac{\max(\hat{x}_{I,n})}{\min(\hat{x}_{I,n})}\right) \dBFS &= \\ 
+20 \logten \left(\frac{\crest\max(e_n)}{\crest\min(e_n)}\right) \dBFS &= S_\text{pk}.
+\end{split}
+\end{equation}
+%================================
+Since $\hat{x}_{I,n} = e_n/\crest \Rightarrow \hat{X}_{I,n} = E_n - \Crest)$ in the logarithmic domain,  the dynamic range mapping, Eq.~\eqref{eq:dynamic_range_mapping}, is consistent apart from a change in the mapping constants: 
+%================================
+\begin{equation}
+O_n =
+\begin{cases}
+	K E_n + M = K\hat{X}_{I,n} + M + \Crest	& E_n \geq T'  \\
+	E_n = \hat{X}_{I,n} + \Crest				& \text{otherwise},
+\end{cases} 
+\end{equation}
+%================================
+The ideal RMS level output is thus
+\begin{equation}
+\hat{O}_n =
+\begin{cases}
+	K\hat{X}_{I,n} + \hat{M}	& \hat{X}_{I,n} \geq \hat{T}' \\
+	\hat{X}_{I,n} + \Crest				& \text{otherwise},
+\end{cases} 
+\end{equation}
+where
+\begin{align}
+\hat{M} &= M + \Crest \\
+\hat{T}' &=T' - \Crest.
+\end{align}
+With the linear domain ideal RMS output denoted $\hat{o}_n = 10^{\hat{O}_n/20}$ the ideal RMS level compression is defined as
+\begin{equation}\label{eq:ideal_rms_output}
+\hat{y}_{I,n} = \hat{o}_n f_n.
+\end{equation}.
 \end{document}
