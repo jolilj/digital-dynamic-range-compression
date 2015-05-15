@@ -12,14 +12,12 @@ Given an input signal $x_n$, as before consisting of an envelope $e_n$ and a fin
 \begin{equation}\label{eq:input_signal_env_finestruct}
 x_n = e_n f_n,
 \end{equation}
-the dynamic range can be unambiguously defined as range between the maximum envelope level
+the dynamic range, Eq. \eqref{eq:s_peak}, can be expressed as
 \begin{equation}
-A_\text{max} = 20 \logten (\max(e_n)) \dBFS
+S_\text{pk} =A_\text{max} - A_\text{min} = 20 \logten \left(\frac{\max(e_n)}{\min(e_n)}\right) \dBFS
 \end{equation}
-and the minimum envelope level
-\begin{equation}
-A_\text{min} = 20 \logten (\min(e_n)) \dBFS.
-\end{equation}
+where $A_\text{max} = \max(A_{\text{pk},n})$ and $A_\text{min} =  \min(A_{\text{pk},n})$.
+ 
 In this thesis \emph{ideal compression} is defined as the processes of mapping all or a part of this dynamic range to a smaller range, without changing the fine structure. This mapping is further defined to be linear in the logarithmic domain and with a threshold below which the signal level is unchanged. For the input signal in Eq.\eqref{eq:input_signal_env_finestruct}, the envelope of the ideal output signal can thus be described by the following equation
 \begin{equation}\label{eq:dynamic_range_mapping}
 O_n =
@@ -42,8 +40,7 @@ The ideal output signal $y_{I,n}$ can then be written as
 \begin{equation}\label{eq:ideal_output}
 y_{I,n} = o_n f_n
 \end{equation}
-where the fine-structure $f_n$ is the same as in Eq.\eqref{eq:input_signal_env_finestruct} and $o_n$ is the mapped output envelope in linear domain. It is shown below that this definition of ideal compression gives $r_\text{FES} = 1$, 0 \% THD, and ECR equal to the specified ratio $R$.
-
+where the fine-structure $f_n$ is the same as in Eq.\eqref{eq:input_signal_env_finestruct} and $o_n$ is the mapped output envelope in linear domain. It is shown below that this definition of ideal compression yields optimal performance in terms of the proposed metrics in previous work, with $\FES = 1$, $\THDF=0$\%, and $\ECR=R$.
 % ========================================
 \subsubsection{FES of Ideal Compression}
 Given that the lower bound of the dynamic range of the input signal $A_\text{min}$ is above the defined threshold $T$, the output envelope level determined by Eq.\eqref{eq:dynamic_range_mapping} is reduced to
@@ -52,7 +49,7 @@ O_n = K E_n + M.
 \end{equation}
 In \cite{XXXX} it is proven that the Pearson correlation coefficient is equal to 1 for linearly dependent variables. Thus, the definition of ideal compression above yields $r_\text{FES} = 1$.
 
-If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $r_\text{FES} < 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Of course, when used to quantify the effect of compression on the envelope of an audio signal as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
+If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $r_\text{FES} < 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Of course, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
 
 % ========================================
 \subsubsection{THD of Ideal Compression}
@@ -70,7 +67,7 @@ f_n &= \sin( 2 \pi f n T_s ).
 The constant amplitude $a$ gives $A_\text{min} = A_\text{max} = E_n = 20 \logten a \dBFS$ and given that $A_\text{min} \geq T$, the output level of ideal compression as defined by Eq.~\eqref{eq:eq_dynamic_range_mapping} is given by
 \begin{equation}
 \begin{split}
-O_n &= K (20 \logten a) + M
+O_n &= K (20 \logten a) + M.
 \end{split}
 \end{equation}
 The ideal output signal as defined by Eq.~\eqref{eq:ideal_output} can then be written as
@@ -85,29 +82,7 @@ If $A_\text{min} < T$ no compression is applied at all and $y_n = x_n$, again yi
 
 % ========================================
 \subsubsection{ECR of Ideal Compression}
-The input signal used to measure ECR as defined in~\ref{theory_metrics_ecr} is composed of an envelope $e_n$ and fine-structure $f_n$, restated here for convenience:
-\begin{equation}
-x_n = e_n f_n,
-\end{equation}
-where
-\begin{equation}
-\begin{split}
-	e_n &= a_\text{min} + \frac{a_\text{max}- a_\text{min}}{2} \left(1 + \cos(2 \pi f_m n T_s) \right), \\
-	f_n &= \sin(2 \pi f_c n T_s).
-\end{split}
-\end{equation}
-The dynamic range $S_\text{pk}$ of this input signal is unambiguously defined by
-\begin{equation}
-S_\text{pk,in} = A_\text{max} - A_\text{min}
-\end{equation}
-where
-\begin{equation}
-\begin{split}
-A_\text{max} &= 20 \logten a_\text{min} \dBFS, \\
-A_\text{min} &= 20 \logten a_\text{max} \dBFS.
-\end{split}
-\end{equation}
-Given that $A_\text{min} \geq T$ the lower and upper bound of the output level is given by by Eq.\eqref{eq:dynamic_range_mapping} as
+Assuming $A_\text{min} \geq T$ the lower and upper bound of the output level is given by Eq.\eqref{eq:dynamic_range_mapping} as
 \begin{equation}
 \begin{split}
 O_\text{max} &= K A_\text{max} + M\\
@@ -123,6 +98,6 @@ ECR = \frac{S_\text{pk,in}}{S_\text{pk,out}} = \frac{A_\text{max} - A_\text{min}
 \end{equation}
 Thus, the effective compression ratio is equal to the specified $R$.
 
-Observe that, as was the case for FES, $A_\text{min}$ must lie above the threshold $T$ for this to be true. However, the same reasoning applies here and ECR will only be considered a valid metric of compressor performance for the case $A_\text{min} \geq T$.
+Observe that, as was the case for FES, ECR will only be considered a valid metric of compressor performance for the case $A_\text{min} \geq T$.
 
 \end{document}
