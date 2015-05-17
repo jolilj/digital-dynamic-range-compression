@@ -1,0 +1,78 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Peak Level and Gain Computer}
+
+fs = 44100 Hz, fc = 10,000 Hz fm = 2 Hz
+Amin = -10 dB Amax = 0dB
+T = -12dB
+R = 4
+As can be seen in the optimised parameter tables, the threshold and release is now not equal to the specified $T$ and $R$. Only hard knee was allowed since the envelope was constantly above the threshold anyway.
+
+Observe that the length in the beginning that was skipped in the evaluation may affect the optimal values.
+
+\begin{table}[h]
+\begin{center}
+\caption{Optimised parameters for the various peak detectors, $f_c=\text{10,000}$ Hz, $f_m=2$ Hz}
+\label{tab:peak_det_gain_computer_opt_params}
+\caption*{(a) Attack and release peak detectors}
+\begin{tabular}{| l | c c c c c | c |}
+	\hline
+	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & $T$ & $R$ & $\EN$ [1/sample]\\
+	\hline
+	
+	Analog 			& 0 		& 135.6 	& 16	(0.36 ms)	& & &?	\\ 
+	Branching smooth 	& 0	 	& 49.6 	& 17	(0.39 ms)	& & &?	\\ 
+	Cascaded smooth	& 1.2	& 49.5 	& 69	(1.56 ms)	& & &?	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\caption*{(b) Windowed peak detectors}
+ \begin{tabular}{| l | c c c c c | c |}
+	\hline
+	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & $T$& $R$ &$\EN$ [1/sample] \\
+	\hline
+	Win. Max		& 69		& -		& 34	(0.77 ms)	& & &?	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+%======================
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/peak_det_opt_gain}}
+\caption{Optimised peak detector gains, vertical offset by 0.2 for clarity. The vertical lines at 0.05 s and 0.95 s mark the start and end of the region for which $\EN$ was calculated.}
+\label{fig:peak_det_opt_gain}
+\end{figure}
+%======================
+\begin{figure}
+
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/peak_det_opt_gain_min}}
+\caption{Peak detector gain, zoomed in at the maximum gain reduction}
+\end{subfigure}
+
+\par\bigskip
+
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/peak_det_opt_gain_max}}
+\caption{Peak detector gain, zoomed in at the minumum gain reduction}
+\end{subfigure}
+
+\caption{Zoomed in versions of optimised gain factors, vertically offset by 0.0032 for clarity}
+\label{fig:peak_det_opt_gain_zoom}
+\end{figure}
+%======================
+
+\end{document}
