@@ -1,6 +1,5 @@
 \documentclass[../main2.tex]{subfiles}
 \begin{document}
-
 \newcommand{\z}{z}
 % FIR filter as block diagram
 \begin{tikzpicture}
@@ -10,7 +9,7 @@
 
 
 	% Place nodes using a matrix
-	\matrix (m1) [row sep=2.5mm, column sep=5mm]
+	\matrix (m1) [row sep=2.5mm, column sep=4.8mm]
 	{
 		%--------------------------------------------------------------------
 		\node[dspnodeopen,dsp/label=above] (m00) {$x_n$};    &
@@ -42,9 +41,9 @@
 		\node[coordinate]                  (m20) {};          &
 		\node[coordinate]                  (m21) {};          &
 		\node[coordinate]                  (m22) {};          &
-		\node[recblock,text height=2em] (m23) {\scriptsize Level \\ \scriptsize detector};          &
+		\node[recblock,text height=2em] (m23) {\scriptsize Level \\ \scriptsize detection};          &
 		\node[coordinate]                  (m24) {};          &
-		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computer};          &
+		\node[recblock,text height=2em] (m25) {\scriptsize Gain \\ \scriptsize computation};          &
 		\node[coordinate]                  (m26) {};          &
 		\node[recblock,text height=2em] (m27) {\scriptsize Gain \\ \scriptsize smoothing };          &
 		\node[coordinate]                  (m28) {};          &
@@ -73,7 +72,7 @@
 		\chainin (m23) [join=by dspconn];
 	\end{scope}
 	
-	\draw[dspconn] (m23) -- node[midway, above]{$F_n$}(m25);
+	\draw[dspconn] (m23) -- node[midway, above]{$L_n$}(m25);
 	\draw[dspconn] (m25) -- node[midway, above]{$G'_n$}(m27);
 	\draw[dspline](m27) -- (m28);
 	\draw[dspconn] (m28) -- node[midway, right]{$g_n$}(m08);
@@ -91,5 +90,4 @@
 	\draw[dashed] (m19) -- (m39);
 	
 	\end{tikzpicture}
-
 \end{document}
