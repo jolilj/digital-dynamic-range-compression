@@ -19,10 +19,11 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 	\hline
 	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
 	\hline
-	
-	Analog 			& 0 			& 135.6 	& 16	(0.36 ms)	& ?	\\ 
-	Branching smooth 	& 0	 		& 49.6 	& 17	(0.39 ms)	& ?	\\ 
-	Cascaded smooth	& 1.2		& 49.5 	& 69	(1.56 ms)	& ?	\\
+	Three Pole	& 0		& 1.8 	& 32	(0.73 ms)	& 0.00158	\\
+	Decoupled smooth	& 1.2		& 49.5 	& 69	(1.56 ms)	& 0.00251	\\
+	Branching smooth 	& 0	 		& 49.6 	& 17	(0.39 ms)	& 0.00296	\\ 
+	Analog 			& 0 			& 135.6 	& 16	(0.36 ms)	& 0.00303	\\ 
+
 	\hline
 \end{tabular}
 \end{center}
@@ -34,7 +35,7 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 	\hline
 	Detector & $w$ [samples] & $d$ [samples] & error [1/sample] \\
 	\hline
-	Win. Max		& 53		& 26	(0.59 ms)	& ?	\\ 
+	Win. Max		& 53		& 26	(0.59 ms)	& 0.000639	\\ 
 	\hline
 \end{tabular}
 \end{center}
@@ -116,41 +117,42 @@ The parameters were fixed from the previous optimisation, and the carrier freque
 
 \FloatBarrier
 \subsubsection{Theoretical Benefit of Upsampling}
-The test signal was generated at 8 times the sample rate, $f_s = 8000$, and the same test as above was run again. The parameters values was optimised again yielding the values in Tab.~\ref{tab:peak_det_opt_params_up}. The result can be seen in Fig.~\ref{peak_det_opt_env_th_up} and Fig.~\ref{fig:peak_det_opt_env_fc_dep_th_up}.
-The envelopes have now become extremely smooth, and the carrier frequencies that evenly divides the sampling frequency is considerably less problematic. The windowed detectors however get a rapidly increasing error as the carrier frequency drops below the frequency the parameters was optimised for.
-
-In practice, the up-sampled signal would have to be interpolated by an interpolating filter, and then down-sampled again after the level detector or later in the side-chain. This will probably downgrade the results seen here.\todo{discussion?}
-
-\begin{table}[h]
-\begin{center}
-\caption{Optimised parameters for the various peak detectors, $f_c=1000/\pi $, $f_m=2 $}
-\label{tab:peak_det_opt_params_up}
-\caption*{(a) Attack and release peak detectors}
-\begin{tabular}{| l | c c c | c |}
-	\hline
-	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
-	\hline
-	
-	Analog 			& 0 			& 141 	& 8		& 0.0067	\\ 
-	Branching smooth 	& 0	 		& 52 	& 8		& 0.0067	\\ 
-	Cascaded smooth	& 1.8		& 52 	& 22		& 0.0056	\\
-	\hline
-\end{tabular}
-\end{center}
-
-\begin{center}
-\caption*{(b) Windowed peak detectors}
-\label{tab:peak_det_instatt_opt_params}
- \begin{tabular}{| l | c c c | c |}
-	\hline
-	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
-	\hline
-	Win. Max		& 33		& -		& 16		& 0.0034	\\ 
-	Win. Max Filt.	& 33		& 42		& 49		& 0.0017	\\
-	\hline
-\end{tabular}
-\end{center}
-\end{table}
+\todo[inline]{UPPSAMPLADE RESULTAT KOMMER}
+%The test signal was generated at 8 times the sample rate, $f_s = 8000$, and the same test as above was run again. The parameters values was optimised again yielding the values in Tab.~\ref{tab:peak_det_opt_params_up}. The result can be seen in Fig.~\ref{peak_det_opt_env_th_up} and Fig.~\ref{fig:peak_det_opt_env_fc_dep_th_up}.
+%The envelopes have now become extremely smooth, and the carrier frequencies that evenly divides the sampling frequency is considerably less problematic. The windowed detectors however get a rapidly increasing error as the carrier frequency drops below the frequency the parameters was optimised for.
+%
+%In practice, the up-sampled signal would have to be interpolated by an interpolating filter, and then down-sampled again after the level detector or later in the side-chain. This will probably downgrade the results seen here.\todo{discussion?}
+%
+%\begin{table}[h]
+%\begin{center}
+%\caption{Optimised parameters for the various peak detectors, $f_c=1000/\pi $, $f_m=2 $}
+%\label{tab:peak_det_opt_params_up}
+%\caption*{(a) Attack and release peak detectors}
+%\begin{tabular}{| l | c c c | c |}
+%	\hline
+%	Detector 	& $\tau_\text{a}$ [ms] & $\tau_\text{r}$ [ms] & $d$ [samples] & error [1/sample]\\
+%	\hline
+%	
+%	Analog 			& 0 			& 141 	& 8		& 0.0067	\\ 
+%	Branching smooth 	& 0	 		& 52 	& 8		& 0.0067	\\ 
+%	Cascaded smooth	& 1.8		& 52 	& 22		& 0.0056	\\
+%	\hline
+%\end{tabular}
+%\end{center}
+%
+%\begin{center}
+%\caption*{(b) Windowed peak detectors}
+%\label{tab:peak_det_instatt_opt_params}
+% \begin{tabular}{| l | c c c | c |}
+%	\hline
+%	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+%	\hline
+%	Win. Max		& 33		& -		& 16		& 0.0034	\\ 
+%	Win. Max Filt.	& 33		& 42		& 49		& 0.0017	\\
+%	\hline
+%\end{tabular}
+%\end{center}
+%\end{table}
 %======================
 \subsection{RMS Level Detection}
 The method is analogue to the peak detection case. However, as the RMS window length is highly dependent on the carrier frequency, the same procedure was repeated for $f_c = 20$ Hz as well. The optimised params can be seen in Tab.~\ref{tab:rms_det_opt_params}.  The resulting RMS outputs can be seen in Fig.~\ref{fig:rms_opt_10000}. Finally the carrier frequency dependence, with optimised params for $f_c=10$ kHz and $f_c=20$ Hz is plotted in Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes} and Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes}, respectively.
@@ -177,8 +179,8 @@ The method is analogue to the peak detection case. However, as the RMS window le
 	\hline
 	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
 	\hline
-	IIR RMS			& - 			& 35.2 	& 1479 (33.5 ms)		& ?	\\ 
-	Window RMS 	& 2206	 		& - 	& 1103 (25.0 ms)		& ?	\\ 
+	IIR RMS			& - 			& 35.2 	& 1479 (33.5 ms)		& 0.000559\\ 
+	Window RMS 	& 2206	 		& - 	& 1103 (25.0 ms)		& $3.98\cdot10^{-5}$		\\ 
 	\hline
 \end{tabular}
 \end{center}
