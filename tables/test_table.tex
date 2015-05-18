@@ -1,0 +1,39 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\begin{tabular}{| l | c c | c c c | c c | c | c |}
+	\hline
+		&
+		\multicolumn{2}{c|}{Level Det} &
+		\multicolumn{3}{c|}{Gain Comp} & 
+		\multicolumn{2}{c|}{Gain Smooth} &
+		&\\
+	\hline
+		&
+		\tblbox{$\tau_\text{a}$\\ $[$ms$]$} &
+		\tblbox{$\tau_\text{r}$\\ $[$ms$]$} &
+		\tblbox{$T$\\ $[ \dBFS ]$} &
+		\tblbox{$R$\\ $[1]$} &
+		\tblbox{$W$\\ $[ \dBFS ]$} &
+		\tblbox{$\tau_\text{a}$\\ $[$ms$]$} &
+		\tblbox{$\tau_\text{r}$\\ $[$ms$]$} &
+		\tblbox{$d_\text{la}$\\ $[$samples$]$} &
+		\tblbox{$\EN$\\ $[$1/sample$]$} \\
+	\hline
+		\tblbox{GMR12\\Branching} &
+		&
+		&
+		&
+		&
+		&
+		&
+		&
+		&
+		\\
+\end{tabular}
+
+\end{document}

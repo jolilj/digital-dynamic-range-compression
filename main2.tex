@@ -22,6 +22,12 @@
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 %\usepackage{natbib}
 
+% table extenstions
+\newcommand*\rot{\rotatebox{90}}
+\usepackage{multirow}
+\newcommand{\tblbox}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
 \usepackage[normalem]{ulem}%for strikethrough
 
 % section numbering
