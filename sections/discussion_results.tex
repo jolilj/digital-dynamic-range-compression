@@ -5,5 +5,18 @@
 
 \begin{document}
 \subsection{Result}\label{discussion_results}
+\subsubsection{Peak Detection}
+All tested peak detectors track the envelope well when optimised. The smooth decoupled detector shows smooth behaviour but do underestimate the envelope by a small amount. The windowed max detector has little variation, but is rather noisy. The analog detector shows interestingly very similar behaviour to the smooth branching detector. This is due to the slow varying envelope. With faster variation, the release trajectory will distinguish these from each other.
+
+As the carrier frequency is varied, Fig.~\ref{fig:peak_det_opt_env_fc10000_dep_error} and Fig.~\ref{fig:peak_det_opt_env_fc10000_dep_fes}, the windowed max filter is the first to experience oscillations in the output resulting in an increased $\EN$. For the detection to be stable, a window of at least $f_c/2$ is required (assuming the phase $\phi=0$). The optimised window parameter results in the limit $f_c =  f_s/2w = 44100/2\cdot 53 \approx 416$ Hz which corresponds to the point where the $\EN$ begins to diverge. The three pole filter is the next filter experiencing increasing $\EN$. The smooth decoupled, smooth branching and analogue detectors show similar behaviour, but inspecting the zoomed version the three are separated with the smooth decoupled showing slightly better performance.
+
+An interesting phenomena seen in the plots are the various peaks in error at the high frequencies. This is the expected behaviour due to the non-linearities of the filters. 
+
+\subsubsection{RMS Detection}
+The optimised RMS outputs are very close to the specified ideal RMS. This is due to the fact that $f_m<<f_c$ making the envelope fairly constant during one period of the carrier wave letting the detector extract the crest factor with great accuracy. As the carrier frequency reduces, the detector is not slow enough to pick the entire period of the carrier resulting in an increase in $\EN$ and a decrease in $\FES$ as expected, Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes}. By optimising the parameters for a carrier wave of much lower frequency, this can be prevented as can be seen in the results where $f_c=20$ Hz, Fig.~\ref{fig:rms_det_opt_env_fc20_dep_error-fes}. This does however increase the amount of look-ahead needed, see Tab.~\ref{tab:rms_det_opt_params}. The performance of the RMS detectors are thus a combination of parameter settings and carrier frequencies.
+
+Furthermore, the linearity of the IIR-filter and the single introduced harmonic due to the squaring operation makes the plots smooth for high frequencies as opposed to the peak detectors, making use of upsampling in RMS detectors redundant.
+
+\subsubsection{Compressor Design}
 
 \end{document}

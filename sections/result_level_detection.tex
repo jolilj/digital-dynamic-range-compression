@@ -8,11 +8,11 @@
 \subsection{Peak Level Detection}
 
 \subsubsection{Parameter Optimisation}
-The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = 10,000$ Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was $44,100$ Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. 
+The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = 10$ kHz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was $44.1100$ kHz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:peak_det_opt_params} together with the resulting normalised euclidian distance to ideal. The resulting envelopes can be seen in Fig.~\ref{fig:peak_det_opt_env}. The envelopes are offset in relation to each other for clarity, with the ideal envelope dotted for each offset. 
 
 \begin{table}[h]
 \begin{center}
-\caption{Optimised parameters for the various peak detectors, $f_c=1000/\pi $, $f_m=2 $}
+\caption{Optimised parameters for the various peak detectors, $f_c=10 $  kHz, $f_m=2 $}
 \label{tab:peak_det_opt_params}
 \caption*{(a) Attack and release peak detectors}
 \begin{tabular}{| l | c c c | c |}
@@ -30,12 +30,11 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 \begin{center}
 \caption*{(b) Windowed peak detectors}
 \label{tab:peak_det_instatt_opt_params}
- \begin{tabular}{| l | c c c | c |}
+ \begin{tabular}{| l | c c  | c |}
 	\hline
-	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+	Detector & $w$ [samples] & $d$ [samples] & error [1/sample] \\
 	\hline
-	Win. Max		& 69		& -		& 34	(0.77 ms)	& ?	\\ 
-	Win. Max Filt.	& 65		& 1.6	& 102 (2.31ms)	& ?	\\
+	Win. Max		& 53		& 26	(0.59 ms)	& ?	\\ 
 	\hline
 \end{tabular}
 \end{center}
@@ -73,13 +72,47 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 %======================
 
 \subsubsection{Carrier Frequency Dependence}
-The parameters were fixed from the previous optimisation, and the carrier frequency swept from 20 Hz to $f_s/2$ Hz as described in Sec.~\ref{sec:method}. The result can be seen in Fig.~\ref{fig:peak_det_opt_env_fc_dep}.
+The parameters were fixed from the previous optimisation, and the carrier frequency swept from 20 Hz to $20$ kHz. The result can be seen in Fig.~\ref{fig:peak_det_opt_env_fc_dep}.
 
+%======================
+%======================
 \begin{figure}[h]
-\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc_dep}}
-\caption{Peak detectors optimised, $f_c$ dependence}
-\label{fig:peak_det_opt_env_fc_dep}
+\captionsetup{justification=centering}
+%======================
+\begin{subfigure}{\linewidth}
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc10000_dep_error}}
+\end{subfigure}
+%======================
+\par\bigskip
+%======================
+\begin{subfigure}{\linewidth}
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc10000_dep_error_zoom}}
+\end{subfigure}
+\caption{$\EN$ of the peak detectors plotted against carrier frequency with optimised parameters at $f_c=10$ kHz}
+\label{fig:peak_det_opt_env_fc10000_dep_error}
 \end{figure}
+%======================
+%======================
+
+%======================
+%======================
+\begin{figure}[h]
+\captionsetup{justification=centering}
+%======================
+\begin{subfigure}{\linewidth}
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc10000_dep_fes}}
+\end{subfigure}
+%======================
+\par\bigskip
+%======================
+\begin{subfigure}{\linewidth}
+\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc10000_dep_fes_zoom}}
+\end{subfigure}
+\caption{$\FES$ of the peak detectors plotted against carrier frequency with optimised parameters at $f_c=10$ kHz}
+\label{fig:peak_det_opt_env_fc10000_dep_fes}
+\end{figure}
+%======================
+%======================
 
 \FloatBarrier
 \subsubsection{Theoretical Benefit of Upsampling}
@@ -118,57 +151,98 @@ In practice, the up-sampled signal would have to be interpolated by an interpola
 \end{tabular}
 \end{center}
 \end{table}
-
-\begin{figure}[h]
-\centerline{\subfile{\rootdir/figures/peak_det_opt_env_th_up}}
-\caption{Upsampled peak detectors optimised envelope}
-\label{fig:peak_det_opt_env_th_up}
-\end{figure}
-
-\begin{figure}[h]
-\centerline{\subfile{\rootdir/figures/peak_det_opt_env_fc_dep_th_up}}
-\caption{Upsampled peak detectors optimised, $f_c$ dependence}
-\label{fig:peak_det_opt_env_fc_dep_th_up}
-\end{figure}
-
-
-
+%======================
 \subsection{RMS Level Detection}
+The method is analogue to the peak detection case. However, as the RMS window length is highly dependent on the carrier frequency, the same procedure was repeated for $f_c = 20$ Hz as well. The optimised params can be seen in Tab.~\ref{tab:rms_det_opt_params}.  The resulting RMS outputs can be seen in Fig.~\ref{fig:rms_opt_10000}. Finally the carrier frequency dependence, with optimised params for $f_c=10$ kHz and $f_c=20$ Hz is plotted in Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes} and Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes}, respectively.
+%======================
+\begin{table}[h]
+\begin{center}
+\caption{Optimised parameters for the two RMS detectors}
+\label{tab:rms_det_opt_params_10000}
+\caption*{(a) Optimised for $f_c=10$ kHz}
+ \begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+	\hline
+	IIR RMS		& -			& 4.64 	& 202 (4.58 ms)		& ?	\\ 
+	Window RMS 	& 172	 		& - 	& 86	(1.95 ms)	& ?	\\ 
+	\hline
+\end{tabular}
+\end{center}
 
+\begin{center}
+\caption*{(b) Optimised for $f_c=20$ Hz}
+\label{tab:rms_det_opt_params_20}
+ \begin{tabular}{| l | c c c | c |}
+	\hline
+	Detector & $w$ [samples] & $\tau_\text{av}$ [ms] & $d$ [samples] & error [1/sample] \\
+	\hline
+	IIR RMS			& - 			& 35.2 	& 1479 (33.5 ms)		& ?	\\ 
+	Window RMS 	& 2206	 		& - 	& 1103 (25.0 ms)		& ?	\\ 
+	\hline
+\end{tabular}
+\end{center}
+\label{tab:rms_det_opt_params}
+\end{table}
+%======================
+%======================
+%======================
 \begin{figure}[h]
+\captionsetup{justification=centering}
+%======================
+\begin{subfigure}{\linewidth}
 \centerline{\subfile{\rootdir/figures/rms_opt_10000}}
-\caption{Optimised RMS for carrier frequency $f_c=10$ kHz}
-\label{fig:peak_det_opt_env_th_up}
-\end{figure}
-
-\begin{figure}[h]
+\caption{Whole signal}
+\end{subfigure}
+%======================
+\par\bigskip
+%======================
+\begin{subfigure}{\linewidth}
 \centerline{\subfile{\rootdir/figures/rms_opt_10000_zoom}}
-\caption{Zoomed version of optimised RMS for carrier frequency $f_c=10$ kHz}
-\label{fig:peak_det_opt_env_fc_dep_th_up}
+\caption{Zoomed version}
+\end{subfigure}
+\caption{Optimised RMS detectors for $f_c=10$ kHz, vertical offset by 0.2 for clarity. The vertical lines at 0.05 s and 0.95 s mark the start and end of the region for which $\EN$ was calculated.}
+\label{fig:rms_opt_10000}
 \end{figure}
-
+%======================
+%======================
+%======================
+%======================
 \begin{figure}[h]
+\captionsetup{justification=centering}
+%======================
+\begin{subfigure}{\linewidth}
 \centerline{\subfile{\rootdir/figures/rms_det_opt_env_fc10000_dep_error}}
-\caption{Euclidean distance of RMS detectors to ideal, $d_e$ plotted against carrier frequency with optimised parameters at $f_c=10$ kHz}
-\label{fig:rms_det_opt_env_fc10000_dep_error}
+\end{subfigure}
+%======================
+\par\bigskip
+%======================
+\begin{subfigure}{\linewidth}
+\centerline{\subfile{\rootdir/figures/rms_det_opt_env_fc10000_dep_fes}}
+\end{subfigure}
+\caption{$\FES$ and $\EN$ of RMS detectors plotted against carrier frequency with optimised parameters at $f_c=10$ kHz}
+\label{fig:rms_det_opt_env_fc10000_dep_error-fes}
 \end{figure}
-
+%======================
+%======================
+%======================
+%======================
 \begin{figure}[h]
+\captionsetup{justification=centering}
+%======================
+\begin{subfigure}{\linewidth}
 \centerline{\subfile{\rootdir/figures/rms_det_opt_env_fc20_dep_error}}
-\caption{Euclidean distance of RMS detectors to ideal, $d_e$ plotted against carrier frequency with optimised parameters at $f_c=20$ Hz}
-\label{fig:rms_det_opt_env_fc20_dep_error}
-\end{figure}
-
-\begin{figure}[h]
-\centerline{\subfile{\rootdir/figures/rms_det_opt_env_fc20_dep_error}}
-\caption{Euclidean distance of RMS detectors to ideal, $d_e$ plotted against carrier frequency with optimised parameters at $f_c=20$ Hz}
-\label{fig:rms_det_opt_env_fc20_dep_error}
-\end{figure}
-
-\begin{figure}[h]
+\end{subfigure}
+%======================
+\par\bigskip
+%======================
+\begin{subfigure}{\linewidth}
 \centerline{\subfile{\rootdir/figures/rms_det_opt_env_fc20_dep_fes}}
-\caption{FES of RMS detectors to ideal, $d_e$ plotted against carrier frequency with optimised parameters at $f_c=20$ Hz}
-\label{fig:rms_det_opt_env_fc20_dep_fes}
+\end{subfigure}
+\caption{$\FES$ and $\EN$ of RMS detectors plotted against carrier frequency with optimised parameters at $f_c=20$ Hz}
+\label{fig:rms_det_opt_env_fc10000_dep_error-fes}
 \end{figure}
+%======================
+%======================
 
 \end{document}

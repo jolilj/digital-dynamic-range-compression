@@ -7,13 +7,15 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
+% sqrRmsDet
+% windowRmsDet
 \definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
 \definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
 %
 \begin{tikzpicture}
 \begin{axis}[%
 width=4.5in,
-height=2.9in,
+height=2.8in,
 at={(1.913889in,0.931944in)},
 scale only axis,
 xmode=log,
@@ -26,7 +28,7 @@ ymax=0.23,
 yticklabel style={/pgf/number format/fixed},
 axis x line=bottom,
 axis y line=left,
-ylabel={Distance to Ideal $d_e \text{ [sample}^{\text{-1}}\text{]}$},
+ylabel={$d_e \text{ [sample}^{\text{-1}}\text{]}$},
 legend style={legend cell align=left,align=left,draw=white!15!black}
 ]
 \addplot [color=black,densely dashed]
@@ -1096,7 +1098,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 20000	0.00159747033099151\\
 20752.9411764706	0.00247233193763548\\
 };
-\addlegendentry{sqrRmsDet};
+\addlegendentry{(1)};
 \addplot [color=black,solid]
   table[row sep=crcr]{%
 20	0.210338747736871\\
@@ -2164,7 +2166,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 20000	0.000126232766163799\\
 20752.9411764706	0.00208911624482498\\
 };
-\addlegendentry{windowRmsDet};
+\addlegendentry{(2)};
 \end{axis}
 \end{tikzpicture}%
 \end{document}

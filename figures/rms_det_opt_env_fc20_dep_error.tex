@@ -7,11 +7,13 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
+% sqrRmsDet
+% windowRmsDet
 \begin{tikzpicture}
 
 \begin{axis}[%
 width=4.5in,
-height=2.9in,
+height=2.8in,
 at={(1.913889in,0.931944in)},
 scale only axis,
 xmode=log,
@@ -24,7 +26,7 @@ ymax=0.23,
 yticklabel style={/pgf/number format/fixed},
 axis x line=bottom,
 axis y line=left,
-ylabel={Distance to Ideal $d_e \text{ [sample}^{\text{-1}}\text{]}$},
+ylabel={$d_e \text{ [sample}^{\text{-1}}\text{]}$},
 ]
 \addplot [color=black,densely dashed]
   table[row sep=crcr]{%
@@ -1093,7 +1095,7 @@ ylabel={Distance to Ideal $d_e \text{ [sample}^{\text{-1}}\text{]}$},
 20000	0.0158541998641338\\
 20752.9411764706	0.0158562454361195\\
 };
-\addlegendentry{sqrRmsDet};
+\addlegendentry{(1)};
 
 \addplot [color=black,solid]
   table[row sep=crcr]{%
@@ -2162,7 +2164,7 @@ ylabel={Distance to Ideal $d_e \text{ [sample}^{\text{-1}}\text{]}$},
 20000	0.00317943605952393\\
 20752.9411764706	0.00319304802009233\\
 };
-\addlegendentry{windowRmsDet};
+\addlegendentry{(2)};
 
 \end{axis}
 \end{tikzpicture}%

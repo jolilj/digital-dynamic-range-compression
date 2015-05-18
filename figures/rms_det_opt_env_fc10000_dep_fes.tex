@@ -7,14 +7,17 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
+
 \definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
 \definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
 %
+% sqrRmsDet
+% windowRmsDet
 \begin{tikzpicture}
 
 \begin{axis}[%
 width=4.5in,
-height=2.9in,
+height=2.8in,
 at={(1.913889in,0.931944in)},
 scale only axis,
 xmode=log,
@@ -1098,7 +1101,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 20000	0.99995292544929\\
 20752.9411764706	0.999884561877512\\
 };
-\addlegendentry{sqrRmsDet};
+\addlegendentry{(1)};
 
 \addplot [color=black,solid]
   table[row sep=crcr]{%
@@ -2167,7 +2170,7 @@ legend style={legend cell align=left,align=left,draw=white!15!black}
 20000	0.999999701996566\\
 20752.9411764706	0.999916495021011\\
 };
-\addlegendentry{windowRmsDet};
+\addlegendentry{(2)};
 
 \end{axis}
 \end{tikzpicture}%
