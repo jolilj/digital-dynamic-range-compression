@@ -17,6 +17,18 @@ The optimised RMS outputs are very close to the specified ideal RMS. This is due
 
 Furthermore, the linearity of the IIR-filter and the single introduced harmonic due to the squaring operation makes the plots smooth for high frequencies as opposed to the peak detectors. It was however surprising that the frequencies above $f_s/2=11,025$ Hz didn't contribute to a larger error as indicated by the introduced double harmonic which would be aliased into the low frequency band, and hence not filtered. To explain this, further analysis needs to be carried out.
 
+\subsubsection{Peak Detection with Gain Computer}
+TODO
+
 \subsubsection{Compressor Design}
+The first thing to notice is that the outputs are extremely close to ideal for all tested compressors with $\EN < 10^{-3}$ per sample. In Fig.~\ref{fig:complete_compressor_opt_out}, it's impossible to distinguish compressor output from ideal.
+
+The gain factors reveal some more information and qualitative differences, but only when examined on very small scales. The McN84 design are closest to ideal with small ripples in gain factor. The GMR12 decoupled design is smoother but with a small static error, while GMR12 branching and FE96 oscillate the most around the ideal curve.
+
+Looking at the carrier frequency dependency in Fig.~\ref{fig:complete_DDRC_opt_fc_dep}, McN84 is the one suffering the most for low frequencies, followed by FE96. Both GMR designs are clearly the most stable ones. The extremely good result for the optimised carrier frequency in combination with the poor performance for lower frequencies in the case of the McN84 design may be explained by the number of parameters. While making it possible to find a very good fit to the ideal curve with extremely short release times ($\approx 6$ ms for both peak detector and gain smoothing), these settings prove to be less optimal for other signals. The stable results for the GMR designs may be explained by their longer release times. Worth noting is that the branching design manages to maintain a small error for low frequencies with only 1 ms of look-ahead. 
+
+The peaks in error at certain frequencies clearly remains from the level detection step. FE96 with its up-sampling peak detector on the other hand has a more stable curve, as expected.
+
+A very surprising result is the step response in Fig.~\ref{fig:complete_DDRC_opt_step_response}. While all the compressors yield essentially the exact same output when fed with the sinusoidal test signal, the step response shows significant differences. This clearly demonstrates the difficulties of nonlinear systems analysis, and the limits of step responses for describing the behaviour of such systems.
 
 \end{document}
