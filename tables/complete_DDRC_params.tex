@@ -1,0 +1,85 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\begin{tabular}{ c | c l | c | c | c | c |}
+
+\multicolumn{3}{c|}{} &
+	\rot{McN84} & 
+	\rot{GMR12 branching} &
+	\rot{GMR12 decoupled} &
+	\rot{FE96} \\
+\hline
+\multirow{2}{*}{Level Det} &
+	$\tau_\text{a}$ & [ms] &
+	0 &
+	- &
+	- &
+	- \\
+&
+	$\tau_\text{r}$ & [ms] &
+	6.1 &
+	- &
+	- &
+	- \\
+\hline
+\multirow{3}{*}{Gain Comp} &
+	$T$ & [$\dBFS$]&
+	-12.17 &
+	-12.06 &
+	-12.03 &
+	-12.02 \\
+&
+	$R$ & [1]&
+	4.04 &
+	4.11 &
+	4.04 &
+	4.00 \\
+&
+	$W$ & [\dBFS]&
+	0 &
+	0 &
+	0 &
+	0 \\
+\hline
+\multirow{3}{*}{Gain Smooth} &
+	$\tau_\text{a}$ & [ms] &
+	5.20 &
+	0.118 &
+	3.26 &
+	3.18 \\
+&
+	$\tau_\text{r}$ & [ms] &
+	5.88 &
+	37.6 &
+	14.9 &
+	32.1 \\
+&
+	$\tau_\text{h}$ & [ms] &
+	- &
+	- &
+	- &
+	3.04 \\
+\hline
+Delay &
+	$d_\text{la}$ & [samples]&
+	\tblbox{247 \\ (5.60 ms)} &
+	\tblbox{47   \\ (1.07 ms)} &
+	\tblbox{148 \\ (3.36 ms)} &
+	\tblbox{10    \\ (0.227 ms)} \\
+\hline
+Error &
+	$\EN$ & [1/sample]&
+	$25.4 \cdot 10^{-6}$ &
+	$194 \cdot 10^{-6}$ &
+	$69.9 \cdot 10^{-6}$ &
+	$160 \cdot 10^{-6}$ \\
+\hline
+
+\end{tabular}
+
+
+\end{document}

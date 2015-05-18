@@ -1,0 +1,53 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\subsection{Complete DDRC algorithms}
+
+\subsubsection{Parameter Optimisation}
+The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = $~10,000~Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was $fs = $~44,100 Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:complete_DDRC_opt_params} together with the resulting normalised euclidian distance to ideal output. The resulting gain factors plotted against time can be seen in Fig.~\ref{fig:peak_det_opt_env}. The curves are offset in relation to each other for clarity, with the ideal gain factor dotted for each offset. 
+
+\begin{table}[h]
+\small
+\begin{center}
+\caption{Optimised parameters for the various peak detectors, $f_c=$~10,000~Hz, $f_m=2$ Hz.}
+\label{tab:complete_DDRC_opt_params}
+\subfile{\rootdir/tables/complete_DDRC_params}
+\end{center}
+\end{table}
+
+\begin{figure}
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/complete_DDRC_opt_gain_max}}
+\caption{Optimised DDRC gain factors, zoomed in at the minimum gain reduction}
+\end{subfigure}
+
+\par\bigskip
+
+\captionsetup{justification=centering}
+\begin{subfigure}{\linewidth}
+\centering
+\centerline{\subfile{\rootdir/figures/complete_DDRC_opt_gain_min}}
+\caption{Optimised DDRC gain factors, zoomed in at the maximum gain reduction}
+\end{subfigure}
+
+\caption{Zoomed in versions of optimised DDRC gain factors, vertically offset by 0.01 for clarity}
+\label{fig:peak_det_opt_env_zoom}
+\end{figure}
+%======================
+
+\subsubsection{Carrier Frequency Dependence}
+The parameters were fixed from the previous optimisation, and the carrier frequency swept from 20 Hz to 20,000 Hz as described in Sec.~\ref{sec:method}. The result can be seen in Fig.~\ref{fig:complete_DDRC_opt_fc_dep}.
+
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/complete_DDRC_opt_fc_dep}}
+\caption{DDRCs optimised, $f_c$ dependence}
+\label{fig:complete_DDRC_opt_fc_dep}
+\end{figure}
+
+\end{document}
