@@ -99,7 +99,7 @@ In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level det
 \end{itemize}
 The difference equation of the \emph{smooth decoupled filter} is
 %================================
-\begin{equation}
+\begin{equation}\label{eq:smooth_decoupled_det}
 \begin{split}
 Z_n &= \begin{cases}
    C'_n								& C'_n > Z_{n-1} \\
@@ -113,7 +113,7 @@ which result in a smooth transition between the attack and release phase without
 
 To obtain a filter with attack and release parameters independent of each other the \emph{smooth branching filter}, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
 %================================
-\begin{equation}
+\begin{equation}\label{eq:smooth_branching_det}
 C_n = \begin{cases}
     \alpha_{a} C'_n + (1-\alpha_{a}) C_{n-1} 	& C'_n > C_{n-1} \\
     \alpha_{r} C'_n + (1-\alpha_{r}) C_{n-1} 	& C'_n \leq C_{n-1}.

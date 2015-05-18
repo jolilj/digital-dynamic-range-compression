@@ -12,7 +12,7 @@ Full wave rectification is performed in the digital domain by simply taking the 
 
 \subsubsection{Peak Detection}\label{peak_detection}
 In \cite{mcnally1984dynamic} and \cite{zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by an IIR-filter, estimating the envelope, defined as
-\begin{equation}
+\begin{equation}\label{eq:analogue_det}
 \tilde{e}_n = \begin{cases}
     \alpha_{a} |x_n| + (1- (\alpha_{a} + \alpha_{r})) \tilde{e}_{n-1}  	& |x_n| \geq \tilde{e}_{n-1} \\
     (1-\alpha_{r}) \tilde{e}_{n-1} 							& |x_n| < \tilde{e}_{n-1}.
@@ -87,14 +87,8 @@ Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further 
 
 \subsubsection{Peak Windowed Max Detector}
 In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a component in a envelope detector constructed to avoid clipping in the output of a digital limiter. The windowed peak max filter takes the maximum value of the absolute value of the input signal over a window of $M$ samples.
-\begin{align}
+\begin{align}\label{eq:window_max_det}
 \tilde{e}_n = \text{max}(x_{n-M/2},x_{n-M/2+1},..., x_{n+M/2-1})
-\end{align}
-\subsubsection{Peak Windowed Max Filtered Detector}
-The windowed max detector above can be filtered by a first order averaging filter to achieve a smoother signal
-\begin{align}
-u_n &= \text{max}(x_{n-M/2},x_{n-M/2+1},..., x_{n+M/2-1}) \\
-\tilde{e}_n &= \alpha_{av} u_n + (1-\alpha_{av})\tilde{e}_{n-1}.
 \end{align}
 
 \subsubsection{RMS}

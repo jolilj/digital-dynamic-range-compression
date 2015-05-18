@@ -18,6 +18,15 @@ The envelope describes the instantaneous peak amplitude of the input signal, and
 \end{equation}
 where $a_\text{min}$ is the minimum instantaneous peak amplitude, $a_\text{max}$ is the maximum instantaneous peak amplitude, $f_m$ the modulation frequency and $f_c$ the carrier frequency.
 
+The following peak detectors, numbers in parenthesis for reference in plots, were tested:
+\begin{itemize}
+\item (1) Window max, Eq.~\eqref{eq:window_max_det}
+\item (2) Three pole release, Eq.~\eqref{eq:stikvoort_release}
+\item (3) Smooth decoupled, Eq.~\eqref{eq:smooth_decoupled_det}
+\item (4) Smooth branching, Eq.~\eqref{eq:smooth_branching_det}
+\item (5) Analogue,  Eq.~\eqref{eq:analogue_det}
+\end{itemize}
+
 \subsubsection{Distance to Ideal Envelope}
 The level estimation produced by the peak detector, as before denoted by $L_n$, was compared to the specified envelope level
 \begin{equation}

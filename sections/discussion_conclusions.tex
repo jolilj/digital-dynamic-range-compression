@@ -5,32 +5,17 @@
 
 \begin{document}
 \subsection{Conclusions}\label{discussion_results}
+The conclusions drawn are presented in accordance with the method beginning with the level detection stage, followed by the gain computation and ending with the complete compressor design.
 
-Design choices:
-\begin{itemize}
-\item Peak or RMS? The users choice depending on application
-\item Detector filter? Here it seems like the ones with a slight hold effect gives the best results. Static Errors are not a big problem as the Threshold can compensate
-\item window + filter? This is a solution not investigated in this paper, but that by looking at the plots seems promising for both exact and smooth peak detection. Furthermore, the hilbert transform peak detector should definitaly be investigated in future work.
-\item Gain Computer. The only reasonable choice is the linear log, based on dynamic range def. But of course any mapping is possible, and there are examples of lin in lin
-\item Gain Smoothing Filter, Ultimately depends on the wanted envelope distortion, and no definite answer can be given. At least not with the method used in this paper. However, a hold effect is useful here as well, and the mere existence of gain smoothing is useful to further smooth the envelope.
-\item Upsampling. Definitely Yes! It was beyond the scope of this paper to further investigate the optimal method for doing this however.
-\item Lookahead. Yes! The results suggests a balance act between performance and delay. Depends on application how much delay is tolerable. Beyond the scope of this paper to further investigate this relationship. Look into this in future research.
-\end{itemize}
+First of all, a decision has to be made wether the compressor should operate on the envelope or the RMS of the signal. In the latter, the results show the two tested RMS detectors are close to the defined ideal RMS specified. However, due to the "kind" test signal, further evaluation has to be made with a different set of signals to draw valid conclusions to which RMS detector to use. The IIR RMS detector have the advantage of not necessarily depending on look-ahead, although it lowers it's performance considerably.
 
-Regarding Ideal Compression. 
+The focus  hence lies at the peak detecting compressors. The results suggests that the smoothing filters as level detection handles the carrier frequency sweep best. The window max filter is more sensitive to lower carrier frequencies leaving either the smooth decoupled or smooth branching are good candidates. However, the compressors with full rectification as only level detection performs well and are fairly stable across the carrier frequency sweep in contrast with the design of \cite{mcnally1984dynamic} that does well in being optimised for a specific carrier frequency, but is being outperformed as the carrier frequency changes.
 
-Parallell to filter design. We know what ideal is, and that is not feasible in practice. But more importantly there exists a framework for specifying different aspects.
-\begin{itemize} 
-\item Stopband attenuation
-\item Passband ripple
-\item Roll off
-\item Phase shift, linear phase
-\item etc...
-\end{itemize}
-It would be very interesting if something similar could be developed for compression, or any nonlinear effect in general. Quantifying \emph{how} the audio signal is transformed. Static curve together with attack and release envelopes on step and down-steps give clues, but does not really tell what happens to an arbitrary signal. Delay is one aspect easy both to measure and understand.
+The results further suggests a balance act between performance and delay. As the amount of delay depends on application, it is left for future work to further investigate this relationship closer.
 
-Future work: Analyse what happens to the signal in the frequency domain?
+Upsampling was shown to be of great use to reduce the introduced harmonics due to the non-linearities. It was however beyond the scope of this thesis to discuss such methods.
 
+\subsection{Future Work}
 The end result of the complete compressors are extremely close to ideal, when parameters are optimised. This raises the suspicion that parameter settings may be more important the underlying algorithm. One line of further research is how easy the settings are to adjust for the user. How the compressor "responds" to different settings, thereby affecting how easy the wanted endresult is to achieve. Not to mention the user interface and human computer interaction.
 
 Another possibility is that the test signal was to "easy" to level detect and compress. The smooth attack and release of the raised cosine envelope closely resembles the natural attack and release step responses of the tested components (both level detector filters and gain smoothing filters).

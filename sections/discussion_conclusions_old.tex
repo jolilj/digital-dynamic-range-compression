@@ -1,0 +1,43 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Conclusions}\label{discussion_results}
+
+Design choices:
+\begin{itemize}
+\item Peak or RMS? The users choice depending on application
+\item Detector filter? Here it seems like the ones with a slight hold effect gives the best results. Static Errors are not a big problem as the Threshold can compensate
+\item window + filter? This is a solution not investigated in this paper, but that by looking at the plots seems promising for both exact and smooth peak detection. Furthermore, the hilbert transform peak detector should definitaly be investigated in future work.
+\item Gain Computer. The only reasonable choice is the linear log, based on dynamic range def. But of course any mapping is possible, and there are examples of lin in lin
+\item Gain Smoothing Filter, Ultimately depends on the wanted envelope distortion, and no definite answer can be given. At least not with the method used in this paper. However, a hold effect is useful here as well, and the mere existence of gain smoothing is useful to further smooth the envelope.
+\item Upsampling. Definitely Yes! It was beyond the scope of this paper to further investigate the optimal method for doing this however.
+\item Lookahead. Yes! The results suggests a balance act between performance and delay. Depends on application how much delay is tolerable. Beyond the scope of this paper to further investigate this relationship. Look into this in future research.
+\end{itemize}
+
+Regarding Ideal Compression. 
+
+Parallell to filter design. We know what ideal is, and that is not feasible in practice. But more importantly there exists a framework for specifying different aspects.
+\begin{itemize} 
+\item Stopband attenuation
+\item Passband ripple
+\item Roll off
+\item Phase shift, linear phase
+\item etc...
+\end{itemize}
+It would be very interesting if something similar could be developed for compression, or any nonlinear effect in general. Quantifying \emph{how} the audio signal is transformed. Static curve together with attack and release envelopes on step and down-steps give clues, but does not really tell what happens to an arbitrary signal. Delay is one aspect easy both to measure and understand.
+
+Future work: Analyse what happens to the signal in the frequency domain?
+
+The end result of the complete compressors are extremely close to ideal, when parameters are optimised. This raises the suspicion that parameter settings may be more important the underlying algorithm. One line of further research is how easy the settings are to adjust for the user. How the compressor "responds" to different settings, thereby affecting how easy the wanted endresult is to achieve. Not to mention the user interface and human computer interaction.
+
+Another possibility is that the test signal was to "easy" to level detect and compress. The smooth attack and release of the raised cosine envelope closely resembles the natural attack and release step responses of the tested components (both level detector filters and gain smoothing filters).
+
+The method could easily be used to test on other envelopes. Either constructed ones like a skew triangle wave resembling fast attack att linear decay, or more elaborate models of real instrument envelopes.
+
+This also opens up the possibility of investigating how well a compressor can \emph{deform} an envelope to a wanted shape. This was not included in this paper, and the effect of the gain smoothing stage was merely used to mitigate defects in the level detection, without investigating their envelope shaping potential. 
+
+
+\end{document}
