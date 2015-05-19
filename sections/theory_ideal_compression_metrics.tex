@@ -1,0 +1,66 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\subsection{Performance of Ideal Compression}
+Here the performance of the defined ideal compression is derived given the proposed metrics in previous work. The derivations are carried out for the peak level detection case but are analogous for the RMS level detection.
+\subsubsection{FES of Ideal Compression}
+Given that the lower bound of the dynamic range of the input signal $A_\text{min}$ is above the defined threshold $T$, the output envelope level determined by Eq.\eqref{eq:dynamic_range_mapping} is reduced to
+\begin{equation}
+O_n = K E_n + M.
+\end{equation}
+In \cite{XXXX} it is proven that the Pearson correlation coefficient is equal to 1 for linearly dependent variables. Thus, the definition of ideal compression above yields $\FES= 1$.
+
+If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $\FES< 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Of course, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
+
+% ========================================
+\subsubsection{THD of Ideal Compression}
+The input signal used to measure THD as defined in \ref{theory_metrics_thd} is a pure sine wave with amplitude $a$ and frequency $f$:
+\begin{equation}
+x_n = a \sin( 2 \pi f n T_s ).
+\end{equation}
+Identifying the terms in Eq.\eqref{eq:input_signal_env_finestruct}, we have
+\begin{equation}
+\begin{split}
+e_n &= a \\
+f_n &= \sin( 2 \pi f n T_s ).
+\end{split}
+\end{equation}
+The constant amplitude $a$ gives $A_\text{min} = A_\text{max} = E_n = 20 \logten a \dBFS$ and given that $A_\text{min} \geq T$, the output level of ideal compression as defined by Eq.~\eqref{eq:eq_dynamic_range_mapping} is given by
+\begin{equation}
+\begin{split}
+O_n &= K (20 \logten a) + M.
+\end{split}
+\end{equation}
+The ideal output signal as defined by Eq.~\eqref{eq:ideal_output} can then be written as
+\begin{equation}
+y_n = o_n f_n = 10^{Ma^K/20} \sin(2 \pi f n T_s).
+\end{equation}
+Clearly, in the absence of higher harmonics in the output,
+\begin{equation}
+\THDF = \frac{\sqrt{0^2}}{10^{Ma^K/20}} = 0.
+\end{equation}
+If $A_\text{min} < T$ no compression is applied at all and $y_n = x_n$, again yielding $\THDF = 0$.
+
+% ========================================
+\subsubsection{ECR of Ideal Compression}
+Assuming $A_\text{min} \geq T$ the lower and upper bound of the output level is given by Eq.\eqref{eq:dynamic_range_mapping} as
+\begin{equation}
+\begin{split}
+O_\text{max} &= K A_\text{max} + M\\
+O_\text{min} &= K A_\text{min} + M.
+\end{split}
+\end{equation}
+The output signal's dynamic range $S_\text{pk, out}$ is thus
+\begin{equation}
+S_\text{pk,out} = O_\text{max} - O_\text{min} = K (A_\text{max} - A_\text{min}).\end{equation}
+The effective compression ratio can then be calculated as
+\begin{equation}
+\ECR = \frac{S_\text{pk,in}}{S_\text{pk,out}} = \frac{A_\text{max} - A_\text{min}}{K(A_\text{max} - A_\text{min})} = K^{-1} = R
+\end{equation}
+which is the specified compression ratio.
+
+Observe that, as was the case for FES, ECR will only be considered a valid metric of compressor performance for the case $A_\text{min} \geq T$.
+\end{document}

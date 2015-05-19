@@ -11,7 +11,7 @@ Level detection (logarithmic domain) or envelope estimation (linear domain), see
 Full wave rectification is performed in the digital domain by simply taking the absolute value of the input signal. As shown in appendix A, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in all following peak detectors.
 
 \subsubsection{Peak Detection}\label{peak_detection}
-In \cite{mcnally1984dynamic} and \cite{zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by an IIR-filter, estimating the envelope, defined as
+In \cite{mcnally1984dynamic} and \cite{zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by an IIR-filter, estimating the envelope. The difference equation for the filter is
 \begin{equation}\label{eq:analogue_det}
 \tilde{e}_n = \begin{cases}
     \alpha_{a} |x_n| + (1- (\alpha_{a} + \alpha_{r})) \tilde{e}_{n-1}  	& |x_n| \geq \tilde{e}_{n-1} \\
@@ -83,7 +83,7 @@ The peak estimate is then taken as the maximum absolute value of the four filter
 \end{equation}
 This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. \todo{show this here? in an appendix?}
 
-Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. Sadly, the exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
+Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. The exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
 
 \subsubsection{Peak Windowed Max Detector}
 In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a component in a envelope detector constructed to avoid clipping in the output of a digital limiter. The windowed peak max filter takes the maximum value of the absolute value of the input signal over a window of $M$ samples.
@@ -94,11 +94,11 @@ In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a comp
 \subsubsection{RMS}
 The RMS of a signal computed on a window of $M$ samples is defined as
 \begin{equation}
-\hat{x}_n = \sqrt{ \frac{1}{M} \sum_{m=-M/2}^{M/2-1} x_{n-m}}
+\hat{x}_n \equiv \sqrt{ \frac{1}{M} \sum_{m=-M/2}^{M/2-1} x_{n-m}}
 \end{equation}
 and is used in \cite{reiss2010rev}\cite{bosi1991low}.
 
-Another approach used in \cite{mcnally1984dynamic} is to only take previous samples into account and weight them by an IIR-filter:
+Another approach proposed in \cite{mcnally1984dynamic} is to only take previous samples into account and weight them by an IIR-filter:
 %================================
 \begin{align*}
 \hat{x}_n = \sqrt{\alpha_{\text{av}} x_{n}^2+ (1-\alpha_{\text{av}}) \hat{x}_{n-1}^2}

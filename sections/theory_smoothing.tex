@@ -6,10 +6,10 @@
 \begin{document}
 \FloatBarrier
 \subsection{Gain Smoothing}
-To further smooth the control signal, various filters are introduced in the end of the side-chain operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion. The fact that $0< g_n\leq 1$ and $G_n \leq 0$ motivates the logarithmic quantity \emph{compression} and the \emph{smoothed compression}  denoted by $C'_n = -G'_n$ and  $C_n = -G_n$, respectively. This way the filters operate on positive values, simplifying the difference equations.
+To further smooth the control signal, various filters are introduced in the end of the side-chain, refer to Fig.~\ref{fig:fig:block_genericDDRC}, operating in either the linear or logarithmic domain, see \cite{mcnally1984dynamic}\cite{frindle1996implementation} and especially \cite{reiss2012tutorial} where this is the only smoothing performed and thus paramount for avoiding distortion. The fact that $0< g_n\leq 1$ and $G_n \leq 0$ motivates the logarithmic quantity \emph{compression} and the \emph{smoothed compression}  denoted by $C'_n = -G'_n$ and  $C_n = -G_n$, respectively. This way the filters operate on positive values, simplifying the difference equations.
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
-A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain in order to reduce such distortion. A block diagram of the filter can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter} where the control block represents the branching condition as discussed below. The difference equation for one version of the filter is
+A first order lowpass filter, as described in \cite{mcnally1984}, is added in the linear domain. A block diagram of the filter can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter} where the control block represents the branching condition as discussed below. The difference equation for one version of the filter is
 %================================
 \begin{equation}
 g_n = \begin{cases}
@@ -92,7 +92,7 @@ and the time constants $\tau_a, \tau_r$ and $\tau_h$ are given in seconds per dB
 \end{figure}
 %================================
 \subsubsection{Smooth Decoupled and Branching Filters}
-In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level detection}, although it is a \emph{smoothing filter} applied to the calculated gain factor, $G'_n$. Two different implementations are proposed, here named in accordance with \cite{reiss2012tutorial}.
+In \cite{reiss2012tutorial} the gain smoothing is referred to as \emph{level detection}, although it is a \emph{smoothing filter} applied to the calculated compression $C'_n = -G'_n$. Two different implementations are proposed, here named in accordance with \cite{reiss2012tutorial}.
 \begin{itemize}
 \item{Smooth decoupled filter}
 \item{Smooth branching filter}

@@ -1,0 +1,15 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+%================================
+\FloatBarrier
+\subsection{Ideal Compression}
+Following the definition of dynamic range, Eq.~\eqref{eq:s_peak}},~\eqref{eq:s_RMS}}, ideal compression is defined for peak and RMS detecting compressors. The ideal compression is then shown to be consistent with the proposed metrics in section~\ref{theory_metrics}.
+\subfile{\rootdir/sections/theory_ideal_peak_compression}
+\subfile{\rootdir/sections/theory_ideal_rms_compression}
+\subfile{\rootdir/sections/theory_ideal_compression_metrics}
+\end{document}
