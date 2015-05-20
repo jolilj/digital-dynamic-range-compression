@@ -1,0 +1,55 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+\begin{table}[h]
+\begin{center}
+\caption{List of quantitites, abbreviations, variables etc.}
+\label{tab:list_of_quantities}
+\begin{tabular}{| c | l |}
+	\hline
+	Abbreviation & Meaning \\ \hline
+	DRC & Dynamic range compression \\
+	DDRC & Digital dynamic range compressor \\
+	FES & Fidelity of envelope Shape \\
+	THD & Total harmonic distortion \\
+	ECR & Effective compression Ratio \\
+	\hline
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{| c | l |}
+	\hline
+	\tblbox{Quantity/\\variable} & Description \\ \hline
+	$f_s$ & Sampling frequency \\
+	$T_s$ & Sampling period \\
+	$n$ & Sample index, relate to time by $t = nT_s$ \\
+	$e_n$ & Envelope \\
+	$\tilde{e}_n$ & Detected (or approximated) envelope\\
+	$\hat{x}$ & Detected RMS \\
+	$a_\text{pk}$ & Peak Amplitude of a signal \\
+	$a_\text{RMS}$ & RMS Amplitude of a signal \\
+	$A_\text{pk}$ & Logarithmic peak amplitude\\
+	$A_\text{RMS}$ & Logarithmic RMS amplitude\\
+	$S$ & Dynamic range\\
+	$g_n$ & Gain factor\\
+	$G'$ & Non-smoothed logarithmic Gain factor\\
+	$C'$ & Amount of compression, $C' = -G'$ \\
+	$T$ & Threshold\\
+	$R$ & Ratio \\
+	$W$ & Knee width \\
+	$\tau_\text{la}$ & Peak detection attack time \\
+	$\tau_\text{lr}$ & Peak detection release time \\
+	$\tau_\text{av}$ & RMS detection averaging time constant\\
+	$\tau_\text{sa}$ & Gain smoothing attack time \\
+	$\tau_\text{sr}$ & Gain smoothing release time \\
+	$\tau_\text{sh}$ & Gain smoothing hold time \\
+	$d_\text{la}$ & Look-ahead delay \\
+	\hline
+\end{tabular}
+\end{center}
+
+\end{table}
+\end{document}
