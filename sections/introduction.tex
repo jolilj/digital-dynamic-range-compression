@@ -8,7 +8,7 @@
 \section{Introduction}
 Dynamic range compression (DRC), is a widely used audio effect that reduces the dynamic range of a signal by attenuating high peaks while leaving quiet sections unaffected. Used both for transparent gain control and as an artistic effect, DRC has a broad range of applications from music production and audio recording to broadcasting and marketing as well as in hearing aids and cochlear implants.
 
-Compression is used extensively both in the studio and live as a powerful tool for shaping the sound of individual instruments and audio tracks. As the dynamic range is compressed the overall gain can be increased, boosting the perceived loudness of the signal, making it a popular effect among mastering engineers as well. Over the years, the effort to increase the loudness of commercial albums has been referred to as the "loudness war"\footnote{The wikipedia page~\cite{loudness_war} has an exstensive collection of articles regarding this subject.}, where critics claim the sound quality is reduced. This feature is also exploited in the marketing business, trying to make ads as loud as possible catching the viewers attention.\footnote{Complaints against too loud commercials are not out of the ordinary, see for example~\cite{comp_ads}.} 
+Compression is used extensively both in the studio and live as a powerful tool for shaping the sound of individual instruments and audio tracks. As the dynamic range is compressed the overall gain can be increased, boosting the perceived loudness of the signal, making it a popular effect among mastering engineers as well. Over the years, the effort to increase the loudness of commercial albums has been referred to as the "loudness war"\footnote{The wikipedia page~\cite{loudness_war} has an exstensive collection of articles regarding this subject.}, where critics claim the sound quality is reduced. This feature is also exploited in the marketing business, trying to make ads as loud as possible catching the viewers attention.\footnote{Complaints against too loud commercials are common, see for example~\cite{comp_ads}.} 
 
 Different usages and opinions aside, this thesis focuses on the technical aspects of digital dynamic range compressor (DDRC) algorithms. 
 
@@ -21,6 +21,8 @@ Various DDRC designs have been proposed in the literature and there exists an ab
 The application of DRC in hearing aids and cochlear implants have increased the need for formal measures of compression characteristics, and metrics such as Effective Compression Ratio (ECR) and Fidelity of Envelope Shape (FES) have been developed~\cite{stone1992syllabic}\cite{stone2007quantifying}. In 2012, a study was conducted outlining different DDRC designs and comparing their respective characteristics with these measures~\cite{reiss2012tutorial}. However, it is not clear whether ECR or FES can be used to benchmark and compare the performance of different compressor designs. As the metrics was initially derived to characterise the effect of different compressor parameter settings on speech intelligibility, the chosen parameter values are likely to have a great impact on the results. Furthermore, the results are highly dependent on the original envelope estimation used.
 
 This thesis builds on the work in~\cite{reiss2012tutorial}, but covers a wider set of compressor designs. Furthermore \emph{ideal compression} is defined and shown to be consistent with the metrics used in previous work. A method for evaluating a compressor's performance, with respect to ideal compression, is proposed and used to compare the different design choices.
+\subsection{Goals}
+
 %===============================
 \subsection{Outline Of Thesis}
 First, necessary definitions and background theory is presented. The theory section is divided into three parts. In section~\ref{theory_dynamic_range}, the terms dynamic range and signal level are discussed and their meaning within this thesis is defined. This is followed by section~\ref{theory_compressor_design} where the investigated compressor designs known from text books and scientific publications are described and analysed. In particular, the different proposed level detection and smoothing techniques are investigated, as this is what in essence separates the various designs from each other. Lastly, the metrics used in \cite{stone1992syllabic}\cite{stone2007quantifying} and \cite{reiss2012tutorial} is described and discussed in section \ref{theory_metrics}.
@@ -29,4 +31,6 @@ In section~\ref{method} the method used to evaluate different aspects of the com
 
 The results are presented in section~\ref{results}, followed by a discussion section~\ref{discussion} and a summary of conclusions that can be drawn from this work in section ~\ref{conclusions}.
 
+Abbreviations, quantities, variables etc. are listed in Table~\ref{tab:list_of_quantities} for convenience.
+\subfile{\rootdir/sections/list_of_quantities}
 \end{document}
