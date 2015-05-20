@@ -12,9 +12,9 @@
 In~\cite{stone2007quantifying} Fidelity of Envelope Shape (FES) is proposed as a metric of the correlation between the envelope shape before and after compression. It is further used in the design comparison conducted in ~\cite{reiss2012tutorial}.
 
 FES is defined as the correlation between the input signal envelope $E_n$ and the output signal envelope $O_n$ using the Pearson correlation coefficient: \begin{equation}
-\FES = \dfrac{\sum(E_n - \langle E_n \rangle)(O_n - \langle O_n \rangle)}{\sqrt{\sum(E_n -\langle E_n \rangle )^2}\sqrt{\sum(O_n - \langle O_n \rangle )^2}},
+\FES = \dfrac{\sum(E_n - \overline{E}_n)(O_n - \overline{O}_n)}{\sqrt{\sum(E_n - \overline{E}_n )^2}\sqrt{\sum(O_n - \overline{O}_n )^2}},
 \end{equation}
-where $\langle E_n \rangle$ and $\langle O_n \rangle$ denote the mean value of $E_n$ and $O_n$ respectively.
+where $\overline{E}_n$ and $\overline{O}_n$ denote the mean value of $E_n$ and $O_n$ respectively.
 
 % ============================
 \subsubsection{Total Harmonic Distortion}
@@ -34,7 +34,7 @@ where $S_\text{I}$ and $S_\text{O}$ is the input  and output dynamic range, resp
 
 % ============================
 \subsubsection{Euclidean Norm}
-The euclidean norm, or normalised euclidean distance, between two signals $x_n$, $y_n$ of equal length is defined as
+In \cite{bitzer2006parameter} the euclidean norm, or normalised euclidean distance, is used to measure the difference between two signals, $x_n$ and $y_n$, of equal length. It is defined as
 \begin{align}
 \EN = ||x-y|| = \sqrt{\frac{1}{N}\sum_{n=0}^{N-1}(x_n-y_n)^2}
 \end{align}

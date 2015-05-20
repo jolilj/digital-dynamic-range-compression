@@ -7,12 +7,26 @@
 
 \FloatBarrier
 \section{Theory - Investigated DDRC Designs} \label{theory_DDRC}
+A DDRC maps the dynamic range of a signal to a smaller, compressed, range. There are two possible topologies for implementing a DDRC; a feed-forward or a feedback system. In \cite{reiss2012tutorial} it is shown that the feedback topology cannot implement a look-ahead delay and cannot work as a perfect limiter. Therefore, in this thesis, only variations of the feed-forward topology are treated. 
 
-\subfile{\rootdir/sections/theory_definitions}
+\subsection{Principle of a Feed-Forward DDRC}
+A Block diagram of a generic feed-forward DDRC can be seen in Fig. ~\ref{fig:block_genericDDRC}.
+%================================
+\begin{figure}[h]
+\centerline{\subfile{\rootdir/figures/block_genericDDRC}}
+\caption{Block diagram of a generic feed-forward DDRC}
+\label{fig:block_genericDDRC}
+\end{figure}
+%================================
 
-\subfile{\rootdir/sections/theory_gain_factor}
-
-\subfile{\rootdir/sections/theory_topologies}
+Let $x_n$ be the sampled input signal, $y_n$ the output signal and $g_n$ the \emph{gain factor}. The input signal, in general delayed by $d$ samples, is multiplied by the gain factor,
+%================================
+\begin{align}
+y_n = g_nx_{n-d}.
+\label{eq:gainfactor}
+\end{align}
+%================================
+The task is then to determine the gain factor $g_n$ corresponding to the desired behaviour of the DDRC. This is the purpose of the \emph{side-chain}, which can be divided into the three steps \emph{level detection}, \emph{gain computation} and \emph{gain smoothing}.
 
 \subfile{\rootdir/sections/theory_level_detection}
 

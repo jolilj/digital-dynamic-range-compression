@@ -5,10 +5,7 @@
 
 \begin{document}
 %================================
-\subsection{Peak Amplitude, Envelope and RMS}\label{peak_envelope_rms}
-Before plunging into the realm of dynamic range compression, a brief discussion of
-the peak amplitude and the root-mean-square of time-varying signals are presented as these are used frequently throughout the thesis.
-\subsubsection{Peak Amplitude}
+\subsection{Peak Amplitude}
 For a periodic signal, the \emph{peak amplitude} can be unambiguously defined as the maximum absolute value over the signal's period. For a signal $x(t)$ with period $\tau$ the peak amplitude is thus defined as
 %================================
 \begin{equation}
@@ -21,7 +18,7 @@ In the case of a sine wave with frequency $f$ the peak amplitude can be calculat
 a_\text{pk} = \sup \{ |a \sin(2 \pi f t) | : 0 \leq t < \frac{1}{f} \} = a.
 \end{equation}
 %================================
-\subsubsection{Envelope and Fine Structure}\label{theory_envelope}
+\subsection{Envelope and Fine Structure}\label{theory_envelope}
 The envelope of an analytic signal $x(t) = a(t)e^{i(\omega t)}$ is defined as \cite{bedrosian1962analytic}
 \begin{align}
 e(t) \equiv |x(t)| = a(t)
@@ -64,7 +61,7 @@ the instantaneous (or time-varying) amplitude is referred to as the envelope, wi
 
 With real-world signals it is however difficult to clearly define an envelope. As expressed in \cite{bedrosian1962analytic}: \emph{"Theoretically, the signal must be analytic to permit envelope detection"}. In such cases it can be seen as the line outlining the extremes of the signal and is acquired by various envelope detection methods, as discussed in section \ref{level_detection}. 
 %================================
-\subsubsection{RMS}
+\subsection{RMS}
 The \emph{root-mean-square amplitude} (RMS) of a periodic signal $x(t)$ with period time $T$ is defined as
 %================================
 \begin{equation}
@@ -84,6 +81,7 @@ The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
 \crest \equiv \frac{a_\text{pk}}{a_\text{RMS}}. \label{eq:crest_factor}
 \end{align}
 %================================
+
 \subsection{Dynamic Range and Signal Level}\label{theory_dynamic_range}
 The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. 
 
