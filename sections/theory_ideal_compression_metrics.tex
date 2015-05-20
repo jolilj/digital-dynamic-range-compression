@@ -11,9 +11,9 @@ Given that the lower bound of the dynamic range of the input signal $A_\text{min
 \begin{equation}
 O_n = K E_n + M.
 \end{equation}
-In \cite{XXXX} it is proven that the Pearson correlation coefficient is equal to 1 for linearly dependent variables. Thus, the definition of ideal compression above yields $\FES= 1$.
+Since the Pearson correlation coefficient is equal to 1 for linearly dependent variables, the definition of ideal compression above yields $\FES= 1$.
 
-If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $\FES< 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Of course, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
+If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $\FES< 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Certainly, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
 
 % ========================================
 \subsubsection{THD of Ideal Compression}
@@ -55,10 +55,10 @@ O_\text{min} &= K A_\text{min} + M.
 \end{equation}
 The output signal's dynamic range $S_\text{pk, out}$ is thus
 \begin{equation}
-S_\text{pk,out} = O_\text{max} - O_\text{min} = K (A_\text{max} - A_\text{min}).\end{equation}
+S_\text{pk,O} = O_\text{max} - O_\text{min} = K (A_\text{max} - A_\text{min}).\end{equation}
 The effective compression ratio can then be calculated as
 \begin{equation}
-\ECR = \frac{S_\text{pk,in}}{S_\text{pk,out}} = \frac{A_\text{max} - A_\text{min}}{K(A_\text{max} - A_\text{min})} = K^{-1} = R
+\ECR = \frac{S_\text{pk,I}}{S_\text{pk,O}} = \frac{A_\text{max} - A_\text{min}}{K(A_\text{max} - A_\text{min})} = K^{-1} = R,
 \end{equation}
 which is the specified compression ratio.
 

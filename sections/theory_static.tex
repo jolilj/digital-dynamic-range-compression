@@ -7,10 +7,10 @@
 
 \FloatBarrier
 \subsection{Static Characteristics}
-The gain factor $g_n$ is calculated based on the level of the signal. In order to derive the $g_n$, the desired input/output relation of the signal level is defined. This is referred to as the static curve of the DDRC.
+The gain factor $g_n$ is calculated based on the level of the signal. In order to derive $g_n$, the desired input/output relation of the signal level is defined. This is referred to as the static curve of the DDRC.
 
 \subsubsection{Static Curve}
-The static curve is depicted in Fig.~\ref{fig:typical_static_detailed} where $Y(L)$ is the desired output signal level and $L$ is the input signal level calculated in the level detector. For signal levels below $T$ the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$.  
+The static curve proposed in \cite{mcnally1984dynamic, stikvoort1986digital, frindle1996implementation, reiss2012tutorial} is depicted in Fig.~\ref{fig:typical_static_detailed} where $Y(L)$ is the desired output signal level and $L$ is the input signal level calculated in the level detector. For signal levels below the threshold, $T$, the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$, where $R$ is the ratio.
 
 %================================
 \begin{figure}
@@ -20,10 +20,10 @@ The static curve is depicted in Fig.~\ref{fig:typical_static_detailed} where $Y(
 \end{figure}
 %================================
 
-Observing the discontinuity at $T$, a smooth transition into the compressed curve, with slope $1/R$, is motivated. This can be achieved by replacing the sharp knee by a second degree polynomial across the knee\cite{frindle1996implementation}\cite{reiss2012tutorial}. The knee width $W$ is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(L)$ to be continuous and have continuous derivatives at the points $L=T-W/2$ and $L=T+W/2$. A knee width of $W=0$ corresponds to a sharp knee. 
+In \cite{frindle1996implementation}\cite{reiss2012tutorial}, a smooth transition over the threshold is achieved by replacing the hard knee by a second degree polynomial. The knee width, $W$, is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(L)$ to be continuous and have continuous derivatives at the points $L=T-W/2$ and $L=T+W/2$. A knee width of $W=0$ corresponds to a hard knee. 
 %================================
 \subsubsection{Gain Computer} \label{gain_computer}
-The gain computer in Fig. ~\ref{fig:block_genericDDRC}, calculates the \emph{non-smoothed} logarithmic gain factor, $G'_n(L)$, given the static characteristics and the signal. Derivation of $G'_n$ is done by first examining the static curve of Fig.~\ref{fig:typical_static_detailed} and calculating the intermediate polynomial which yields the following piecewise continuous function
+The gain computer in Fig. ~\ref{fig:block_genericDDRC}, calculates the \emph{non-smoothed} logarithmic gain factor, $G'$, given the static characteristics and the signal. Derivation of $G'$ is done by using the static curve of Fig.~\ref{fig:typical_static_detailed} and calculating the intermediate polynomial which yields the following piecewise continuous function
 %================================
 \begin{equation} \label{eq:gaincomp}
 Y(L) = \begin{cases}
@@ -36,7 +36,7 @@ Y(L) = \begin{cases}
 Now  by expressing equation \eqref{eq:gainfactor} in terms of their logarithmic level
 %================================
 \begin{align}
-y_n &= x_ng_n   \\
+y_n &= x_ng_n  \quad \Rightarrow \\
 Y &= L + G' \label{eq:cv}
 \end{align}
 %================================
@@ -52,14 +52,14 @@ L+G' = \begin{cases}
 %================================
 Solving for $G'$ yields
 \begin{equation} \label{eq:c}
-G' = \begin{cases}
+G'(L) = \begin{cases}
     0 & \quad \text{if }L <T -\frac{1}{2}W \\[0.8em]
     \dfrac{(R^{-1}-1)(L-T+\frac{1}{2}W)^2}{2W}& \quad \text{if } |L-T| \leq \frac{1}{2}W\\[1.2em]
     \left(R^{-1}-1\right)\left(L-T\right) & \quad \text{if } L > T + \frac{1}{2}W.
  \end{cases}
 \end{equation}
 %================================
-The typical gain factor curve is depicted in Fig.~\ref{fig:typical_gain_detailed}.
+The resulting logarithmic gain factor, $G'(L)$, is depicted in Fig.~\ref{fig:typical_gain_detailed}.
 %================================
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/typical_gain_detailed}}
@@ -68,6 +68,6 @@ The typical gain factor curve is depicted in Fig.~\ref{fig:typical_gain_detailed
 \end{figure}
 %================================
 
- A common parameter introduced in the end of the side-chain it the \emph{make-up gain} defined as a constant amount of gain added to the signal level. Since the compressor lowers the level of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input. It is omitted in the derivations for convenience with no loss of generality.
+ A common parameter introduced in the end of the side-chain is the \emph{make-up gain} defined as a constant amount of gain added to the signal level. Since the compressor lowers the level of the signal, the perceived loudness decreases. Make-up gain is used to balance the loudness of the output with the input. It is omitted in this thesis for convenience with no loss of generality.
 
 \end{document}

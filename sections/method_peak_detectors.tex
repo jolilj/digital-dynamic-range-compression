@@ -18,28 +18,28 @@ The envelope describes the instantaneous peak amplitude of the input signal, and
 \end{equation}
 where $a_\text{min}$ is the minimum instantaneous peak amplitude, $a_\text{max}$ is the maximum instantaneous peak amplitude, $f_m$ the modulation frequency and $f_c$ the carrier frequency.
 
-The following peak detectors, numbers in parenthesis for reference in plots, were tested:
-\begin{itemize}
-\item (1) Window max, Eq.~\eqref{eq:window_max_det}
-\item (2) Three pole release, Eq.~\eqref{eq:stikvoort_release}
-\item (3) Smooth decoupled, Eq.~\eqref{eq:smooth_decoupled_det}
-\item (4) Smooth branching, Eq.~\eqref{eq:smooth_branching_det}
-\item (5) Analogue,  Eq.~\eqref{eq:analogue_det}
-\end{itemize}
+The following peak detectors, were tested:
+\begin{enumerate}
+\item Window max, Eq.~\eqref{eq:window_max_det}
+\item Three pole release, Eq.~\eqref{eq:stikvoort_release}
+\item Smooth decoupled, Eq.~\eqref{eq:smooth_decoupled_det}
+\item Smooth branching, Eq.~\eqref{eq:smooth_branching_det}
+\item Analog,  Eq.~\eqref{eq:analog_det}
+\end{enumerate}
+The indices of this list will be used to label the detectors in the results.
 
 \subsubsection{Distance to Ideal Envelope}
-The estimated envelope produced by the peak detector, as before denoted by $\tilde{e}_n$, was compared to the specified envelope
-by the following error function
+The estimated envelope produced by the peak detector, as before denoted by $\tilde{e}_n$, was compared to the specified envelope, $e_n$, by using the error function $\EN$ defined as the euclidian distance between the two envelopes:
 \begin{equation}
-\EN = \sqrt{ \frac{1}{N}\sum_{n = 0}^{N-1} (e_n - \tilde{e}_n)^2 } \dB / \text{sample},
+\EN = \sqrt{ \frac{1}{N}\sum_{n = 0}^{N-1} (e_n - \tilde{e}_n)^2 } \quad \text{sample}^{-1},
 \end{equation}
-where $\EN$ is the euclidian distance and N is the length of the test signal in samples. 
+where $N$ is the length of the test signal in samples. 
 
 Given a modulation frequency, a peak detector's ability to extract the correct envelope depends greatly on the parameter settings, as these in essence define the time-scale the detector should operate on, see section \ref{theory_time_scales}. To be able to evaluate the algorithms, rather than their parameter settings, the parameter values was optimised numerically for each detector with a fixed modulation frequency $f_m = f_{m,0}$ and carrier frequency $f_c = f_{c,0}$, using $\EN$ as cost function.
 
 \subsubsection{Carrier Frequency Dependence}
-While the optimised parameter values are closely related to modulation frequency, possible dependencies on carrier frequency are unwanted, since the fine structure ideally should not affect the estimated envelope. To evaluate how peak detector performance depends on the fine structure, the parameter values as well as modulation frequency was fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
+While the optimised parameter values are closely related to the modulation frequency, possible dependencies on carrier frequency are unwanted, since the fine structure ideally should not affect the estimated envelope. To evaluate how peak detector performance depends on the fine structure, the parameter values as well as the modulation frequency where fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
 
 \subsubsection{Estimated Envelope Shape}
-As the calculated error $\EN$ is the normalised distance between the estimated and the specified signal level, it does not distinguish between static errors and unwanted oscillations or other envelope distortions. Thus, FES was calculated as the correlation between the estimated envelope $\tilde{e}_n$ and the original envelope $e_n$ and plotted against carrier frequency as well. Note that while FES is used in \cite{stone1992syllabic}\cite{stone2007quantifying} and \cite{reiss2012tutorial} to correlate the envelopes of the input signal with the envelope of the output from a \emph{complete compressor}, it is used here to evaluate the different peak detector components in isolation. 
+The normalised distance between the estimated and the specified signal level, $\EN$, does not distinguish between static errors and unwanted oscillations or other envelope distortions. As oscillating errors will lower the correlation between the estimated and ideal envelope, while static errors won't, FES was calculated and plotted against carrier frequency as well. Note that while FES is used in \cite{stone1992syllabic}\cite{stone2007quantifying} and \cite{reiss2012tutorial} to correlate the envelopes of the input signal with the envelope of the output from a \emph{complete compressor}, it is used here to evaluate the different peak detector components in isolation. 
 \end{document}
