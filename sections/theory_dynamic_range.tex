@@ -5,7 +5,7 @@
 
 \begin{document}
 %================================
-\subsection{Peak Amplitude, Envelope and RMS}
+\subsection{Peak Amplitude, Envelope and RMS}\label{peak_envelope_rms}
 Before plunging into the realm of dynamic range compression, a brief discussion of
 the peak amplitude and the root-mean-square of time-varying signals are presented as these are used frequently throughout the thesis.
 \subsubsection{Peak Amplitude}
@@ -84,7 +84,7 @@ The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
 \crest \equiv \frac{a_\text{pk}}{a_\text{RMS}}. \label{eq:crest_factor}
 \end{align}
 %================================
-\subsection{Dynamic Range and Signal Level}
+\subsection{Dynamic Range and Signal Level}\label{theory_dynamic_range}
 The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. 
 
 To distinguish between linear and logarithmic quantities the former are in general denoted by lowercase and the latter by uppercase letters\footnote{There are a few exceptions, for example the compression ratio $R$ and sample period $T_s$.}.
