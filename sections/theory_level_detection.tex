@@ -51,11 +51,11 @@ v_n &= \text{max}(|x_n|, \alpha_\text{lr} u_n + (1-\alpha_\text{lr}) v_{n-1} \\
 \tilde{e}_n &= \text{max}(|x_n|, \alpha_\text{lr} v_n + (1-\alpha_\text{lr}) \tilde{e}_{n-1}. \\
 \end{split}
 \end{equation}
-The release coefficient, $\alpha_\text{lr}$, is as before defined by Eq.~\eqref{eq:release_coeff_def}, but it is worth noting that the actual release time is $\approx 3.25 \tau_\text{lr}$ \cite{stikvoort1986digital}.
+The release coefficient, $\alpha_\text{lr}$, is as before defined by Eq.~\eqref{eq:release_coeff_def}, but it is worth noting that the actual release time is approximately equal to $ 3.25 \tau_\text{lr}$ \cite{stikvoort1986digital}.
 
 The filter functions as both a peak-hold and a smooth release effect as can be seen in Fig.~\ref{fig:step_stikvoort_release}. This detector will be referred to as the \emph{third order peak detector}.
 %=========================
-\begin{figure}
+\begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/step_stikvoort_release}}
 \caption{Step and downstep response of third order release filter as defined in Eq.~\eqref{eq:stikvoort_release}, with $\tau_\text{lr} = 150 \text{ms}$. Notice the slight hold-effect between $t=0.5$ s and $t \approx 0.7$ s.}
 \label{fig:step_stikvoort_release}
@@ -87,9 +87,9 @@ The peak estimate is then taken as the maximum absolute value of the four filter
 \begin{equation}
 \tilde{e}_n = \text{max}(|f^1_n|, |f^2_n|, |f^3_n|, |f^4_n|)
 \end{equation}
-This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. It will be referred to as the \emph{upsampling peak detector}.
+Since this is equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value, it will be referred to as the \emph{upsampling peak detector}.
 
-Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. The exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
+Lastly, the calculated peak envelope is subject to hysteresis of 1 $\dB$ to further decrease the oscillating peak estimation errors. The exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
 
 \subsubsection{Windowed Max Peak Detector}
 In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a component in a envelope detector constructed to avoid clipping in the output of a digital limiter. The \emph{windowed max peak detector} takes the maximum value of the absolute value of the input signal over a window of $M$ samples:
