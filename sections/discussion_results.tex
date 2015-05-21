@@ -5,35 +5,15 @@
 
 \begin{document}
 \subsection{Result}\label{discussion_results}
-%\subsubsection{Peak Detection}
-%All tested peak detectors track the envelope well when optimised. The smooth decoupled detector shows smooth behaviour but do underestimate the envelope by a small amount. The windowed max detector has little variation, but is rather noisy. The analog detector shows interestingly very similar behaviour to the smooth branching detector. This is due to the slow varying envelope. With faster variation, the release trajectory will distinguish these from each other.
-%
-%As the carrier frequency is varied, Fig.~\ref{fig:peak_det_opt_env_fc10000_dep_error} and Fig.~\ref{fig:peak_det_opt_env_fc10000_dep_fes}, the windowed max filter is the first to experience oscillations in the output resulting in an increased $\EN$. For the detection to be stable, a window of at least $f_c/2$ is required (assuming the phase $\phi=0$). The optimised window parameter results in the limit $f_c =  f_s/2w = 44100/2\cdot 53 \approx 416$ Hz which corresponds to the point where the $\EN$ begins to diverge. The three pole filter is the next filter experiencing increasing $\EN$. The smooth decoupled, smooth branching and analogue detectors show similar behaviour, but inspecting the zoomed version the three are separated with the smooth decoupled showing slightly better performance.
-%
-%An interesting phenomena seen in the plots are the various peaks in error at the high frequencies. This is the expected behaviour due to the non-linearities of the filters. 
-%
-%\subsubsection{RMS Detection}
-%The optimised RMS outputs are very close to the specified ideal RMS. This is due to the fact that $f_m<<f_c$ making the envelope fairly constant during one period of the carrier wave letting the detector extract the crest factor with great accuracy. As the carrier frequency reduces, the detector is not slow enough to pick the entire period of the carrier resulting in an increase in $\EN$ and a decrease in $\FES$ as expected, Fig.~\ref{fig:rms_det_opt_env_fc10000_dep_error-fes}. By optimising the parameters for a carrier wave of much lower frequency, this can be prevented as can be seen in the results where $f_c=20$ Hz, Fig.~\ref{fig:rms_det_opt_env_fc20_dep_error-fes}. This does however increase the amount of look-ahead needed, see Tab.~\ref{tab:rms_det_opt_params}. It is worth to note that the optimised window length is exactly half a period of the carrier wave as expected.
+With the numerical parameter optimisation approach used in this thesis, only an upper bound could be given of the distance to ideal. There is no guarantee that the minima found is global. In fact, when randomising the start guesses, different minima is found, although they are in the neighbourhood of each other. It was however possible to draw some conclusions.
 
-%Furthermore, the linearity of the IIR-filter and the single introduced harmonic due to the squaring operation makes the plots smooth for high frequencies as opposed to the peak detectors. It was however surprising that the frequencies above $f_s/2=11,025$ Hz didn't contribute to a larger error as indicated by the introduced double harmonic which would be aliased into the low frequency band, and hence not filtered. To explain this, further analysis needs to be carried out.
+The extremely good result for the optimised carrier frequency, Fig.~\ref{fig:peak_det_opt_env_zoom} in combination with the poor performance for lower frequencies, Fig.~\ref{fig:complete_DDRC_opt_fc_dep}, in the case of the McN84 design may be explained by the number of parameters. While making it possible to find a very good fit to the ideal curve with extremely short release times ($\approx 6$ ms for both peak detector and gain smoothing), these settings prove to be less optimal for other carrier frequencies.  
 
-%\subsubsection{Peak Detection with Gain Computer}
-%TODO
-With the numerical parameter optimisation approach used in this thesis, only upper bound could be given of the distance to ideal. To be able to say for sure which compressor is able to come closest, other methods needs to be developed.
+The GMR designs did show a larger error in the optimisation, Fig.~\ref{fig:peak_det_opt_env_zoom}, but proved to be more stable when varying the carrier frequency, Fig.~\ref{fig:complete_DDRC_opt_fc_dep}. This may be explained by the longer release times making the design more robust to the slower oscillations of the carrier frequency. 
 
-It was however possible to draw some conclusions.
+The FE96 compressor shows larger fluctuations and error at carrier frequencies where the other are stable, see Fig.~\ref{fig:complete_DDRC_opt_fc_dep} where $10^3<f_c<10^4$, apart from the characteristics peaks due to the introduced harmonics of the peak detector. Comparing the design with the GMR compressors, the main difference is the gain smoothing component, as the peak detection in essence is the full wave rectification in both cases but up-sampled in FE96, the major difference between the detection is the reduction of spikes at certain frequencies. The difference in performance is thus believed to be caused by the linear gain smoothing filter. Note however, that since no guarantee can be made regarding global minima of parameter optimisation, there may in theory exist a parameters more optimal than the one found. Futhermore, up-sampling is shown to reduce the spikes in the higher frequencies as expected. 
 
-It was expected that the parameter settings was sensitive to the input signal, but not HOW sensitive.
-
-
-Also, that is was possible to come so close was supricing. 
-
-
-The extremely good result for the optimised carrier frequency in combination with the poor performance for lower frequencies in the case of the McN84 design may be explained by the number of parameters. While making it possible to find a very good fit to the ideal curve with extremely short release times ($\approx 6$ ms for both peak detector and gain smoothing), these settings prove to be less optimal for other signals.
-
-The stable results for the GMR designs may be explained by their longer release times.
-
-Attack vs delay. 
+Finally, the optimised delay vary between the DDRCs, see Table~\ref{tab:complete_DDRC_opt_params}, but there is little indication for how the delay actually affects the performance in this setup. The effect of the look-ahead can be seen in Fig.~\ref{fig:complete_DDRC_opt_step_response} as the onset is compressed immediately, despite the attack time, and the compression release is applied before the down-step resulting in the peak at the end of the step.
 
 %A very surprising result is the step response in Fig.~\ref{fig:complete_DDRC_opt_step_response}. While all the compressors yield essentially the exact same output when fed with the sinusoidal test signal, the step response shows significant differences. This clearly demonstrates the difficulties of nonlinear systems analysis, and the limits of step responses for describing the behaviour of such systems.
 
