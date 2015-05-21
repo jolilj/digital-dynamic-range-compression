@@ -5,7 +5,7 @@
 \section{Method}\label{method}
 By combining the various peak and RMS detectors with the gain smoothing filters treated in section~\ref{theory_DDRC}, a large amount of side-chain configurations are possible. Due to lack of time and computational resources, a selection of the described variants had to be made. To narrow the scope of this thesis, four different compressor algorithms was selected and evaluated.
 
-Two tests was conducted. First of all, the importance of parameter settings when comparing compressor characteristics was investigated. This process is described in section \ref{method_param_opt}. Following this, the four chosen compressor algorithms was compared and evaluated in more detail. The parameter settings were optimised for a specific test signal to achieve a measure of how close to ideal the chosen DDRCs were able to perform. This process is described in section~\ref{method_peak_compressors}.
+Two tests were conducted. First of all, the importance of parameter settings when comparing compressor characteristics was investigated. This process is described in section \ref{method_param_opt}. Following this, the four chosen compressor algorithms was compared and evaluated in more detail. The parameter settings were optimised for a specific test signal to achieve a measure of how close to ideal the chosen DDRCs were able to perform. This process is described in section~\ref{method_peak_compressors}.
 
 \subsection{Implementation} \label{method_implementation}
 The compressors were implemented and tested in MATLAB\textsuperscript{\textregistered}. The parameter optimisation was conducted using the built in function \emph{fminsearch}\footnote{For documentation see \cite{fminsearch}} which uses the Nelder-Mead simplex algorithm. 
