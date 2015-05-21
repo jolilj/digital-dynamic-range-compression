@@ -2,13 +2,13 @@
 \providecommand{\rootdir}{..}
 \begin{document}
 
-\subsection{Parameter Optimisation}\label{method_param_opt}
-In \cite{reiss2012tutorial} the placement, type and domain of the level detector is partly motivated by comparing step and down-step response of the compressors with equal parameter settings. The fact that various algorithms exhibit different characteristics with equal parameters does however bias the result. 
+\subsection{The Importance of Parameter Settings}\label{method_param_opt}
+In \cite{reiss2012tutorial} the placement, type and domain of the level detector is partly motivated by comparing step and down-step response of the compressors with equal parameter settings. To investigate the importance of the chosen parameter settings in such comparisons, the following test was conducted.
 
-Two compressor designs presented in \cite{reiss2012} are examined
+Two compressor designs presented in \cite{reiss2012} were tested
 \begin{enumerate}[label=(\Alph*)]
  \item Full wave rectification with smooth branching log domain gain smoothing (recommended)
 \item  Branching peak detector without gain smoothing (not recommended)
 \end{enumerate}
-First, a step and down-step response with equal parameter settings are generated. Second, the same step and down-step response is generated but with the parameter  settings of the second compressor being optimised using the euclidean distance to the output of the first compressor as cost function. 
+First, a step and down-step response with equal parameter settings are generated. Second, the same step and down-step response is generated but with the parameter settings of compressor B optimised by fitting it's output to the output of compressor A, using the euclidean distance as cost function.
 \end{document}

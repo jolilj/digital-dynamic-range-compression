@@ -5,9 +5,12 @@
 
 \begin{document}
 \subsection{Evaluation of Peak Level Compressors}\label{method_peak_compressors}
+The investigated compressors were:
+
+\subfile{\rootdir/sections/method_chosen_DDRC}
+
 \subsubsection{Test signal}\label{method_test_signal}
-In accordance with the definition of ideal compression, see section~\ref{method_ideal_peak_compression}
-, a test signal $x_n$ is generated, consisting of an envelope $e_n$ and a fine structure $f_n$
+In accordance with the definition of ideal compression in section~\ref{method_ideal_peak_compression}, a test signal $x_n$ was generated, consisting of an envelope $e_n$ and a fine structure $f_n$
 \begin{equation}
 \begin{split}
 	x_n &=e_nf_n\\
@@ -17,7 +20,7 @@ In accordance with the definition of ideal compression, see section~\ref{method_
 \end{equation}
 where $a_\text{min}$ is the minimum instantaneous peak amplitude, $a_\text{max}$ is the maximum instantaneous peak amplitude, $f_m$ the modulation frequency and $f_c$ the carrier frequency.
 
-The wanted compression was defined by a threshold $T_\text{def}$ and ratio $R_\text{def}$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal $y_\text{I}$ was calculated according to Eq.~\eqref{eq:ideal_output}.
+The wanted compression was defined by a threshold, $T_\text{def}$, and ratio, $R_\text{def}$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal, $y_\text{I}$, was calculated according to Eq.~\eqref{eq:ideal_output}.
 
 \subsubsection{Distance to Ideal as Performance Indicator}\label{method_dist_ideal}
 Compressor performance was evaluated by comparing the output of the compressor to the ideal output. The distance to ideal was calculated using the euclidian norm
@@ -26,9 +29,9 @@ Compressor performance was evaluated by comparing the output of the compressor t
 \end{equation}
 where $y_\text{I}$ is the ideal output and $y$ is the output from the compressor.
 
-The parameter settings for each compressor was optimised numerically with a fixed modulation frequency $f_m = f_{m,0}$ and carrier frequency $f_c = f_{c,0}$, using $\EN$ as cost function. The motivation for this procedure is following the discussion in section~\ref{method_param_opt}.
+The parameter settings for each compressor was optimised numerically with a fixed modulation frequency $f_m = f_{m,0}$ and carrier frequency $f_c = f_{c,0}$, using $\EN$ as cost function.
 
 \subsubsection{Carrier Frequency Dependence}\label{method_carrier_freq_dep}
-The optimised values are closely related to modulation frequency. Possible dependencies on carrier frequency however are unwanted, since the fine structure ideally should not be affect the resulting dynamic range compression. It is expected that the DDRCs, given a set of parameters optimised for a specific carrier frequency, are sensitive to other carrier frequencies. To evaluate how sensitive a compressor is with respect to changing the fine structure, the parameter values as well as modulation frequency where fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
+The optimised values are closely related to modulation frequency. Possible dependencies on carrier frequency however are unwanted, since the fine structure ideally should not affect the resulting dynamic range compression. It is expected that the DDRCs, given a set of parameters optimised for a specific carrier frequency, are sensitive to other carrier frequencies. To evaluate how sensitive a compressor is with respect to changing the fine structure, the parameter values as well as modulation frequency where fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
 
 \end{document}

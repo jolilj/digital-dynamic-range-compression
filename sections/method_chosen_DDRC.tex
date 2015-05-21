@@ -5,9 +5,8 @@
 
 \begin{document}
 %================================
-\subsection{Chosen DDRCs} \label{method_chosen_DDRC}
-\subsubsection{McN84 Peak Detection}
-The design proposed in \cite{mcnally1984dynamic} consists of either a peak or RMS level detector. In this study the peak detector is used. Since this algorithm is presented in both \cite{zolzer2008digital} and \cite{dafx11} it is the first DDRC to be evaluated.  The design is summarised in Table~\ref{tab:mcn84}.
+\paragraph{(1) McN84 Peak Detection}
+The design proposed in \cite{mcnally1984dynamic} consists of either a peak or RMS level detector. In this study the peak detector is tested. Since this algorithm is presented in both \cite{zolzer2008digital} and \cite{dafx11} it is the first DDRC to be evaluated. The design is summarised in Table~\ref{tab:mcn84}.
 \begin{table}[h]
 \begin{center}
 \caption{McN84 Peak Detection}
@@ -22,7 +21,7 @@ The design proposed in \cite{mcnally1984dynamic} consists of either a peak or RM
 \end{tabular}
 \end{center}
 \end{table}
-\subsubsection{GMR12 Smooth Branching and Smooth Decoupled Peak}
+\paragraph{(2) GMR12 Smooth Branching and (3) Smooth Decoupled Peak}
 The scientific comparison and tutorial of DDRC design conducted in \cite{reiss2012tutorial} resulted in the recommendation of two peak detecting compressors summarised in Table~\ref{tab:gmr12_decoupled} and~\ref{tab:gmr12_branching}. Since these are the latest proposed designs, they were chosen as the second and third tested DDRCs.
 \begin{table}[h]
 \begin{center}
@@ -46,14 +45,15 @@ The scientific comparison and tutorial of DDRC design conducted in \cite{reiss20
 \begin{tabular}{| l | l |}
 	\hline
 	Component & Type \\ \hline
-	Peak detection & Upsampling peak detector, section~\ref{theory_upsampling_peak_det} \\
+	Peak detection & Full wave rectification, section.~\ref{full_wave_rect} \\
 	Gain computer & Standard. Eq.~\eqref{eq:gain} \\
 	Gain smoothing & Smooth decoupled. Eq.~\eqref{eq:smooth_decoupled_det} \\
 	\hline
 \end{tabular}
 \end{center}
 \end{table}
-\subsubsection{FE96}
+
+\paragraph{(4) FE96}
 In \cite{frindle1996implementation} an interesting design is proposed. Since this is the only publication mentioning up-sampling as a method for reducing distortion and oscillating errors it is chosen as the fourth DDRC for evaluation. A summary of the design is seen in Table~\ref{tab:fe96}.
 \begin{table}[h]
 \begin{center}
