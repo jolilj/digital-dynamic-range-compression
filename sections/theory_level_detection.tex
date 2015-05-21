@@ -8,7 +8,7 @@
 Level detection (logarithmic domain) or envelope estimation (linear domain), see Fig.~\ref{fig:block_genericDDRC}, is the process of extracting the level, or envelope, of the input signal. Various methods have been proposed for this task in the literature. Here follows a summary of the algorithms investigated in this thesis and a short analysis of their properties. The input signal will be denoted $x_n$, the estimated envelope $\tilde{e}_n$, the rms $\hat{x}$ and the detected level, either envelope based or rms-based, $L_n = 20\logten(\tilde{e})$ or $\hat{L}_n=20\logten(\hat{x})$, respectively. 
 
 \subsubsection{Full Wave Rectification}\label{full_wave_rect}
-Full wave rectification is performed in the digital domain by simply taking the absolute value of the input signal. As shown in appendix~\ref{non_lin_ops}, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in all following peak detectors.
+Full wave rectification is performed in the digital domain by simply taking the absolute value of the input signal. As shown in Appendix~\ref{non_lin_ops}, the nonlinearity of this operation introduces a phase dependent oscillating or static error at certain frequencies as their harmonics get aliased to near or at 0 Hz. Nevertheless, it is used without modification in~\cite{reiss2012tutorial}, and as a first step in all following peak detectors.
 
 \subsubsection{Peak Detection by Nonlinear Filtering}\label{peak_detection}
 In \cite{mcnally1984dynamic, zolzer1997digital}, the higher frequency harmonics from the full wave rectification is filtered out by a nonlinear IIR-filter, estimating the envelope. The difference equation for the filter is
@@ -87,7 +87,7 @@ The peak estimate is then taken as the maximum absolute value of the four filter
 \begin{equation}
 \tilde{e}_n = \text{max}(|f^1_n|, |f^2_n|, |f^3_n|, |f^4_n|)
 \end{equation}
-This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. \todo{show this here? in an appendix?}. It will be referred to as the \emph{upsampling peak detector}.
+This can be shown to be equivalent to up-sampling by a factor of 8 and taking the maximum absolute value of the 1st, 3rd, 5th and 7th interpolated value as peak value. It will be referred to as the \emph{upsampling peak detector}.
 
 Lastly, the calculated peak envelope is subject to hysteresis of 1dB to further decrease the oscillating peak estimation errors. The exact implementation of this hysteresis curve is not revealed in the paper and cannot be further analysed here.
 
@@ -100,7 +100,7 @@ In \cite{hamalainen2002smoothing} a windowed max filter is implemented as a comp
 \subsubsection{RMS Detection}
 The RMS of a signal computed on a window of $M$ samples is defined as
 \begin{equation}
-\hat{x}_n \equiv \sqrt{ \frac{1}{M} \sum_{m=-M/2}^{M/2-1} x_{n-m}}
+\hat{x}_n \equiv \sqrt{ \frac{1}{M} \sum_{m=-M/2}^{M/2-1} x_{n-m}^2}
 \end{equation}
 and is used in \cite{reiss2010rev, bosi1991low}. It will be referred to as the \emph{Windowed RMS detector}.
 
