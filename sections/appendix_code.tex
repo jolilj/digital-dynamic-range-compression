@@ -8,13 +8,12 @@
 \subsection{Level Detection}
 \subsubsection{Peak Detection}
 \begin{lstlisting}[style=customc]
-function [ y ] = peakAnalogDet( x, t_a, t_r, d, fs )
+function [ y ] = analogPeakDet( x, t_a, t_r, fs )
   % x    - input
   % t_a  - attack time [s]
   % t_r  - release time [s]
-  % d    - delay
   % fs   - sampling frequency 
-  x = [x, zeros(1,d)];
+
   x = abs(x);
     
   N = length(x);
@@ -32,267 +31,367 @@ function [ y ] = peakAnalogDet( x, t_a, t_r, d, fs )
     end
     yprev = y(i);
   end
-  y = y(1+d:end);
 end
 \end{lstlisting}
-\begin{lstlisting}[style=customc]
-function [ y ] = upsamplingPeakDet( x, d, fs )
-    % x   - input
-    % d   - delay
-    % f_s - sampling frequency
 
-    %Pad input with zeros due to windowed filter
-    x = [0,0,0,0,0,x];
+% ========================================
+
+\begin{lstlisting}[style=customc]
+function [ y ] = branchingPeakDet( x, t_a, t_r, fs )
+  % x    - input
+  % t_a  - attack time [s]
+  % t_r  - release time [s]
+  % fs   - sampling frequency 
+
+  x = abs(x);
     
-    % Init coefficents
-    a = [0,0,0,0,0,0];
-    b = [0,0,0,0,0,0];
-    c = [0,0,0,0,0,0];
-    d = [0,0,0,0,0,0];
+  N = length(x);
+  alpha_a = 1-exp(-1/(t_a*fs));
+  alpha_r = 1-exp(-1/(t_r*fs));
     
-    %Generate coefficients
-    for k=0:5
-       a(k+1) = sin(pi*(0.125+k-3))/(pi*(0.125+k-3))*...
-              0.5*(1+cos(2*pi*(0.125+k-3)/6));
-       b(k+1) = sin(pi*(0.375+k-3))/(pi*(0.375+k-3))*...
-              0.5*(1+cos(2*pi*(0.375+k-3)/6));
-       c(k+1) = sin(pi*(0.625+k-3))/(pi*(0.625+k-3))*...
-              0.5*(1+cos(2*pi*(0.625+k-3)/6));
-       d(k+1) = sin(pi*(0.875+k-3))/(pi*(0.875+k-3))*...
-              0.5*(1+cos(2*pi*(0.875+k-3)/6));
+  y = zeros(1,N);
+  yprev = 0;
+  for i=1:N
+    if x(i) > yprev
+      y(i) = alpha_a*x(i) + (1-alpha_a)*yprev;
+    else
+      y(i) = (1-alpha_r)*yprev;
     end
-    
-    N = length(x);
-    y = zeros(1,N);
-    for i=6:N 
-       % Sinc filters
-       f1 = a(1)*x(i) + a(2)*x(i-1) + a(3)*x(i-2)...
-                      + a(4)*x(i-3) + a(5)*x(i-4) + a(6)*x(i-5);
-       f2 = b(1)*x(i) + b(2)*x(i-1) + b(3)*x(i-2)...
-                      + b(4)*x(i-3) + b(5)*x(i-4) + b(6)*x(i-5);
-       f3 = c(1)*x(i) + c(2)*x(i-1) + c(3)*x(i-2)...
-                      + c(4)*x(i-3) + c(5)*x(i-4) + c(6)*x(i-5);
-       f4 = d(1)*x(i) + d(2)*x(i-1) + d(3)*x(i-2)...
-                      + d(4)*x(i-3) + d(5)*x(i-4) + d(6)*x(i-5);
-                  
-       y(i) = max([abs(f1) abs(f2) abs(f3) abs(f4)]);
-    end
-    y = y(6:end);
-  
+        
+    yprev = y(i);
+  end
 end
 \end{lstlisting}
+
+% ========================================
+
+\begin{lstlisting}[style=customc]
+function [ y ] = peakThreePoleDet( x, t_r, fs )
+  % x    - input
+  % t_r  - release time [s]
+  % fs   - sampling frequency 
+
+  x = abs(x);
+    
+  N = length(x);
+  alpha_r = 1-exp(-1/(t_r*fs));
+    
+  u = zeros(1,N);
+  v = zeros(1,N);
+  y = zeros(1,N);
+    
+  uprev = 0;
+  vprev = 0;
+  yprev = 0;
+    
+  for i=1:length(x)
+    u(i) = max(x(i), (1-alpha_r)*uprev);
+    uprev = u(i);
+
+    v(i) = max(x(i), alpha_r*u(i) + (1-alpha_r)*vprev);
+    vprev = v(i);
+
+    y(i) = max(x(i), alpha_r*v(i) + (1-alpha_r)*yprev);
+    yprev = y(i);
+  end
+end
+
+\end{lstlisting}
+
+% ========================================
+
+\begin{lstlisting}[style=customc]
+function [ y ] = upsamplingPeakDet( x )
+  % x    - input
+
+  N = length(x);
+  x = [0,0,x,0,0,0];
+    
+  % Init coefficents
+  a = [0,0,0,0,0,0];
+  b = [0,0,0,0,0,0];
+  c = [0,0,0,0,0,0];
+  d = [0,0,0,0,0,0];
+    
+  %Generate coefficients
+  for k=0:5
+    a(k+1) = sin(pi*(0.125+k-3))/(pi*(0.125+k-3))*...
+             0.5*(1+cos(2*pi*(0.125+k-3)/6));
+    b(k+1) = sin(pi*(0.375+k-3))/(pi*(0.375+k-3))*...
+             0.5*(1+cos(2*pi*(0.375+k-3)/6));
+    c(k+1) = sin(pi*(0.625+k-3))/(pi*(0.625+k-3))*...
+             0.5*(1+cos(2*pi*(0.625+k-3)/6));
+    d(k+1) = sin(pi*(0.875+k-3))/(pi*(0.875+k-3))*...
+             0.5*(1+cos(2*pi*(0.875+k-3)/6));
+  end
+    
+  y = zeros(1,N);
+  for i=6:length(x) 
+    % Sinc filters
+    f1 = a(1)*x(i) + a(2)*x(i-1) + a(3)*x(i-2)...
+                   + a(4)*x(i-3) + a(5)*x(i-4) + a(6)*x(i-5);
+    f2 = b(1)*x(i) + b(2)*x(i-1) + b(3)*x(i-2)...
+                   + b(4)*x(i-3) + b(5)*x(i-4) + b(6)*x(i-5);
+    f3 = c(1)*x(i) + c(2)*x(i-1) + c(3)*x(i-2)...
+                   + c(4)*x(i-3) + c(5)*x(i-4) + c(6)*x(i-5);
+    f4 = d(1)*x(i) + d(2)*x(i-1) + d(3)*x(i-2)...
+                   + d(4)*x(i-3) + d(5)*x(i-4) + d(6)*x(i-5);
+                  
+    y(i-5) = max([abs(f1) abs(f2) abs(f3) abs(f4)]);
+  end
+end
+\end{lstlisting}
+
+% ========================================
+
 \subsection{Gain Computer}
 \begin{lstlisting}[style=customc]
 function [ G ] = gainComp( X, T, R, W)
-    % X    - Logarithmic input 
-    % T  - Threshold
-    % R  - Ratio
-    % W   - Knee width
-    N = length(X);
-    slope = (1/R - 1);
+  % X    - Logarithmic input 
+  % T  - Threshold
+  % R  - Ratio
+  % W   - Knee width
+  N = length(X);
+  slope = (1/R - 1);
     
-    % calc G
-    G = zeros(1,N);
-    above = (X ~= -Inf) & (X >= (T + W/2));
-    knee = (X ~= -Inf) & (X > (T-W/2)) & (X < (T+W/2));
-    G(above) = slope*(X(above)-T);
-    G(knee) = slope*((X(knee)-T+W/2).^2)/(2*W);
+  % calc G
+  G = zeros(1,N);
+  above = (X ~= -Inf) & (X >= (T + W/2));
+  knee = (X ~= -Inf) & (X > (T-W/2)) & (X < (T+W/2));
+  G(above) = slope*(X(above)-T);
+  G(knee) = slope*((X(knee)-T+W/2).^2)/(2*W);
 end
 \end{lstlisting}
+
+% ========================================
+
 \subsection{Gain Smoothing}
 \begin{lstlisting}[style=customc]
-function [ gs ] = branchingGainSmoothLin( g, t_a, t_r, fs )
-    % g    - input gain
-    % t_a  - attack time [s]
-    % t_r  - release time [s]
-    % fs   - sampling frequency 
-    N = length(g);
-    alpha_a = 1-exp(-1/(t_a*fs));
-    alpha_r = 1-exp(-1/(t_r*fs));
-    
-    gs = zeros(1,N);
-    gs_prev = 1;
-    for i=1:N
-        if g(i) < gs_prev
-            gs(i) = alpha_a*g(i) + (1-alpha_a)*gs_prev;
-        else
-            gs(i) = alpha_r*g(i) + (1-alpha_r)*gs_prev;
-        end
-        
-        gs_prev = gs(i);
-    end
-end
-\end{lstlisting}
-\begin{lstlisting}[style=customc]
-function [ gs ] = branchingGainSmoothLog( g, t_a, t_r, fs )
-    % g    - input gain
-    % t_a  - attack time [s]
-    % t_r  - release time [s]
-    % fs   - sampling frequency 
-    N = length(g);
-    alpha_a = 1-exp(-1/(t_a*fs));
-    alpha_r = 1-exp(-1/(t_r*fs));
-    
-    gs = zeros(1,N);
-    gs_prev = 0;
-    for i=1:N
-        if g(i) > gs_prev
-            gs(i) = alpha_a*g(i) + (1-alpha_a)*gs_prev;
-        else
-            gs(i) = alpha_r*g(i) + (1-alpha_r)*gs_prev;
-        end
-        
-        gs_prev = gs(i);
-    end
-end
-\end{lstlisting}
-\begin{lstlisting}[style=customc]
-function [ gs ] = decoupledGainSmoothLog( g, t_a, t_r, fs )
-    % g    - input gain
-    % t_a  - attack time [s]
-    % t_r  - release time [s]
-    % fs   - sampling frequency 
-    N = length(g);
-    alpha_a = 1-exp(-1/(t_a*fs));
-    alpha_r = 1-exp(-1/(t_r*fs));
-    
-    w = zeros(1,N);
-    gs = zeros(1,N);
-    w_prev = 0;
-    gs_prev = 0;
-    for i=1:N
-        w(i) = max( g(i), alpha_r*g(i) + (1-alpha_r)*w_prev );
-        w_prev = w(i);
-        
-        gs(i) = alpha_a*w(i) + (1-alpha_a)*gs_prev;
-        gs_prev = gs(i);
-    end
-end
-\end{lstlisting}
-\begin{lstlisting}[style=customc]
-function [ Gs ] = linearGainSmoothLog( G, t_a, t_r, t_h, fs )
-    % x    - input
-    % t_a  - attack time [s]
-    % t_r  - release time [s]
-    % t_h - hold time [s]
-    % fs   - sampling frequency 
+function [ gs ] = adaptiveFilter( g, t_a, t_r, fs )
+  % g    - linear unsmooth gain factor
+  % t_a  - attack time [s]
+  % t_r  - release time [s]
+  % fs   - sampling frequency
+  % gs   - linear smooth gain factor
 
-    % convert time constants
-    a_a = 1/(fs*t_a);
-    a_r = 1/(fs*t_r);
-    a_h = 0.5/(fs*t_h);
+  N = length(g);
+  alpha_a = 1-exp(-1/(t_a*fs));
+  alpha_r = 1-exp(-1/(t_r*fs));
     
-    % gain smooting
-    Gs = zeros(1,length(G));
-    Gsprev = 0;
-    Hprev = 0;
-    for i=1:length(G)
-        Z = max(G(i),Gsprev-a_r*Hprev);
-        Gs(i) = min(Z, Gsprev+a_a); 
-        if Gs(i) < Gsprev
-            Hprev = min(1, a_h + Hprev);
-        else 
-            Hprev = a_h;
-        end
-        Gsprev = Gs(i);
+  gs = zeros(1,N);
+  gs_prev = 1;
+  for i=1:N
+    if g(i) < gs_prev
+      gs(i) = alpha_a*g(i) + (1-alpha_a)*gs_prev;
+    else
+      gs(i) = alpha_r*g(i) + (1-alpha_r)*gs_prev;
     end
+        
+    gs_prev = gs(i);
+  end
 end
 \end{lstlisting}
+
+% ========================================
+
+\begin{lstlisting}[style=customc]
+function [ Cs ] = linearGainSmoothLog( C, t_a, t_r, t_h, fs )
+  % C    - unsmooth compression [dB]
+  % t_a  - attack time [s]
+  % t_r  - release time [s]
+  % t_h  - hold time [s]
+  % fs   - sampling frequency
+  % Cs   - smooth compression [dB]
+
+  % convert time constants
+  a_a = 1/(fs*t_a);
+  a_r = 1/(fs*t_r);
+  a_h = 0.5/(fs*t_h);
+    
+  Cs = zeros(1,length(C));
+  Csprev = 0;
+  Hprev = 0;
+  for i=1:length(C)
+    Z = max(C(i),Csprev-a_r*Hprev);
+    Cs(i) = min(Z, Csprev+a_a); 
+    if Cs(i) < Csprev
+      Hprev = min(1, a_h + Hprev);
+    else 
+      Hprev = a_h;
+    end
+    Csprev = Cs(i);
+  end
+end
+\end{lstlisting}
+
+% ========================================
+
+\begin{lstlisting}[style=customc]
+function [ Cs ] = smoothBranchingFilterLog( C, t_a, t_r, fs )
+  % C    - unsmooth compression [dB]
+  % t_a  - attack time [s]
+  % t_r  - release time [s]
+  % fs   - sampling frequency
+  % Cs   - smooth compression [dB]
+
+  N = length(g);
+  alpha_a = 1-exp(-1/(t_a*fs));
+  alpha_r = 1-exp(-1/(t_r*fs));
+    
+  Cs = zeros(1,N);
+  Cs_prev = 0;
+  for i=1:N
+    if C(i) > Cs_prev
+      Cs(i) = alpha_a*C(i) + (1-alpha_a)*Cs_prev;
+    else
+      Cs(i) = alpha_r*C(i) + (1-alpha_r)*Cs_prev;
+    end
+    
+    Cs_prev = Cs(i);
+  end
+end
+\end{lstlisting}
+\begin{lstlisting}[style=customc]
+
+% ========================================
+
+function [ Cs ] = smoothDecoupledFilterLog( C, t_a, t_r, fs )
+  % C    - unsmooth compression [dB]
+  % t_a  - attack time [s]
+  % t_r  - release time [s]
+  % fs   - sampling frequency 
+  % Cs   - smooth compression [dB]
+
+  N = length(g);
+  alpha_a = 1-exp(-1/(t_a*fs));
+  alpha_r = 1-exp(-1/(t_r*fs));
+    
+  w = zeros(1,N);
+  Cs = zeros(1,N);
+  w_prev = 0;
+  Cs_prev = 0;
+  for i=1:N
+    w(i) = max( C(i), alpha_r*C(i) + (1-alpha_r)*w_prev );
+    w_prev = w(i);
+    
+    Cs(i) = alpha_a*w(i) + (1-alpha_a)*Cs_prev;
+    Cs_prev = Cs(i);
+  end
+end
+\end{lstlisting}
+
+% ========================================
+
 \subsection{DDRC}
 \begin{lstlisting}[style=customc]
 function [ y, gs ] = McN84_peak(input, T, R, W, t_pa, t_pr, t_ga, t_gr, D, fs)
-    % T:    Threshold [dBFS]
-    % R:    Ratio
-    % t_pa: peak detector attack [s]
-    % t_pr: peak detector release [s]
-    % t_ga: gain smoothing attack [s]
-    % t_gr: gain smoothing release [s]
-    % D: delay, sidechain lag compensation+ look ahead [samples]
-    % fs: sample rate [samples/s]
+  % T:    Threshold [dBFS]
+  % R:    Ratio
+  % t_pa: peak detector attack [s]
+  % t_pr: peak detector release [s]
+  % t_ga: gain smoothing attack [s]
+  % t_gr: gain smoothing release [s]
+  % D: delay, sidechain lag compensation+ look ahead [samples]
+  % fs: sample rate [samples/s]
 
-    % time-shift sidechain
-    x = [input, zeros(1,D)];
-    % calc envelope
-    e = peakAnalogDet(x, t_pa, t_pr, 0, NaN, fs);
-    % calc Level
-    L = 20*log10(e);
-    % calc gain reduction
-    G = gainComp(L, T, R, W);
-    g = 10.^(G/20);
-    % smooth gain in linear domain
-    gs = branchingGainSmoothLin(g, t_ga, t_gr, fs);
-    % apply gain
-    gs = gs((1+D):end);
-    y = input.*gs;
+  % time-shift sidechain
+  x = [input, zeros(1,D)];
+  % calc envelope
+  e = analogPeakDet(x, t_pa, t_pr, fs);
+  % calc Level
+  L = 20*log10(e);
+  % calc gain reduction
+  G = gainComp(L, T, R, W);
+  g = 10.^(G/20);
+  % smooth gain in linear domain
+  gs = adaptiveFilter(g, t_ga, t_gr, fs);
+  gs = gs((1+D):end);
+  % compress
+  y = input.*gs;
     
 end
 \end{lstlisting}
+
+% ========================================
+
 \begin{lstlisting}[style=customc]
 function [ y,gs ] = FE96(input, T, R, W, t_a, t_r, t_h, D, fs)
-    % T:    Threshold [dBFS]
-    % R:    Ratio
-    % t_a: smoothing attack [s]
-    % t_r: smoothing release [s]
-    % t_h: smoothing hold [s]
-    % D: lookahead + sidechain delay compensation
-    % fs: sample rate [samples/s]
-    
-    % calc envelope
-    x = [input, zeros(1,D)];
-    e = upsamplingPeakDet(x, 0, fs);
-    % calc gain
-    E = 20*log10(e);
-    G = gainComp(E, T, R, W);
-    GS = linearGainSmoothLog(abs(G), t_a, t_r, t_h, fs);
-    gs = 10.^(-GS/20);
-    % smooth gain
-    gs = gs((1+D):end);
-    y = input.*gs;
+  % T:    Threshold [dBFS]
+  % R:    Ratio
+  % t_a: smoothing attack [s]
+  % t_r: smoothing release [s]
+  % t_h: smoothing hold [s]
+  % D: lookahead + sidechain delay compensation
+  % fs: sample rate [samples/s]
+  
+  % calc envelope
+  x = [input, zeros(1,D)];
+  e = upsamplingPeakDet(x);
+  % calc gain
+  E = 20*log10(e);
+  G = gainComp(E, T, R, W);
+  C = abs(G);
+  CS = linearGainSmoothLog(C, t_a, t_r, t_h, fs);
+  % smooth gain
+  gs = 10.^(-CS/20);
+  gs = gs((1+D):end);
+  % compress
+  y = input.*gs;
 
 end
 \end{lstlisting}
+
+% ========================================
+
 \begin{lstlisting}[style=customc]
 function [ y, gs ] = GMR12_decoupled( input, T, R, W, t_ga, t_gr, D, fs)
-    % T: Threshold [dBFS]
-    % R: Ratio
-    % W: Knee width [dBFS]
-    % t_a: Attack time [s]
-    % t_r: Release time [s]
-    % fs: Sample rate [samples / s]
-    
-    % calc envelope
-    x = [input, zeros(1,D)];
-    e = abs(x);
-    % calc gain
-    E = 20*log10(e);
-    G = gainComp(E, T, R, W);
-    GS = decoupledGainSmoothLog(abs(G), t_ga, t_gr, fs);
-    gs = 10.^(-GS/20);
-    % smooth gain
-    gs = gs((1+D):end);
-    y = input.*gs;
+  % T: Threshold [dBFS]
+  % R: Ratio
+  % W: Knee width [dBFS]
+  % t_a: Attack time [s]
+  % t_r: Release time [s]
+  % fs: Sample rate [samples / s]
+  
+  % calc envelope
+  x = [input, zeros(1,D)];
+  e = abs(x);
+  % calc gain
+  E = 20*log10(e);
+  G = gainComp(E, T, R, W);
+  C = abs(G);
+  % smooth gain
+  CS = smoothDecoupledFilterLog(C, t_ga, t_gr, fs);
+  gs = 10.^(-CS/20);
+  gs = gs((1+D):end);
+  % compress
+  y = input.*gs;
 end
 \end{lstlisting}
+
+% ========================================
+
 \begin{lstlisting}[style=customc]
 function [ y, gs ] = GMR12_branching( input, T, R, W, t_ga, t_gr, D, fs)
-    % T: Threshold [dBFS]
-    % R: Ratio
-    % W: Knee width [dBFS]
-    % t_a: Attack time [s]
-    % t_r: Release time [s]
-    % fs: Sample rate [samples / s]
-    
-    % calc envelope
-    x = [input, zeros(1,D)];
-    e = abs(x);
-    % calc gain
-    E = 20*log10(e);
-    G = gainComp(E, T, R, W);
-    GS = branchingGainSmoothLog(abs(G), t_ga, t_gr, fs);
-    gs = 10.^(-GS/20);
-    % smooth gain
-    gs = gs((1+D):end);
-    y = input.*gs;
+  % T: Threshold [dBFS]
+  % R: Ratio
+  % W: Knee width [dBFS]
+  % t_a: Attack time [s]
+  % t_r: Release time [s]
+  % fs: Sample rate [samples / s]
+  
+  % calc envelope
+  x = [input, zeros(1,D)];
+  e = abs(x);
+  % calc gain
+  E = 20*log10(e);
+  G = gainComp(E, T, R, W);
+  C = abs(G);
+  % smooth gain
+  CS = smoothBranchingFilterLog(C, t_ga, t_gr, fs);
+  gs = 10.^(-CS/20);
+  gs = gs((1+D):end);
+  % compress
+  y = input.*gs;
 end
 \end{lstlisting}
 \end{document}
