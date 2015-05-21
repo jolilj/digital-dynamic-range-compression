@@ -7,17 +7,23 @@
 
 \subsection{Complete DDRC algorithms}
 
-\subsubsection{Parameter Optimisation}
-The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} was set to $f_c = $~10,000~Hz and the envelope modulation frequency was set to $f_m = 2$ Hz. The sampling frequency was $fs = $~44,100 Hz. The parameters for each peak detector was optimised, and their optimised values can be seen in Tab.~\ref{tab:complete_DDRC_opt_params} together with the resulting normalised euclidian distance to ideal output. The resulting gain factors plotted against time can be seen in Fig.~\ref{fig:peak_det_opt_env}. The curves are offset in relation to each other for clarity, with the ideal gain factor dotted for each offset. 
+\subsubsection{Distance to Ideal}
+The optimised parameter values are presented in Tab.~\ref{tab:complete_DDRC_opt_params} together with the resulting normalised euclidian distance to ideal output, $\EN$. There is no guarantee that the found parameter settings in Tab.~\ref{tab:complete_DDRC_opt_params} are at the global minimum of the cost function $\EN$. There may exist parameter settings other than those presented here that yield a smaller error. However, these results establishes an \emph{upper bound} on the distance to ideal for each compressor.
+
+With this in mind, the key result presented here is that all tested compressors were able to approximate the ideal output within an error of less than $10^{-3}$ per sample ($-60 \dBFS$/sample). Furthermore, it was possible to achieve this with threshold and ratio very close to the defined goal compression parameters.
 
 \begin{table}[h]
 \small
 \begin{center}
-\caption{Optimised parameters for the various peak detectors, $f_c=$~10,000~Hz, $f_m=2$ Hz.}
+\caption{Optimised parameters for the various peak detectors. Test signal: $f_c=$~10,000~Hz, $f_m=2$ Hz. Goal compression: $T=-12 \dBFS$, $R=4$}
 \label{tab:complete_DDRC_opt_params}
 \subfile{\rootdir/tables/complete_DDRC_params}
 \end{center}
 \end{table}
+
+The difference $y_{\text{I},n} - y_n$ can be seen plotted against time for each of the tested compressors in Fig.~\ref{fig:complete_DDRC_opt_diff}, vertically offset by 0.002 for clarity.
+
+The gain factors, $g_n$, can be seen plotted against time for each of the tested compressors in Fig.~\ref{complete_DDRC_opt_gain}, vertically offset by 0.01. The McN84 has small very fast ripples in gain factor, while the GMR12 decoupled design is smoother but with a small static error. GMR12 branching and FE96 oscillate considerably more around the ideal curve.
 
 \begin{figure}
 \captionsetup{justification=centering}
@@ -34,15 +40,21 @@ The frequency of the fine structure as defined in Eq.~\eqref{eq:eq_test_signal} 
 \centering
 \centerline{\subfile{\rootdir/figures/complete_DDRC_opt_gain_min}}
 \caption{Optimised DDRC gain factors, zoomed in at the maximum gain reduction}
+\label{fig:complete_DDRC_opt_gain}
 \end{subfigure}
 
 \caption{Zoomed in versions of optimised DDRC gain factors, vertically offset by 0.01 for clarity}
 \label{fig:peak_det_opt_env_zoom}
 \end{figure}
-%======================
 
+
+%======================
 \subsubsection{Carrier Frequency Dependence}
-The parameters were fixed from the previous optimisation, and the carrier frequency swept from 20 Hz to 20,000 Hz as described in Sec.~\ref{sec:method}. The result can be seen in Fig.~\ref{fig:complete_DDRC_opt_fc_dep}.
+Looking at the carrier frequency dependency in Fig.~\ref{fig:complete_DDRC_opt_fc_dep}, McN84 is the one suffering the most for low frequencies, followed by FE96. Both GMR designs are clearly more robust to lower carrier frequencies than they were optimised for. Worth noting is that the branching design manages to maintain a small error for low frequencies with only 1 ms of look-ahead. 
+
+The McN84 and GMR12 designs have spikes in error at certain carrier frequencies. A closer inspection shows that the spikes are located at exactly the carrier frequencies that evenly divides the sampling frequency, as predicted in section \ref{full_wave_rect_det}. This problem is significantly reduced in FE96 with its up-sampling peak detector.
+
+Fig.~\ref{fig:complete_DDRC_opt_fc_dep}.
 
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/complete_DDRC_opt_fc_dep}}
