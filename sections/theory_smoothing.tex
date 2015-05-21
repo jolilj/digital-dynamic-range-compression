@@ -6,7 +6,7 @@
 \begin{document}
 \FloatBarrier
 \subsection{Gain Smoothing}
-To further smooth the control signal, various filters are introduced in the end of the side-chain, see Fig.~\ref{fig:fig:block_genericDDRC}, operating in either the linear or logarithmic domain \cite{mcnally1984dynamic}\cite{frindle1996implementation}. In \cite{reiss2012tutorial} this is the only smoothing performed and thus paramount for avoiding distortion.
+To further smooth the control signal, various filters are introduced in the end of the side-chain, see Fig.~\ref{fig:fig:block_genericDDRC}, operating in either the linear or logarithmic domain. In \cite{reiss2012tutorial} this is the only smoothing performed and thus paramount for avoiding distortion.
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
 In \cite{mcnally1984} a first order lowpass filter is added in the linear domain. A block diagram of the filter can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter} where the control block represents the branching condition as discussed below. The difference equation for one version of the filter is
@@ -18,7 +18,7 @@ g_n = \begin{cases}
 \end{cases}
 \end{equation}
 %================================
-The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02}\cite{dafx11}\cite{zolzer1997digital}\cite{zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic}\cite{dafx02}. The original intent of \cite{mcnally1984dynamic} is unclear.
+The block diagrams in \cite{mcnally1984dynamic}\cite{dafx02, dafx11, zolzer1997digital, zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic, dafx02}. The original intent in \cite{mcnally1984dynamic} is unclear.
 
 %================================
 \begin{figure}

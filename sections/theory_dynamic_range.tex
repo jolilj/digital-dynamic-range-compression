@@ -6,8 +6,8 @@
 \begin{document}
 
 \FloatBarrier
-\section{Theory - Dynamic Range} \label{theory_dynamic_range}
-The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described.
+\section{Theory - Definitions and Dynamic Range} \label{theory_dynamic_range}
+The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. First of all though, some definitions are needed.
 
 \subsection{Peak Amplitude and Envelope}
 For a periodic signal, the \emph{peak amplitude} can be unambiguously defined as the maximum absolute value over the signal's period. For a signal $x(t)$ with period $\tau$ the peak amplitude is thus defined as
@@ -79,20 +79,14 @@ The factor $\sqrt 2$ is referred to as the \emph{crest factor} and is defined as
 \crest \equiv \frac{a_\text{pk}}{a_\text{RMS}}. \label{eq:crest_factor}
 \end{align}
 %================================
-
-\subsection{Dynamic Range and Signal Level}\label{theory_dynamic_range}
-The term \emph{dynamic range} has two different meanings in the context of digital audio. For a DSP \emph{system}, the dynamic range is the ratio between the largest representable signal to the quantisation error and is closely related to \emph{signal to noise ratio} (SNR)  \cite{wilson1993filter}. For an audio \emph{signal} on the other hand, the dynamic range is the ratio between the \emph{level} of the loudest portion and the quietest \cite{davis1989sound}. The goal of a dynamic range controller, e.g. a compressor, is to change (or control) the latter. A clear understanding of it's meaning is thus of importance before the actual process is described. 
-
-To distinguish between linear and logarithmic quantities the former are in this study denoted by lowercase and the latter by uppercase letters\footnote{There are a few exceptions, for example the compression ratio $R$ and sample period $T_s$.}.
-%================================
-\subsubsection{Sound Level}
-The problem lies at defining the level of a signal. While the perceived \emph{loudness} of a sound is a subjective quantity \cite{american1973american}, \emph{sound level} is a physical quantity that can be measured. \emph{Sound pressure level} (SPL) is the effective pressure deviation of an acoustic wave in air relative to a reference value, measured on a logarithmic scale. More formally,
+\subsection{Sound Level}
+While the perceived \emph{loudness} of a sound is a subjective quantity \cite{american1973american}, \emph{sound level} is a physical quantity that can be measured. \emph{Sound pressure level} (SPL) is the effective pressure deviation of an acoustic wave in air relative to a reference value, measured on a logarithmic scale \cite{davis1989sound}. More formally,
 %================================
 \begin{equation}
 L_{p/p0} = 10 \logten \left( \frac{p_\text{RMS}^2}{p_0^2} \right) \dB = 20 \logten \left( \frac{p_\text{RMS}}{p_0} \right) \dB,
 \end{equation}
 %================================
-where $p_\text{RMS}$ is the root-mean-square (RMS) pressure deviation and $p_0 > 0$ the reference value \cite{XXXXX}. A common reference value is the threshold of human hearing, $p_0 = 20 \mPa$ \cite{XXXX}, denoted here by dB SPL\footnote{Although indicating the reference value by a suffix to the dB-unit is not an accepted SI standard, it is a common practice we will adopt in this thesis.}:
+where $p_\text{RMS}$ is the root-mean-square (RMS) pressure deviation and $p_0 > 0$ the reference value. A common reference value is the approximate threshold of human hearing, $p_0 = 20 \mPa$, denoted here by dB SPL\footnote{Although indicating the reference value by a suffix to the dB-unit is not an accepted SI standard, it is a common practice we will adopt in this thesis.} \cite{davis1989sound}:
 %================================
 \begin{equation}
 L_{p/20 \mu\text{Pa}} = 20 \logten \left( \frac{p_\text{RMS}}{20 \mPa} \right) \dBSPL.
@@ -110,7 +104,7 @@ Since the effective power is proportional to the square of the RMS voltage, the 
 L_{u/u_0} = 10 \logten \left( \frac{u_\text{RMS}^2}{u_0^2} \right) \dB = 20 \logten \left( \frac{u_\text{RMS}}{u_0} \right) \dB,
 \end{equation}
 %================================
-where $u_\text{RMS}$ is the RMS voltage and $u_0$ a reference voltage. Various reference powers and voltages exists, for example 
+where $u_\text{RMS}$ is the RMS voltage and $u_0$ a reference voltage \cite{davis1989sound}. Various reference powers and voltages exists, for example 
 %================================
 \begin{itemize}
 \item \textbf{dBm} - $P_0 = 1$ mW corresponding to $u_0 \approx 0.775 V$ for an 600 $\Omega$ impedance
@@ -118,21 +112,31 @@ where $u_\text{RMS}$ is the RMS voltage and $u_0$ a reference voltage. Various r
 \item \textbf{dBV} - $u_0 = 1$ V and no impedance given.
 \end{itemize}
 %================================
-\subsubsection{Signal Level}
-A convenient unit in digital audio systems is dB \emph{Full scale} (dB FS)~\cite{db_fullscale}, used in this thesis for measuring \emph{signal level} with a peak amplitude of $a_{0, \text{pk}} = 1$ as reference. The peak signal level of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
+\subsection{Signal Level}
+A convenient unit in digital audio systems is dB relative to \emph{Full scale} (dB FS)~\cite{db_fullscale}. When measuring \emph{peak signal level}, a peak amplitude of $a_{0, \text{pk}} = 1$ is used as reference. The peak signal level of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
 \begin{equation}
 A_\text{pk} = 10 \logten \left( \frac{a_\text{pk}^2}{a_{0, \text{pk}}^2} \right) \text{dB FS} = 20 \log_{10} a_\text{pk} \dBFS.
 \end{equation}
+
 %================================
-When measuring the RMS signal level, $a_{0, \text{rms}} = 1$ is used as reference\footnote{The  AES Standard AES17-1998 uses $a_{0, \text{rms}} = 1/sqrt(2)$ as reference. We do note adopt this convention here, since $a_{0, \text{rms}} = 1$ simplifies conversion between linear and logarithmic RMS values}
+When measuring the RMS signal level, $a_{0, \text{rms}} = 1$ is used as reference\footnote{The  AES Standard AES17-1998 uses $a_{0, \text{rms}} = 1/sqrt(2)$ as reference. This convention is not adopted in this thesis, since $a_{0, \text{rms}} = 1$ simplifies conversion between linear and logarithmic RMS values}
 For the same sine wave then, the RMS signal level is given by
 \begin{equation}
 A_\text{RMS} = 20\log_{10} \left( \frac{a_\text{pk}}{\sqrt 2} \right) \approx A_\text{pk}- 3.01 \dBFS.
 \end{equation}
 
-For periodic signals, $A_\text{pk}$ and $A_\text{RMS}$, are uniquely determined. For real-world signals however, the issue at hand is to define methods for how these are to be extracted. Essentially, it depends on the \emph{time scale} over where these are measured. This is a fundamental part of dynamic range control and is referred to as \emph{level detection} and is discussed in section~\ref{level_detection}. 
+For periodic signals, $A_\text{pk}$ and $A_\text{RMS}$, are uniquely determined. For real-world signals however, the issue at hand is to define methods for how these are to be extracted. Essentially, it depends on the \emph{time scale} over where these are measured. This is a fundamental part of dynamic range control and is referred to as \emph{level detection}, discussed in section~\ref{level_detection}. 
 
-\subsubsection{Definition of Dynamic Range in DDRC}
+To distinguish between linear and logarithmic quantities the former are in this study denoted by lowercase and the latter by uppercase letters\footnote{There are a few exceptions, for example the compression ratio $R$ and sample period $T_s$, but since they do not relate to amplitude or signal level there is little risk of ambiguity.}.
+
+\subsection{Digital Signals}
+This thesis covers the topic of \emph{digital} dynamic range compression, and the considered signals will be discrete time. A sampled signal $x$ will be indexed by the suffix $n$ to denote the sample number. For example the sampled, discrete time, version of the sine wave in Eq. \eqref{eq:sine_wave} is denoted
+\begin{equation}
+x_n = a_\text{pk} \sin \left( \frac{2 \pi}{\tau} n T_s \right),
+\end{equation}
+where $T_s$ is the sampling period. The sampling frequency will be denoted by $f_s$.
+
+\subsection{Definition of Dynamic Range in DDRC}
 Given a time-varying detected peak or RMS level,  denoted by$A_{\text{pk},n}$ and $A_{\text{RMS},n}$ respectively, the dynamic range $S$ of a signal can be defined as
 \begin{equation}\label{eq:s_peak}
 S_\text{pk} \equiv \max(A_{\text{pk},n}) - \min(A_{\text{pk},n})
