@@ -141,9 +141,68 @@ function [ y ] = upsamplingPeakDet( x )
   end
 end
 \end{lstlisting}
-
+\begin{lstlisting}[style=customc]
+function [ y ] = windowedMaxPeakDet( x, w, d, fs)
+    % x: input
+    % w: window length
+    % d: delay
+    
+    x = abs(x);
+    x = [x, zeros(1,d)];
+    
+    N = length(x);
+    x = [zeros(1,w-1), x];
+    y = zeros(1,N);
+    for i=1:N
+        y(i) = max(x(i:(i+w-1)));
+    end
+    
+    y = y(1+d:end);
+end
+\end{lstlisting}
 % ========================================
+\subsubsection{RMS Detection}
+\begin{lstlisting}[style=customc]
+function [ y ] = IIRRmsDet( x, t_av, D, fs )
+    % x    - input
+    % t_av - averaging time constant
+    % D    - delay
+    
+    x = [x, zeros(1,d)];
 
+    x = x.^2;
+   
+    N = length(x);
+    alpha = 1-exp(-1/(t_av*fs));
+    
+    y = zeros(1,N);
+    yprev = 0;
+    for i=1:N
+        y(i) = alpha*x(i) + (1-alpha)*yprev;
+        yprev = y(i);
+    end
+    
+    y = sqrt(y);
+    y = y(1+d:end);
+end
+\end{lstlisting}
+\begin{lstlisting}[style=customc]
+function [ y ] = windowRmsDet( x, w, d, fs )
+    % x: input
+    % w: window length
+    % d: delay
+    
+    x = [x, zeros(1,d)];
+    
+    N = length(x);
+    x = [zeros(1,w-1), x];
+    y = zeros(1,N);
+    for i=1:N
+        y(i) = sqrt(1/w*sum(x(i:(i+w-1)).^2));
+    end
+    y = y(1+d:end);
+end
+\end{lstlisting}
 \subsection{Gain Computer}
 \begin{lstlisting}[style=customc]
 function [ G ] = gainComp( X, T, R, W)
