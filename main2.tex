@@ -40,6 +40,36 @@
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
+
+% MATLAB CODE
+\usepackage{listings, color}
+\definecolor{light-gray}{gray}{0.95}
+\lstdefinestyle{customc}{
+ backgroundcolor=\color{light-gray},
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{output}{
+ backgroundcolor=\color{light-gray},
+ language=bash,
+ xleftmargin=\parindent,
+ keywordstyle=\color{blue},
+ basicstyle=\ttfamily,
+ morekeywords={peter@kbpet},
+ %alsoletter={:~$},
+ morekeywords=[2]{peter@kbpet:},
+}
+
 % custom commands
 \newcommand{\dB}		{\ensuremath{\mskip3mu\text{dB}}}
 \newcommand{\dBFS}	{\ensuremath{\mskip3mu\text{dB FS}}}

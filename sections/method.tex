@@ -3,23 +3,15 @@
 \begin{document}
 
 \section{Method}\label{method}
-\todo{introduction to the method}
-Since the side-chain is a sequence of non-linear components that does not obey the superposition principle, an investigation of both their individual performance as well as their interaction with each other is justified. First, the peak- and RMS level detectors was evaluated separately. Secondly, complete compressor designs was composed by combining different level detection and gain smoothing components and evaluated.
+A thorough study of a variety of DDRC's presented in literature has been made and their components described. Due to time and computational limits a selection of the described variants had to be made. Given the large number of peak and RMS detectors combined with the various gain smoothing filters a vast amount of design configurations are possible. To narrow the scope of the study, four algorithms were evaluated and compared. In this section the chosen DDRCs are presented and the evaluation method described.
 
-The method for evaluating the level detectors is outlined in sections \ref{method_peak_detectors} and \ref{method_rms_detectors}. The method for evaluating complete DDRC designs is derived in sections \ref{method_ideal_compression}, \ref{method_distance_to_ideal} and \ref{method_compressor_thd}.
-
-When comparing both level detectors and the complete DDRC designs, the parameter settings was optimised numerically. This approach is motivated and described in section \ref{method_param_opt}.
-
-\subfile{\rootdir/sections/method_peak_detectors}
-\subfile{\rootdir/sections/method_rms_detectors}
-%upsampling?
-
-
-
-\subfile{\rootdir/sections/method_peak_compressors}
+\subfile{\rootdir/sections/method_chosen_DDRC}
 \subfile{\rootdir/sections/method_rms_compressors}
+\subfile{\rootdir/sections/method_peak_compressors}
+
 %upsampling?
 
 \subfile{\rootdir/sections/method_param_opt}
+\subfile{\rootdir/sections/method_implementation}
 
 \end{document}
