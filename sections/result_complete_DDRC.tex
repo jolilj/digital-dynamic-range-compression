@@ -4,13 +4,34 @@
 \providecommand{\rootdir}{..}
 
 \begin{document}
+\subsection{Motivation for Parameter Optimisation}
+The plot in Fig.~\ref{fig:param_opt_left} shows the input and output of the two compressors with equal parameter settings. The plot in Fig.~\ref{fig:param_opt_right} shows the output where the parameter settings of the second compressor has been optimised using the euclidean distance to the output of the first compressor as cost function. 
+%================================
+\begin{figure}[ht]
+\captionsetup*{justification=centering}
+\begin{minipage}[t]{.5\textwidth}
+ \centering
+\subfile{\rootdir/figures/param_opt_left}
+\caption*{(a)} 
+\label{fig:param_opt_left}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\subfile{\rootdir/figures/param_opt_right}
+\caption*{(b)} 
+\label{fig:param_opt_right}
+\end{minipage}
+\caption{The output of two feed forward compressor designs, log domain decoupled peak detector after gain computer (1) and linear domain return to zero peak detector before gain computer (2), as discussed in \cite{reiss2012tutorial}. The left plot, (a), shows the step and down-step response of the compressors with equal parameter settings: $T = -5$ dBFS, $R=4$, $W=0$ dBFS, $\tau_a = 20$ ms, $\tau_r = 100$ ms and $d_{la}=0$ ms. The right plot, (b), shows the response of the same compressors where the parameters of the second (2) compressor has been optimised to $T = -8.9$ dBFS, $R=1.73$, $W=15.7$ dBFS, $\tau_a = 22.4$ ms, $\tau_r = 151$ ms and $d_{la}=5$ ms.}
+\label{fig:param_opt}
+\end{figure}
+%================================
 
 \subsection{Complete DDRC algorithms}
 
 \subsubsection{Distance to Ideal}
 The optimised parameter values are presented in Tab.~\ref{tab:complete_DDRC_opt_params} together with the resulting normalised euclidian distance to ideal output, $\EN$. There is no guarantee that the found parameter settings in Tab.~\ref{tab:complete_DDRC_opt_params} are at the global minimum of the cost function $\EN$. There may exist parameter settings other than those presented here that yield a smaller error. However, these results establishes an \emph{upper bound} for the distance to ideal for each compressor.
 
-With this in mind, the key result presented here is that all tested compressors were able to approximate the ideal output within an error of less than $10^{-3}$ per sample ($-60 \dBFS$/sample). Furthermore, it was possible to achieve this with threshold and ratio very close to the defined goal compression parameters.
+With this in mind, the key result presented here is that all tested compressors were able to approximate the ideal output within an error of less than $0.2\cdot 10^{-3}$ per sample ($-74 \dBFS$/sample). Furthermore, it was possible to achieve this with threshold and ratio very close to the defined goal compression parameters.
 
 \begin{table}[h]
 \small
@@ -53,7 +74,7 @@ The gain factors, $g_n$, can be seen plotted against time for each of the tested
 \label{fig:peak_det_opt_env_zoom}
 \end{figure}
 
-Inspecting the optimised parameters in Table~\ref{tab:complete_DDRC_opt_params}, one sees that although the static parameters are similar between the compressors, the time constants vary. It is evident that these parameters  yield practically the same output, but for this test signal only. To compare the similarity of the compressors given another input, but the \emph{same} parameters, a step and down-step response was compressed. The results can be seen in Fig.~\ref{fig:complete_DDRC_opt_step_response}. Evidently, the compressors do approximate the ideal compression of the test signal well, but by completely different means. The step and down-step responses show \emph{completely} different characteristics, thus illustrating the non-linearity of the system. The \emph{mutual} difference in output between the DDRCs are highly dependent on the input.
+Inspecting the optimised parameters in Table~\ref{tab:complete_DDRC_opt_params}, one sees that although the static parameters are similar between the compressors, the time constants vary. It is evident that these parameters  yield practically the same output, but for this test signal only. To compare the similarity of the compressors given another input, but the \emph{same} parameters, a step and down-step response was compressed. The results can be seen in Fig.~\ref{fig:complete_DDRC_opt_step_response}. Evidently, the compressors do approximate the ideal compression of the test signal well, but by completely different means. 
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/complete_DDRC_opt_step_response}}
 \caption{Step response of DDRC with optimised parameters for amplitude modulated sinewave with $f_m=2$ Hz and $f_c=10000$ Hz.}
