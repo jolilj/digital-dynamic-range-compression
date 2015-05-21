@@ -13,7 +13,7 @@ The optimised parameter values are presented in Tab.~\ref{tab:complete_DDRC_opt_
 \begin{table}[h]
 \small
 \begin{center}
-\caption{Optimised parameters for the various peak detectors. Test signal: $f_c=$~10,000~Hz, $f_m=2$ Hz. Goal compression: $T_\text{def}=-12 \dBFS$, $R_\text{def}=4$}
+\caption{Optimised parameters for the various peak detectors. Test signal: $f_c=$~10,000~Hz, $f_m=2$ Hz, $a_\text{min} = 10^{-10/20}$ and $a_\text{max} = 1$. Goal compression: $T_\text{def}=-12 \dBFS$, $R_\text{def}=4$}
 \label{tab:complete_DDRC_opt_params}
 \subfile{\rootdir/tables/complete_DDRC_params}
 \end{center}
@@ -27,7 +27,7 @@ In the following figures the compressors are labelled by their index in section~
 \label{fig:complete_DDRC_opt_diff}
 \end{figure}
 
-The gain factors, $g_n$, can be seen plotted against time for each of the tested compressors in Fig.~\ref{complete_DDRC_opt_gain}, vertically offset by 0.01. The McN84 has small very fast ripples in gain factor, while the GMR12 decoupled design is smoother but with a small static error. GMR12 branching and FE96 oscillate considerably more around the ideal curve.
+The gain factors, $g_n$, can be seen plotted against time for each of the tested compressors in Fig.~\ref{fig:complete_DDRC_opt_gain}, vertically offset by 0.01. The McN84 has small very fast ripples in gain factor, while the GMR12 decoupled design is smoother but with a small static error. GMR12 branching and FE96 oscillate considerably more around the ideal curve.
 
 \begin{figure}
 \captionsetup{justification=centering}
@@ -48,7 +48,7 @@ The gain factors, $g_n$, can be seen plotted against time for each of the tested
 \end{subfigure}
 
 \caption{Zoomed in versions of optimised DDRC gain factors, vertically offset by 0.01 for clarity}
-\label{fig:peak_det_opt_env_zoom}
+\label{fig:complete_DDRC_opt_gain}
 \end{figure}
 
 Inspecting the optimised parameters in Table~\ref{tab:complete_DDRC_opt_params}, one sees that although the static parameters are similar between the compressors, the time constants vary. It is evident that these parameters yield practically the same output, but for this test signal only. To compare the similarity of the compressors given another input, but the \emph{same} parameters, a step and down-step response was generated as well. The results can be seen in Fig.~\ref{fig:complete_DDRC_opt_step_response}. Evidently, the compressors do approximate the ideal compression of the test signal well, but by completely different means. 
@@ -63,7 +63,7 @@ Inspecting the optimised parameters in Table~\ref{tab:complete_DDRC_opt_params},
 Looking at the carrier frequency dependence in Fig.~\ref{fig:complete_DDRC_opt_fc_dep}, McN84 is the one suffering the most for low frequencies, followed by FE96. Both GMR designs are clearly more robust to lower carrier frequencies than they were optimised for.
 %Worth noting is that the branching design manages to maintain a small error for low frequencies with only 1 ms of look-ahead. 
 
-The McN84 and GMR12 designs have spikes in error at certain carrier frequencies. A closer inspection shows that the spikes are located at exactly the carrier frequencies that evenly divides the sampling frequency, as predicted in section \ref{full_wave_rect_det}. This problem is significantly reduced in FE96 with its up-sampling peak detector.
+The McN84 and GMR12 designs have spikes in error at certain carrier frequencies. A closer inspection shows that the spikes are located at exactly the carrier frequencies that evenly divides the sampling frequency, as predicted in section~\ref{full_wave_rect}. This problem is significantly reduced in FE96 with its up-sampling peak detector.
 
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/complete_DDRC_opt_fc_dep}}
