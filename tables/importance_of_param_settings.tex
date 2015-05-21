@@ -1,0 +1,82 @@
+\documentclass[../main2.tex]{subfiles}
+%if compiling standalone, rootdir wil be previous folder,
+%if compiling main document, rootdir will already be set by main file
+\providecommand{\rootdir}{..}
+
+\begin{document}
+
+\begin{tabular}{ c | c l| | c | c || c | c |}
+
+\multicolumn{3}{c||}{} &
+	\multicolumn{2}{c||}{First run} &
+	\multicolumn{2}{c|}{Second run}\\
+
+\multicolumn{3}{c||}{} &
+	(A) & 
+	(B) &
+	(A) &
+	(B) \\
+\hline
+\multirow{2}{*}{Level Det} &
+	$\tau_\text{la}$ & [ms] &
+	- &
+	20 &
+	- &
+	22.4 \\
+&
+	$\tau_\text{lr}$ & [ms] &
+	- &
+	100 &
+	- &
+	151 \\
+\hline
+\multirow{3}{*}{Gain Comp} &
+	$T$ & [$\dBFS$]&
+	-5 &
+	-5 &
+	-5 &
+	-8.9 \\
+&
+	$R$ & [1]&
+	4 &
+	4 &
+	4 &
+	1.73 \\
+&
+	$W$ & [\dBFS]&
+	0 &
+	0 &
+	0 &
+	15.7 \\
+\hline
+\multirow{3}{*}{Gain Smooth} &
+	$\tau_\text{sa}$ & [ms] &
+	20 &
+	- &
+	20 &
+	- \\
+&
+	$\tau_\text{sr}$ & [ms] &
+	100 &
+	- &
+	100 &
+	- \\
+&
+	$\tau_\text{sh}$ & [ms] &
+	- &
+	- &
+	- &
+	- \\
+\hline
+Delay &
+	$d$ & [samples]&
+	\tblbox{0 \\ (0 ms)} &
+	\tblbox{0   \\ (0 ms)} &
+	\tblbox{0 \\ (0 ms)} &
+	\tblbox{220 \\ (5 ms)} \\
+\hline
+
+\end{tabular}
+
+
+\end{document}

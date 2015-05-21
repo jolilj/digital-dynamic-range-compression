@@ -6,18 +6,24 @@
 \begin{document}
 \FloatBarrier
 \subsection{Gain Smoothing}
-To further smooth the control signal, various filters are introduced in the end of the side-chain, see Fig.~\ref{fig:block_genericDDRC}, operating in either the linear or logarithmic domain. In \cite{reiss2012tutorial} this is the only smoothing performed and thus paramount for avoiding distortion.
+To further smooth the control signal, various filters are introduced in the end of the side-chain, see Fig.~\ref{fig:block_genericDDRC}, operating in either the linear or logarithmic domain. In \cite{reiss2012tutorial} this is the only smoothing performed and thus paramount for avoiding distortion. The input to the smoothing step will be denoted by primed variables, and the smooth output with non-primed variables.
+
 %================================
 \subsubsection{Adaptive Filter} \label{adaptive_filter}
 In \cite{mcnally1984dynamic} a first order lowpass filter is added in the linear domain. A block diagram of the filter can be seen in Fig.~\ref{fig:block_mcnally_theory_adap_filter} where the control block represents the branching condition as discussed below. The difference equation for one version of the filter is
 %================================
 \begin{equation}\label{eq:mcnally_gain_smoothing}
 g_n = \begin{cases}
-    \alpha_{a} g'_n + (1-\alpha_{a}) g_{n-1} 	& g'_n \leq g_{n-1} \\
-    \alpha_{r} g'_n + (1-\alpha_{r}) g_{n-1} 		& g'_n > g_{n-1}
+    \alpha_\text{sa} g'_n + (1-\alpha_\text{sa}) g_{n-1}   & g'_n \leq g_{n-1} \\
+    \alpha_\text{sr} g'_n + (1-\alpha_\text{sr}) g_{n-1}	   & g'_n > g_{n-1}
 \end{cases}
 \end{equation}
 %================================
+where the attack and release coefficients $\alpha_\text{sa}$, $\alpha_\text{sr}$ are related to attack and release time constants $\tau_\text{sa}$, $\tau_\text{sr}$ by 
+\begin{align}
+\alpha_\text{sa} &= 1 - e^{-1/\tau_\text{sa} f_s } \label{eq:attack_coeff_def}\\
+\alpha_\text{sr} &= 1 - e^{-1/\tau_\text{sr} f_s } \label{eq:release_coeff_def}.
+\end{align}
 The block diagrams in \cite{mcnally1984dynamic, dafx02, dafx11, zolzer1997digital, zolzer2008digital} all suggest that the branching condition is determined by $g'_n > g'_{n-1}$, that is, by comparing the current and previous \emph{input} samples instead of comparing the current input with the previous \emph{output}. However, when described in a code snippet appearing for the first time in \cite{dafx11}, the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is actually used. In \cite{bitzer2006parameter} the branching condition of equation \eqref{eq:mcnally_gain_smoothing} is used while referring to \cite{mcnally1984dynamic, dafx02}. The original intent in \cite{mcnally1984dynamic} is unclear.
 
 %================================
@@ -31,30 +37,30 @@ The block diagrams in \cite{mcnally1984dynamic, dafx02, dafx11, zolzer1997digita
 In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as
 \begin{equation}\label{eq:frindle_gainsmooth}
 \begin{split}
-Z_n &= \text{max}(C'_n, C_{n-1} - A_r H_{n-1} )\\
-C_n &= \text{min}(Z_n, C_{n-1} + A_a) \\
+Z_n &= \text{max}(C'_n, C_{n-1} - A_\text{sr} H_{n-1} )\\
+C_n &= \text{min}(Z_n, C_{n-1} + A_\text{sa}) \\
 H_n &=
 \begin{cases}
-    \text{min}(1,A_h + H_{n-1})	& C_n < C_{n-1}; \\
-    A_h					& \text{otherwise}
+    \text{min}(1,A_\text{sh} + H_{n-1})	& C_n < C_{n-1}; \\
+    A_\text{sh}					& \text{otherwise}
 \end{cases} \\
 \end{split}
 \end{equation}
 where
 \begin{equation}
 \begin{split}
-A_a &= \frac{1}{f_s \tau_a} \\
-A_r &= \frac{1}{f_s \tau_r} \\
-A_h &= \frac{0.5}{f_s \tau_h}. \\
+A_\text{sa} &= \frac{1}{f_s \tau_\text{sa}} \\
+A_\text{sr} &= \frac{1}{f_s \tau_\text{sr}} \\
+A_\text{sh} &= \frac{0.5}{f_s \tau_\text{sh}}. \\
 \end{split}
 \end{equation}
-and the time constants $\tau_a, \tau_r$ and $\tau_h$ are given in seconds per dBFS. Note that the filter acts on the positive logarithmic quantity \emph{compression}, $C'_n = -G'_n$, instead of the actual gain reduction $G'$.
+and the time constants $\tau_\text{sa}, \tau_\text{sr}$ and $\tau_\text{sh}$ are given in seconds per $\dBFS$. Note that the filter acts on the positive logarithmic quantity \emph{compression}, $C'_n = -G'_n$, instead of the actual gain reduction $G'$.
 
 The attack and release trajectories are linear in the log domain, as can be seen in Fig.~\ref{fig:step_frindle_gain}. In the release phase the hold timer $H_n$ scales the release time constant up to it's final value. The goal of this is to get a smooth release characteristic with low distortion for low frequency content and a smooth transition from hold to release phase.
 %================================
 \begin{figure}[h]
 \centerline{\subfile{\rootdir/figures/step_frindle_gain}}
-\caption{Linear gain smoothing, as implemented in \cite{frindle1996implementation}, step and downstep response with $\tau_a=0.02$, $\tau_r=0.08$ and $\tau_h= 0.1$.}
+\caption{Linear gain smoothing, as implemented in \cite{frindle1996implementation}, step and downstep response with $\tau_\text{sa}=0.02$, $\tau_\text{sr}=0.08$ and $\tau_\text{sa}= 0.1$ s/$\dBFS$.}
 \label{fig:step_frindle_gain}
 \end{figure}
 %================================
@@ -69,28 +75,28 @@ The difference equation of the \emph{smooth decoupled filter} is
 \begin{equation}\label{eq:smooth_decoupled_det}
 \begin{split}
 Z_n &= \begin{cases}
-   C'_n								& C'_n > Z_{n-1} \\
-    \alpha_{r} C'_n + (1-\alpha_{r}) Z_{n-1} 	& C'_n \leq Z_{n-1}
+   C'_n									& C'_n > Z_{n-1} \\
+    \alpha_\text{sr} C'_n + (1-\alpha_\text{sr}) Z_{n-1} & C'_n \leq Z_{n-1}
 \end{cases} \\
-C_n &= \alpha_{a} Z_n + (1-\alpha_{a}) C_{n-1}
+C_n &= \alpha_\text{sa} Z_n + (1-\alpha_\text{sa}) C_{n-1}
 \end{split}
 \end{equation}
 %================================
-which result in a smooth transition between the attack and release phase without discontinuities. The name is poorly chosen since it in fact couples the attack and release parameters in the release phase. In \cite{reiss2012tutorial} it is derived from it's analog counterpart, hence the name, and it is shown that the actual release time is $\approx \tau_a + \tau_r$.
+$\alpha_\text{sa}$, $\alpha_\text{sr}$ are related to attack and release time constants $\tau_\text{sa}$, $\tau_\text{sr}$ as before. The output of this smoothing filter has a gentle transition between the attack and release phase as can be seen in Fig.~\ref{fig:step_reiss_filter}. The name is poorly chosen since it in fact couples the attack and release parameters in the release phase. In \cite{reiss2012tutorial} it is derived from it's analog counterpart, and it is shown that the actual release time is approximately $\tau_\text{sa} + \tau_\text{sr}$.
 
-To obtain a filter with attack and release parameters independent of each other the \emph{smooth branching filter}, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain where 
+To obtain a filter with attack and release parameters independent of each other the \emph{smooth branching filter}, same as described in section \ref{adaptive_filter} above, is suggested, here operating in the logarithmic domain:
 %================================
 \begin{equation}\label{eq:smooth_branching_det}
 C_n = \begin{cases}
-    \alpha_{a} C'_n + (1-\alpha_{a}) C_{n-1} 	& C'_n > C_{n-1} \\
-    \alpha_{r} C'_n + (1-\alpha_{r}) C_{n-1} 	& C'_n \leq C_{n-1}.
+    \alpha_\text{sa} C'_n + (1-\alpha_\text{sa}) C_{n-1} 	& C'_n > C_{n-1} \\
+    \alpha_\text{sr} C'_n + (1-\alpha_\text{sr}) C_{n-1} 	& C'_n \leq C_{n-1}.
 \end{cases}
 \end{equation}
 %================================
 The step and down-step response in Fig.~\ref{fig:step_reiss_filter} shows the different release trajectories of the smooth decoupled and the smooth branching filter.%================================
 \begin{figure}
 \centerline{\subfile{\rootdir/figures/step_reiss_filter}}
-\caption{Step and downstep response of the smooth decoupled and smooth branching filter, with $\tau_a = 50$ ms, $\tau_r = 150$ ms}
+\caption{Step and downstep response of the smooth decoupled and smooth branching filter, with $\tau_\text{sa} = 50$ ms, $\tau_\text{sr} = 150$ ms}
 \label{fig:step_reiss_filter}
 \end{figure}
 %================================

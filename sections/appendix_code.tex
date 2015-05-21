@@ -161,6 +161,7 @@ function [ y ] = windowedMaxPeakDet( x, w, d, fs)
 end
 \end{lstlisting}
 % ========================================
+\clearpage
 \subsubsection{RMS Detection}
 \begin{lstlisting}[style=customc]
 function [ y ] = IIRRmsDet( x, t_av, D, fs )
@@ -169,9 +170,7 @@ function [ y ] = IIRRmsDet( x, t_av, D, fs )
     % D    - delay
     
     x = [x, zeros(1,d)];
-
     x = x.^2;
-   
     N = length(x);
     alpha = 1-exp(-1/(t_av*fs));
     
@@ -225,6 +224,7 @@ end
 % ========================================
 
 \subsection{Gain Smoothing}
+
 \begin{lstlisting}[style=customc]
 function [ gs ] = adaptiveFilter( g, t_a, t_r, fs )
   % g    - linear unsmooth gain factor
@@ -310,9 +310,9 @@ function [ Cs ] = smoothBranchingFilterLog( C, t_a, t_r, fs )
   end
 end
 \end{lstlisting}
-\begin{lstlisting}[style=customc]
-
 % ========================================
+
+\begin{lstlisting}[style=customc]
 
 function [ Cs ] = smoothDecoupledFilterLog( C, t_a, t_r, fs )
   % C    - unsmooth compression [dB]
@@ -340,7 +340,7 @@ end
 \end{lstlisting}
 
 % ========================================
-
+\clearpage
 \subsection{DDRC}
 \begin{lstlisting}[style=customc]
 function [ y, gs ] = McN84_peak(input, T, R, W, t_pa, t_pr, t_ga, t_gr, D, fs)
