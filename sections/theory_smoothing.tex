@@ -64,7 +64,7 @@ With the coefficients in Tab.~\ref{tab:coeff_stikvoort_attack} \todo{$c_2$ has a
 %=========================
 \subsubsection{Linear Smoothing in Log Domain}
 In \cite{frindle1996implementation} a gain smoothing is implemented in the log domain as
-\begin{equation}
+\begin{equation}\label{eq:frindle_gainsmooth}
 \begin{split}
 Z_n &= \text{max}(C'_n, C_{n-1} - A_r H_{n-1} )\\
 C_n &= \text{min}(Z_n, C_{n-1} + A_a) \\

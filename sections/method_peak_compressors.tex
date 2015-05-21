@@ -5,7 +5,19 @@
 
 \begin{document}
 \subsection{Evaluation of Peak Level Compressors}\label{method_peak_compressors}
-The test signal defined by \eqref{eq:test_signal_am_modulated} was generated, and the wanted compression was defined by a threshold $T$ and ratio $R$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal $y_\text{I}$ was calculated according to Eq.~\eqref{eq:ideal_output}.
+\subsubsection{Test signal}
+In accordance with the definition of ideal compression, see section~\ref{method_ideal_peak_compression}
+, a test signal $x_n$ is generated, consisting of an envelope $e_n$ and a fine structure $f_n$
+\begin{equation}
+\begin{split}
+	x_n &=e_nf_n\\
+	e_n &= a_\text{min} + \frac{a_\text{max}- a_\text{min}}{2} \left(1 + \cos(2 \pi f_m n T_s) \right), \\
+	f_n &= \sin(2 \pi f_c n T_s),
+\end{split} \label{eq:test_signal}
+\end{equation}
+where $a_\text{min}$ is the minimum instantaneous peak amplitude, $a_\text{max}$ is the maximum instantaneous peak amplitude, $f_m$ the modulation frequency and $f_c$ the carrier frequency.
+
+The wanted compression was defined by a threshold $T$ and ratio $R$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal $y_\text{I}$ was calculated according to Eq.~\eqref{eq:ideal_output}.
 
 \subsubsection{Distance to Ideal as Performance Indicator}
 Compressor performance was evaluated by comparing the output of the compressor to the ideal output. The distance to ideal was calculated using the euclidian norm
@@ -17,6 +29,6 @@ where $y_\text{I}$ is the ideal output and $y$ is the output from the compressor
 The parameter settings for each compressor was optimised numerically with a fixed modulation frequency $f_m = f_{m,0}$ and carrier frequency $f_c = f_{c,0}$, using $\EN$ as cost function. The motivation for this procedure is partly the same as for the evaluation of peak level detectors, and partly following the discussion in section~\ref{method_param_opt}.
 
 \subsubsection{Carrier Frequency Dependence}
-As was the case for peak level detection, the optimised values are closely related to modulation frequency. Possible dependencies on carrier frequency however are still unwanted, since the fine structure ideally should not be affect the resulting dynamic range compression. To evaluate how compressor performance depends on the fine structure, the parameter values as well as modulation frequency was fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
+The optimised values are closely related to modulation frequency. Possible dependencies on carrier frequency however are still unwanted, since the fine structure ideally should not be affect the resulting dynamic range compression. To evaluate how compressor performance depends on the fine structure, the parameter values as well as modulation frequency was fixed, while the carrier frequency was swept from 20 Hz to 20 kHz and the resulting error $\EN$ was plotted against $f_c$.
 
 \end{document}
