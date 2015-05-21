@@ -113,13 +113,13 @@ where $u_\text{RMS}$ is the RMS voltage and $u_0$ a reference voltage \cite{davi
 \end{itemize}
 %================================
 \subsection{Signal Level}
-A convenient unit in digital audio systems is dB relative to \emph{Full scale} (dB FS)~\cite{db_fullscale}. When measuring \emph{peak signal level}, a peak amplitude of $a_{0, \text{pk}} = 1$ is used as reference. The peak signal level of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
+A convenient unit in digital audio systems is dB relative to \emph{Full scale} ($\dBFS$)~\cite{db_fullscale}. When measuring \emph{peak signal level}, a peak amplitude of $a_{0, \text{pk}} = 1$ is used as reference. The peak signal level of the sine wave in Eq.~\eqref{eq:sine_wave} is thus
 \begin{equation}
 A_\text{pk} = 10 \logten \left( \frac{a_\text{pk}^2}{a_{0, \text{pk}}^2} \right) \text{dB FS} = 20 \log_{10} a_\text{pk} \dBFS.
 \end{equation}
 
 %================================
-When measuring the RMS signal level, $a_{0, \text{rms}} = 1$ is used as reference\footnote{The  AES Standard AES17-1998 uses $a_{0, \text{rms}} = 1/sqrt(2)$ as reference. This convention is not adopted in this thesis, since $a_{0, \text{rms}} = 1$ simplifies conversion between linear and logarithmic RMS values}
+When measuring the RMS signal level, $a_{0, \text{rms}} = 1$ is used as reference\footnote{The  AES Standard AES17-1998 uses $a_{0, \text{rms}} = 1/\sqrt{2}$ as reference. This convention is not adopted in this thesis, since $a_{0, \text{rms}} = 1$ simplifies conversion between linear and logarithmic RMS values}
 For the same sine wave then, the RMS signal level is given by
 \begin{equation}
 A_\text{RMS} = 20\log_{10} \left( \frac{a_\text{pk}}{\sqrt 2} \right) \approx A_\text{pk}- 3.01 \dBFS.
@@ -130,7 +130,7 @@ For periodic signals, $A_\text{pk}$ and $A_\text{RMS}$, are uniquely determined.
 To distinguish between linear and logarithmic quantities the former are in this study denoted by lowercase and the latter by uppercase letters\footnote{There are a few exceptions, for example the compression ratio $R$ and sample period $T_s$, but since they do not relate to amplitude or signal level there is little risk of ambiguity.}.
 
 \subsection{Digital Signals}
-This thesis covers the topic of \emph{digital} dynamic range compression, and the considered signals will be discrete time. A sampled signal $x$ will be indexed by the suffix $n$ to denote the sample number. For example the sampled, discrete time, version of the sine wave in Eq. \eqref{eq:sine_wave} is denoted
+This thesis covers the topic of \emph{digital} dynamic range compression, and the considered signals will be discrete in time. A sampled signal $x$ will be indexed by the suffix $n$ to denote the sample number. For example the sampled version of the sine wave in Eq. \eqref{eq:sine_wave} is denoted
 \begin{equation}
 x_n = a_\text{pk} \sin \left( \frac{2 \pi}{\tau} n T_s \right),
 \end{equation}
