@@ -5,10 +5,42 @@
 
 \section{Result}\label{results}
 
-%\FloatBarrier
-%\subfile{\rootdir/sections/result_level_detection}
-%\FloatBarrier
-%\subfile{\rootdir/sections/result_level_det_gain_comp}
+\subsection{The Importance of Parameter Settings}
+The plot in Fig.~\ref{fig:param_opt_left} shows the input and output of the two compressors, referred to as (A) and (B) in section \ref{method_param_opt}, with equal parameter settings. The plot in Fig.~\ref{fig:param_opt_right} shows the output where the parameter settings of the second compressor has been optimised using the euclidean distance to the output of the first compressor as cost function. The parameter settings of the two tests are listed in Tab.~\ref{tab:importance_of_param_settings}. The sampling frequency was $f_s = 44100$ Hz.
+
+%================================
+\begin{figure}[ht]
+\captionsetup*{justification=centering}
+\begin{minipage}[t]{.5\textwidth}
+ \centering
+\subfile{\rootdir/figures/param_opt_left}
+\caption*{(a)} 
+\label{fig:param_opt_left}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\subfile{\rootdir/figures/param_opt_right}
+\caption*{(b)} 
+\label{fig:param_opt_right}
+\end{minipage}
+\caption{The output of two feed forward compressor designs, (A) Full wave rectification with smooth branching log domain gain smoothing, and (B) Branching peak detector without gain smoothing. The left plot, (a), shows the step and down-step response of the compressors with equal parameter settings. The right plot, (b), shows the response of the same compressors where the parameters of compressor (B) has been optimised by fitting the output of B to the output of compressor A.}
+\label{fig:param_opt}
+\end{figure}
+%================================
+
+\begin{table}[h]
+\small
+\begin{center}
+\caption{The parameter settings of compressors A and B. First run with same parameters. Second run with parameters of compressor B optimimised.}
+\label{tab:importance_of_param_settings}
+\subfile{\rootdir/tables/importance_of_param_settings}
+\end{center}
+\end{table}
+
+The compressors have very different behaviour with the same parameter settings. Compressor B has a slight lag before the attack starts, and almost linear release trajectory, while compressor A attacks immediately with a smooth release trajectory.
+
+With the parameter settings of compressor B optimised to fit the output of compressor A however, these differences are almost completely gone. 
+
 \FloatBarrier
 \subfile{\rootdir/sections/result_complete_DDRC}
 \FloatBarrier
