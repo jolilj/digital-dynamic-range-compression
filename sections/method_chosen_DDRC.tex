@@ -26,20 +26,6 @@ The design proposed in \cite{mcnally1984dynamic} consists of either a peak or RM
 The scientific comparison and tutorial of DDRC design conducted in \cite{reiss2012tutorial} resulted in the recommendation of two peak detecting compressors summarised in Table~\ref{tab:gmr12_decoupled} and~\ref{tab:gmr12_branching}. Since these are the latest proposed designs, they were chosen as the second and third tested DDRCs.
 \begin{table}[h]
 \begin{center}
-\caption{GMR12 Smooth decoupled}
-\label{tab:gmr12_decoupled}
-\begin{tabular}{| l | l |}
-	\hline
-	Component & Type \\ \hline
-	Peak detection & Upsampling peak detector, section~\ref{theory_upsampling_peak_det} \\
-	Gain computer & Standard. Eq.~\eqref{eq:gain} \\
-	Gain smoothing & Smooth decoupled. Eq.~\eqref{eq:smooth_decoupled_det} \\
-	\hline
-\end{tabular}
-\end{center}
-\end{table}
-\begin{table}[h]
-\begin{center}
 \caption{GMR12 Smooth branching}
 \label{tab:gmr12_branching}
 \begin{tabular}{| l | l |}
@@ -48,6 +34,21 @@ The scientific comparison and tutorial of DDRC design conducted in \cite{reiss20
 	Peak detection & Full wave rectification, section.~\ref{full_wave_rect} \\
 	Gain computer & Standard. Eq.~\eqref{eq:gain} \\
 	Gain smoothing & Smooth branching. Eq.~\eqref{eq:smooth_branching_det} \\
+	\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\caption{GMR12 Smooth decoupled}
+\label{tab:gmr12_decoupled}
+\begin{tabular}{| l | l |}
+	\hline
+	Component & Type \\ \hline
+	Peak detection & Upsampling peak detector, section~\ref{theory_upsampling_peak_det} \\
+	Gain computer & Standard. Eq.~\eqref{eq:gain} \\
+	Gain smoothing & Smooth decoupled. Eq.~\eqref{eq:smooth_decoupled_det} \\
 	\hline
 \end{tabular}
 \end{center}

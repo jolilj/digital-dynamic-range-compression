@@ -5,5 +5,10 @@
 \subsection{Parameter Optimisation}\label{method_param_opt}
 In \cite{reiss2012tutorial} the placement, type and domain of the level detector is partly motivated by comparing step and down-step response of the compressors with equal parameter settings. The fact that various algorithms exhibit different characteristics with equal parameters does however bias the result. 
 
-The two compressor designs presented in \cite{reiss2012} are examined; the recommended branching log domain peak detector placed after the gain computer (1) and the linear domain return to zero peak detector placed before the gain computer (2). First, a step and down-step response with equal parameter settings are generated. Second, the same step and down-step response is generated but with the parameter  settings of the second compressor being optimised using the euclidean distance to the output of the first compressor as cost function. 
+Two compressor designs presented in \cite{reiss2012} are examined
+\begin{enumerate}[label=(\Alph*)]
+ \item Full wave rectification with smooth branching log domain gain smoothing (recommended)
+\item  Branching peak detector without gain smoothing (not recommended)
+\end{enumerate}
+First, a step and down-step response with equal parameter settings are generated. Second, the same step and down-step response is generated but with the parameter  settings of the second compressor being optimised using the euclidean distance to the output of the first compressor as cost function. 
 \end{document}
