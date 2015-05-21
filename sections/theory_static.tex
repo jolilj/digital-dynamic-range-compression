@@ -10,7 +10,7 @@
 The gain factor $g_n$ is calculated based on the level of the signal. In order to derive $g_n$, the desired input/output relation of the signal level is defined. This is referred to as the static curve of the DDRC.
 
 \subsubsection{Static Curve}
-The static curve proposed in \cite{mcnally1984dynamic, stikvoort1986digital, frindle1996implementation, reiss2012tutorial} is depicted in Fig.~\ref{fig:typical_static_detailed} where $Y(L)$ is the desired output signal level and $L$ is the input signal level calculated in the level detector. For signal levels below the threshold, $T$, the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$, where $R$ is the ratio.
+The static curve proposed in \cite{mcnally1984dynamic, frindle1996implementation, zolzer2008digital, reiss2012tutorial} is depicted in Fig.~\ref{fig:typical_static_detailed} where $Y(L)$ is the desired output signal level and $L$ is the input signal level calculated in the level detector. For signal levels below the threshold, $T$, the input is left unaffected while at levels above $T$ the output is compressed, resulting in the linear curve with slope $1/R$, where $R$ is the ratio.
 
 %================================
 \begin{figure}
@@ -20,7 +20,7 @@ The static curve proposed in \cite{mcnally1984dynamic, stikvoort1986digital, fri
 \end{figure}
 %================================
 
-In \cite{frindle1996implementation}\cite{reiss2012tutorial}, a smooth transition over the threshold is achieved by replacing the hard knee by a second degree polynomial. The knee width, $W$, is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(L)$ to be continuous and have continuous derivatives at the points $L=T-W/2$ and $L=T+W/2$. A knee width of $W=0$ corresponds to a hard knee. 
+In \cite{frindle1996implementation, reiss2012tutorial}, a smooth transition over the threshold is achieved by replacing the hard knee by a second degree polynomial. The knee width, $W$, is defined as the range in dB spanning either side of $T$ where such a polynomial is connected. The conditions to be met is for $Y(L)$ to be continuous and have continuous derivatives at the points $L=T-W/2$ and $L=T+W/2$. A knee width of $W=0$ corresponds to a hard knee. 
 %================================
 \subsubsection{Gain Computer} \label{gain_computer}
 The gain computer in Fig. ~\ref{fig:block_genericDDRC}, calculates the \emph{non-smoothed} logarithmic gain factor, $G'$, given the static characteristics and the signal. Derivation of $G'$ is done by using the static curve of Fig.~\ref{fig:typical_static_detailed} and calculating the intermediate polynomial which yields the following piecewise continuous function
