@@ -16,7 +16,7 @@ Different usages and opinions aside, this thesis focuses on the technical aspect
 
 %===============================
 \subsection{Motivation}
-Various DDRC designs have been proposed in the literature and there exists an abundance of commercial implementations on the market.\footnote{For a list of popular commercial compressors, see~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals. Furthermore, lacking a clear definition of the dynamic range of a signal, confusion resides around whether the peak or average values of the signal is to be compressed. 
+Various DDRC designs have been proposed in the literature and there exists an abundance of commercial implementations on the market.\footnote{For a list of popular commercial compressors, see~\cite{commercial}.} However, the subjective nature of audio quality together with the inherent nonlinear behaviour of DRC make mathematical analysis and formal comparisons of different designs difficult. In the absence of a broadly accepted definition of \emph{ideal} compression, "artefact-free", "transparent" or "low distortion" are common design goals.
 
 The application of DRC in hearing aids and cochlear implants have increased the need for formal measures of compression characteristics, and metrics such as Effective Compression Ratio (ECR) and Fidelity of Envelope Shape (FES) have been developed~\cite{stone1992syllabic, stone2007quantifying}. In 2012, a study was conducted outlining different DDRC designs and comparing their respective characteristics with these measures~\cite{reiss2012tutorial}. However, it is not clear whether ECR or FES can be used to benchmark and compare the performance of different compressor designs. As the metrics was initially derived to characterise the effect of different compressor parameter settings on speech intelligibility, the chosen parameter values are likely to have a great impact on the results. Furthermore, the results are highly dependent on the original envelope estimation used.
 
@@ -31,9 +31,9 @@ The goal of this thesis was to
 \subsection{Outline Of Thesis}
 First, necessary definitions and background theory is presented. The theory section is divided into three parts: In section~\ref{theory_dynamic_range}, the terms dynamic range and signal level are discussed and their meaning within this thesis is defined. This is followed by section~\ref{theory_DDRC} where the investigated compressor designs known from text books and scientific publications are described and analysed. In particular, the different proposed level detection and smoothing techniques are investigated, as this is what in essence separates the various designs from each other. Lastly, the metrics used in \cite{stone1992syllabic, stone2007quantifying, reiss2012tutorial} is described and discussed in section \ref{theory_metrics_ideal} followed by the definition of ideal compression used in this thesis.
 
-In section~\ref{method} the method used to evaluate the different compressor algorithms and their subcomponents is described. The results are presented in section~\ref{results}, followed by a discussion of these results in section~\ref{discussion} and a summary of conclusions that can be drawn from this work in section ~\ref{conclusions}.
-
+In section~\ref{method} the method used to evaluate the different compressor algorithms is described. The results are presented in section~\ref{results}, followed by a discussion of these results in section~\ref{discussion_results} and a summary of conclusions that can be drawn from this work in section~\ref{discussion_conclusions}. Lastly, suggestions for further investigation are presented in section~\ref{discussion_future_work}.  
 
 Abbreviations, quantities, variables etc. are listed in Table~\ref{tab:list_of_quantities} for convenience.
 \subfile{\rootdir/sections/list_of_quantities}
+
 \end{document}

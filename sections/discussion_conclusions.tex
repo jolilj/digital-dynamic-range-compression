@@ -4,7 +4,7 @@
 \providecommand{\rootdir}{..}
 
 \begin{document}
-\subsection{Conclusions}\label{discussion_results}
+\subsection{Conclusions}\label{discussion_conclusions}
 In this thesis an overview was made of design choices proposed in literature and scientific publications known to the authors. The various level detecting gain smoothing components were also implemented in MATLAB\textsuperscript{\textregistered}. Furthermore four different complete DDRCs were tested and compared using a definition of ideal compression. In an attempt to focus on the actual algorithms and not the parameter settings, the compressor parameters were optimised numerically.
 
 First of all, a decision has to be made whether the compressor should operate on the envelope or the RMS of the signal, since they represent different aspects of the dynamic range of the input signal. In this thesis only peak detecting compressors were evaluated.
@@ -15,7 +15,7 @@ The results do, however, show that up-sampling is of interest. Which specific me
 
 %The effect of look-ahead on performance is yet to be investigated.
 
-\subsection{Future Work}
+\subsection{Future Work}\label{discussion_future_work}
 Although this thesis presents few general guidelines for digital feed forward compressor design, a foundation has been laid for future work. Further evaluation is easily carried out with the MATLAB\textsuperscript{\textregistered} code provided in appendix~\ref{appendix_code}.
 
 All tested compressors performed very close to ideal when their parameters was optimised. This raises the suspicion that parameter settings may be more important than the underlying algorithm. One line of further research is how easy the settings are to adjust for the user. How the compressor "responds" to different settings, thereby affecting how easy the wanted end result is to achieve. Not to mention the user interface and human computer interaction.
