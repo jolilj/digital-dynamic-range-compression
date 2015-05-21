@@ -13,11 +13,11 @@ O_n = K E_n + M.
 \end{equation}
 Since the Pearson correlation coefficient is equal to 1 for linearly dependent variables, the definition of ideal compression above yields $\FES= 1$.
 
-If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $\FES< 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Certainly, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{XXXX} and \cite{XXXX}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
+If $A_\text{min} < T$ this is not the case. As the dynamic range of the input signal spans the knee of the static compression curve, the envelope will inevitably be distorted and $\FES< 1$. However, this distortion is not regarded as an unwanted artefact in this thesis since both $T$ and $R$ are regarded as user parameters defining the wanted dynamic range mapping. Thus FES is only considered a valid metric of compressor performance for the case when $A_\text{min} \geq T$.\footnote{Certainly, when used to quantify the effect of compression on the envelope of an audio signal, as is done in \cite{stone2007quantifying}, there is no need to put constraints on $A_\text{min}$ or $T$. It is merely when used to evaluate compressor \emph{performance} this restriction is necessary.}
 
 % ========================================
 \subsubsection{THD of Ideal Compression}
-The input signal used to measure THD as defined in \ref{theory_metrics_thd} is a pure sine wave with amplitude $a$ and frequency $f$:
+The input signal used to measure THD as defined in section \ref{metric_thd} is a pure sine wave with amplitude $a$ and frequency $f$:
 \begin{equation}
 x_n = a \sin( 2 \pi f n T_s ).
 \end{equation}
@@ -28,7 +28,7 @@ e_n &= a \\
 f_n &= \sin( 2 \pi f n T_s ).
 \end{split}
 \end{equation}
-The constant amplitude $a$ gives $A_\text{min} = A_\text{max} = E_n = 20 \logten a \dBFS$ and given that $A_\text{min} \geq T$, the output level of ideal compression as defined by Eq.~\eqref{eq:eq_dynamic_range_mapping} is given by
+The constant amplitude $a$ gives $A_\text{min} = A_\text{max} = E_n = 20 \logten a \dBFS$ and given that $A_\text{min} \geq T$, the output level of ideal compression as defined by Eq.~\eqref{eq:dynamic_range_mapping} is given by
 \begin{equation}
 \begin{split}
 O_n &= K (20 \logten a) + M.
