@@ -20,7 +20,26 @@ In accordance with the definition of ideal compression in section~\ref{method_id
 \end{equation}
 where $a_\text{min}$ is the minimum instantaneous peak amplitude, $a_\text{max}$ is the maximum instantaneous peak amplitude, $f_m$ the modulation frequency and $f_c$ the carrier frequency.
 
-The wanted compression was defined by a threshold, $T_\text{def}$, and ratio, $R_\text{def}$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal, $y_\text{I}$, was calculated according to Eq.~\eqref{eq:ideal_output}.
+The wanted compression was defined by a threshold, $T_\text{def}$, and ratio, $R_\text{def}$. The ideal output level was mapped by Eq.~\eqref{eq:dynamic_range_mapping} and the ideal output signal, $y_\text{I}$, was calculated according to Eq.~\eqref{eq:ideal_output}. In Fig.~\ref{fig:testsignal} an example of the test signal is plotted, with corresponding ideal output.
+%================================
+\begin{figure}[ht]
+\captionsetup*{justification=centering}
+\begin{minipage}[t]{.5\textwidth}
+ \centering
+\subfile{\rootdir/figures/testsignal}
+\caption*{(a)} 
+\label{fig:param_opt_left}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\subfile{\rootdir/figures/testsignalcomp}
+\caption*{(b)} 
+\label{fig:param_opt_right}
+\end{minipage}
+\caption{An example of the test signal with $f_m=2$ Hz, $f_c= 40$ Hz, $a_\text{min} = 10^{-10/20}=0.316$ and $a_\text{max} = 1$ is plotted in (a) with it's ideal compressed output given $T=-12 \dBFS$ and $R = 4$ plotted in (b)}
+\label{fig:testsignal}
+\end{figure}
+%================================
 
 \subsubsection{Distance to Ideal as Performance Indicator}\label{method_dist_ideal}
 Compressor performance was evaluated by comparing the output of the compressor to the ideal output. The distance to ideal was calculated using the euclidian norm
